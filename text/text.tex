@@ -1,0 +1,34 @@
+% Do not forget to include Introduction
+%---------------------------------------------------------------
+\chapter{Úvod}
+% uncomment the following line to create an unnumbered chapter
+%\chapter*{Introduction}\addcontentsline{toc}{chapter}{Introduction}\markboth{Introduction}{Introduction}
+%---------------------------------------------------------------
+\setcounter{page}{1}
+
+% The following environment can be used as a mini-introduction for a chapter. Use that any way it pleases you (or comment it out). It can contain, for instance, a summary of the chapter. Or, there can be a quotation.
+% \begin{chapterabstract}
+% 	\lipsum[1]
+% \end{chapterabstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% alternative using package minted for source highlighting
+% package minted requires execution with `-shell-escape'
+% e.g., `xelatex -shell-escape ctufit-thesis.tex'
+% \begin{listing}
+% \begin{minted}{C}
+%     #include<stdio.h>
+%     #include<iostream>
+%     // A comment
+%     int main(void)
+%     {
+%         printf("Hello World\n");
+%         return 0;
+%     }
+% \end{minted}
+% \caption{Zbytečný kód}\label{list:8-6}
+% \end{listing}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{text/introduction}
+\input{text/social-dance}
