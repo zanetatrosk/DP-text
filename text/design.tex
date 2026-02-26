@@ -1,1 +1,124 @@
 \chapter{Návrh uživatelského rozhraní}
+\begin{chapterabstract}
+    Tato kapitola pojednává o návrhu uživatelského rozhraní pro aplikaci. Nejprve bude uvedeno, proč je pro nás uživatelské rozhraní důležité a jaké jsou naše cíle při jeho návrhu. Následně budou uvedeny pojmy se kterými kapitola pracuje. Nakonec na základě požadavků vydefinovaných v předchozí kapitole budou předvedeny jednotlivé návrhy uživatelského rozhraní pro různé části aplikace, u kterých bude vysvětleno proč jsou takto navrženy, popřípadě komentář od potenciálních uživatelů, kteří se k návrhům vyjádřili.
+\end{chapterabstract}
+
+Uživatelské rozhraní je v našem případě velmi důležité, protože pokud chceme aby aplikace byla úspěšná, je potřeba aby jí do budoucna využívalo co nejvíce lidí. Proto je potřeba aby bylo uživatelské rozhraní jednoduché, přehledné a intuitivní. Zároveň ale chci dosáhnout toho, aby bylo líbivé a uživatelé bavilo se v něm pohybovat a používat ho.
+
+\section{Wireframing}
+Je to způsob, jak navrhovat uživatelské rozhraní na úrovni jeho struktury a rozložení. Wireframe je návrh layoutu stránky, který demonstruje které prvky stránka bude mít. Jeho cílem je přiblížit celému týmu a stakoholderům jak bude vypadat výsledný produkt ještě předtím, než se začne s jeho vývojem. Díky tomu se dá předejít zbytečným změnám v pozdějších fázích vývoje, které bývají nákladné. Wireframy se dají budˇvytvářet ručně, nebo pomocí různých nástrojů jako je například Figma, Adobe XD, Sketch a další. \cite{wireframing:definition}
+
+Wireframy se dělí na tři kategorie:
+\begin{itemize}
+    \item Low-fidelity wireframe - jsou jednoduché, často černobílé, bez detailů a zaměřují se na především na rozložení prvků na stránce a navigaci mezi nimi. 
+    \item Mid-fidelity wireframe - jsou podrobnější než low-fidelity, slouží k zpřesnění výsledného designu. Designéři do nich přidávají poznámky a konkrétnější obsah, testují různé varianty uživatelských toků a prvků rozhraní.
+    \item High-fidelity wireframe - se už podobají raným verzím finálního produktu. Obsahují vizuální i interaktivní prvky, ale stále nemusí mít plnou funkčnost prototypu. \cite{wireframing:types}
+\end{itemize}
+
+V rámci projektu budu jednotlivé typy wireframů využívat podle aktuální potřeby. Jelikož však na projektu pracuji sama a nemám k dispozici UX designéra, zaměřím se především na low-fidelity a mid-fidelity wireframy, které mi umožní efektivně navrhnout strukturu a rozložení aplikace. Tvorba high-fidelity wireframů je podle mých zkušeností časově náročná, což při omezeném časovém rámci projektu není příliš vhodné.
+
+\subsection{Figma}
+Pro návrh uživatelského rozhraní jsem zvolila nástroj Figma. Figma je nástroj, který je v základní verzi zdarma a i v ní umožňuje nejenom jednoduše tvořit návrhy uživatelského rozhraní, ale také obsahuje řadu užitečných funkcionalit, které usnadnují jejich tvorbu (možnost přidávat komentáře, tvořit komponenty, prototypovat a mnoho dalšího). Já osobně mám ráda, že můžu vytvořit parent komponentu (například navigační menu) a následně její kopie vkládat na všechny stránky, které ji potřebují. Díky tomu, že jsou všechny tyto kopie propojené s parent komponentou, stačí upravit pouze parent komponentu a všechny její kopie se automaticky aktualizují. To je velmi užitečné, protože se dá ušetřit spousta času a zároveň se dá předejít chybám, které by mohly vzniknout při ruční úpravě každé kopie zvlášť. Dále se mi velmi dobře pracuje s tzv. auto layoutem, který umožňuje nastavit pravidla pro rozložení prvků na stránce, a díky tomu se dá snadno přizpůsobit návrh různým velikostem obrazovky. \cite{figma}
+
+Navíc pro Figmu bývají již vytvořené tzv. UI kit, což jsou předpřipravené komponenty, které odpovídají určitým designovým systémům (například Material Design od Google). Díky tomu se design dá více přiblížit finálnímu vzhledu a zároveň se dá ušetřit spousta času, protože není potřeba tvořit komponenty od začátku, ale skládat je z již předpřipravených. \cite{figma:uiKits}
+
+Tyto důvody potvrdily, že Figma je pro mě ideálním nástrojem pro návrh uživatelského rozhraní pro tento projekt. Díky zkušenostem s tímto nástrojem jsem schopná efektivně navrhnout uživatelské rozhraní.
+
+\section{Design systém}
+Design systém je soubor pravidel a opakovaně použitelných prvků, které zajišťují jednotný vzhled i celkový dojem z produktu a uživatelského prostředí. Design systém tvoří například barvy zvolené pro produkty, ikonky co budou použity, typografie, ale také způsob jakým budou fungovat interakce s uživatelem. Design systém nám pomáhá udržovat konzistentní vzhled a chování napříč různými částmi produktu, což zlepšuje uživatelský zážitek a usnadňuje orientaci v aplikaci. \cite{designSystems}
+
+V následujících sekcích rozeberu jednotlivé knihovny s komponentami, které se dají využít jako design systém nebo minimálně základ pro vytvoření vlastního design systému.
+Jelikož jsem v předchozí kapitole zvolili jako technologii pro vývoj aplikace React, zaměřím se na knihovny, které jsou určeny pro tento framework. 
+
+\subsection{Material UI}
+Material UI je knihovna implementující Material Design od Google pro React. tato knihovna obsahuje velké množství předpřipravených komponent, které jsou navrženy tak, aby odpovídaly designovým principům Material Designu. Díky tomu se dá snadno vytvořit konzistentní a moderní uživatelské rozhraní. Knihovna je velmi rozšířená a má velkou komunitu, včetně přehledné dokumentace, což usnadňuje její používání. Mezi její nevýhody patří avšak to, že knihovna má velký bundle size, což může negativně ovlivnit výkon aplikace, a také to, že má svůj specifický vzhled, který nemusí být vhodný pro všechny typy aplikací. Já osobně mám s Material UI hodně zkušeností, protože jsem s ní pracovala na bakalářské práci, a vím jak funguje. Podle mého pozorování nabízí nejvíce předpřipravených komponent, které jsou funkční a dobře se s nimi pracuji. Avšak jsem tuto knihovnu zavrhla, protože se snažím vytvořit aplikaci s poutavějším designem a snažit se ohýbat Material UI není vhodné dle mého názoru, protože to nepůjde jednodušše a zároveň tím ztrácíme částečně smysl, proč chceme použít tento design system. \cite{reactUILibraries}
+
+\subsection{Ant Design}
+Je design systém a knihovna komponent pro React, který se zaměřuje především na enterprise aplikace. Komponenty v Ant Design jsou navrženy pro firemní aplikaci (jako administrační aplikace, dashboardy a podobně), než pro aplikace, které by měly pracovat s koncovými uživateli.
+Vzhledem k tomu, že vzhled komponent této knihovny se mi nelíbí a navíc se mi zdá, že je zaměřená spíše na jiné typy aplikací, než jakou chci vytvořit, jsem se rozhodla tuto knihovnu také nezvolit. \cite{reactUILibraries}
+
+\subsection{Chakra UI}
+Je další kvalitní knihovna komponent pro React, která se zaměřuje na jednoduchost a přizpůsobitelnost. Chakra UI nabízí širokou škálu komponent včetně grafů. API této knihovny je intuitivní a umožňuje snadno přizpůsobit vzhled a chování komponent. Knihovna má také skvělou dokumentaci, ve které jsou uvedeny příklady použití a možnosti přizpůsobení. Co mi však vadí na této knihovně je to, že její vzhled se mi tolik nelíbí a narazila jsem tam u některých komponent na jiné chování než bych chtěla, například u comboboxu se možnosti zakliknuté přidávají nad ním, což mi připadá nepřehledné. Díky tomuto faktu jsem se rozhodla tuto knihovnu nezvolit. \cite{reactUILibraries}
+
+\subsection{Shadcn UI}
+Shadcn UI není knihovnou design systému, ale spíše sbírkou komponent pro React, které jsou navrženy tak, aby byly co nejvíce přizpůsobitelné a umožňovaly vytvářet vlastní design systém.\cite{reactUILibraries}
+
+Tato knihovna bývá používáná s Tailwind CSS, což je utility-first CSS framework, který umožňuje rychle a efektivně vytvářet vlastní designy. \cite{tailwindcss}
+
+Shadcn UI samotná stojí na na Radix UI a Base UI knihovnách a dostylizovaná pomocí Tailwind CSS. Knihovna se do aplikace nestahuje jako celek, ale jednotlivé komponenty se stáhnou jako kód do projektu, což umožňuje v případě potřeby upravit komponentu přímo v projektu. Díky tomu se dá design skoro až bych řekla maximálně přizpůpsobit. Mě osobně se knihovna líbí i nastylovaná v defaultním stavu, ale zároveň ocením možnost pohrát si s designem a přizpůsobit ho podle svých představ. Díky tomu jsem se rozhodla tuto knihovnu zvolit pro tvorbu uživatelského rozhraní pro tento projekt. \cite{reactUILibraries}
+
+\section{Návrh jednotlivých částí aplikace}
+V této sekci chci navrhnout jednotlivé části aplikace. U většiny částí bude přiložen návrh uživatelského rozhraní ať už pomocí wireframu, nebo přímo implementace v projektu.  
+
+\subsection{Navigační prvky}
+Nejprve je potřeba navrhnout navigační prvky, které se budou nacházet na každé stránce aplikace. Jedním z těcto prvků je navigační lišta umístěná v horní části obrazovky, která bude obsahovat název aplikace s logem a dále následující odkazy/akce:
+\begin{itemize}
+    \item sekci Events, která po rozkliknutí nabídne odkazy i s vysvětlením, co daná stránka obsahuje (All events - seznam nadcházejících akcí, My events - seznam akcí, na které se uživatel přihlásil, organizoval anebo označil že má zájem, Create event - formulář pro vytvoření nové akce)
+    \item About, která po rozkliknutí uživatele přesměruje na stránku s informacemi o aplikaci
+    \item ikonu slunce/měsíce, která bude sloužit pro přepínání mezi světlým a tmavým režimem
+    \item pokud je uživatel přihlášený, bude se zde nacházet také ikona profilu, která po rozkliknutí zobrazí informace kdo je přihlášený (jméno uživatele a email) a nabídne odkazy na profil uživatele a odhlášení z aplikace
+    \item pokud uživatel není přihlášený, bude se zde nacházet odkaz pro přihlášení do aplikace
+\end{itemize}
+
+Pokud jsme na stránce pro přihlášení do aplikace, navigační lišta bude obsahovat pouze název aplikace s logem.
+U mobilního zobrazení bude navigační lišta obsahovat pouze název aplikace s logem, přepínač na tmavý režim a ikonu pro otevření menu, které bude obsahovat odkazy/akce jako v desktopovém zobrazení. Navigační lištu jsem implementovala rovnou v kódu, protože poskládání a prototypování v nástroji Figma by mi zabralo zbytečně moc času. Finální design navigační lišty je znázorněn na obrázku \ref{fig:navbar}.
+
+Dále jsem navrhla pro hezčí design patičku, která se bude nacházet v dolní části obrazovky a bude obsahovat pouze název aplikace s logem.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/navbar.png}
+    \caption{Finální design navigační lišty aplikace}
+    \label{fig:navbar}
+\end{figure}
+
+\subsection{Domovská stránka}
+Domovská stránka bude propagovat celou aplikaci a její hlavní funkce. Bude obsahovat krátký popis toho, co aplikace umí a jaké jsou její hlavní funkce. U nich budou 2 tlačítka, jedno (výraznější) pro přihlášení do aplikace a druhé pro zobrazení nadcházejících akcí. Dále bude obsahovat sekci s top funkcionalitama aplikace, proč by uživatelé měli aplikaci používat. Nakonec se zde budou nacházet 3 akce, které se konají v nejbližší době. Tento návrh jsem tvořila na základě požadavku.
+
+Návrh domovské stránky je znázorněn na obrázku TODO.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{images/homePage.png}
+%     \caption{Návrh domovské stránky}
+%     \label{fig:homePage}
+% \end{figure}
+
+\subsection{Nadcházející akce}
+Tato stránka je velmi důležitá, protože hned po úvodní stránce, je stránkou, kterou uživatelé uvidí a budou se například rozhodovat zda se zaregistrují do aplikace.
+
+Stránka se skládá ze sekce pro vyhledávání akcí a výčtu nadcházejících akcí. Pro vyhledávání jsem navrhla několik inputů, které umožní uživatelům filtrovat akce podle různých kritérií dle požadavku TODO. 
+
+Pro filtrování jména akce jsem se rozhodla navrhnout dlouhý input, následně pro místo konání akce jsem navrhla combobox, který umožní uživatelům potom co začnou psát název místa, zobrazit možnosti, které odpovídají zadanému textu. 
+
+Pro typ akce a typ tance jsem navrhla také comboboxy avšak uživatel může vybrat více možností a pokud je tech možností více než tři tak se zobrazí pouze první tři a zbytek bude zobrazen jako "+X", kde X bude počet zbývajících možností. Po rozkliknutí komboboxu se uživateli zobrazí možnosti které zaškrtl. Tento výběr možností bude na mobilním zařízení implementován tak že vyjede nabídka (podobající se modalu) s možnostmi, které může uživatel zaškrtnout/odškrtnout.
+
+Co se týče zobrazení nadcházejících akcí, navrhla jsem zobrazení ve formě karet, které budou obsahovat informace, jak jsou definované v požadavku TODO. Kartu na desktopovém zařízení jsem pojala tak, že v levé části karty se bude nacházet obrázek akce anebo placeholder pokud obrázek není uvedený. Úplně nahoře v pravé části karty bude název akce, pod ním bude jméno organizátora a následně se budou nacházet zbylé informace o akci, obohacené o ikony. Úplně na spodu karty se budou nacházet akce, když je akce organizována uživatelem, bude se zde nacházet tlačítko přejít na detail akce, pokud uživatel organizátorem není, tak zde navíc budou akce jako přihlásit se na akci a označit že mám zájem o akci. Co mi chvíli dalo zabrat na návrhu bylo umístění tagů, které budou zobrazovat typ akce a typ tance. Nakonec jsem se rozhodla umístit je pod organizátora, kvůli tomu že jsem proiterovala několik variant a tato varianta se uživatelům zdála nejpřehlednější. 
+
+V mobilní variantě se obrázek a informace zobrazí nad sebou, aby se lépe přizpůsobily menší obrazovce.
+
+Základ jsem si nakreslila do figmy, jak mobilní zařízení, tak desktopové zobrazení, ale finální design jsem implementovala rovnou v kódu, protože mi to přišlo efektivnější. Finální design této stránky je znázorněn na obrázku TODO.
+
+\subsection{Detail akce}
+
+\subsection{Profil uživatele}
+
+\subsection{Moje akce}
+
+\subsection{Vytvořit akci}
+
+\subsection{O aplikaci}
+
+
+\subsection{Přehled přihlášených uživatelů}
+
+\subsection{Přihlašování do aplikace}
+Pro přihlašování do aplikace jsem vyčlenila samostatnou stránku ve které je karta s tlačítkem pro přihlášení pomocí Google účtu. Pokud by v budoucnu bylo potřeba přidat další způsoby přihlášení, například pomocí emailu a hesla, tak by se přidaly do karty. 
+
+
+
+
+
+
+
+
