@@ -1,1 +1,105 @@
 \chapter{Implementace}
+
+\section{Server}
+\subsection{API na lokace}
+Při tvorbě taneční akce je potřeba zadat lokaci, kde se bude konat. Jelikož nechci aby uživatelé zadávali lokaci ručně (jue to nepohodlné a může to vést k chybám), bylo potřeba najít správné API, které umožňuje získávat lokace zadané uživatelem. Zároveň ale pořád chci umožnit lokaci ručně upravit, protože je možné, že některé lokace budou v API chybět (například se bude v API nacházet ulice, ale ne s číslem popisným, na které se akce bude konat). V následujících odstavcích popíšu, mezi jakými API jsem vybírala a která byla nakonec zvolena.
+
+\subsubsection{Google places API (New)}
+Jedná se o vystavenou službu od společnosti Google, která umožňuje pracovat s lokacemi. Toto API nabízí širokou škálu funkcí \cite{google_places_api_overview} jako například: 
+\begin{itemize}
+    \item Place Details (New) - API umožňuje získat podrobné informace o konkrétním místě, jako je adresa, telefonní číslo, hodnocení, fotografie a další.
+    \item Text Search (New) - API umožňuje hledat místa na základě textového dotazu, jako je název místa, adresa nebo kategorie.
+    \item Nearby Search (New) - API umožňuje hledat místa v okolí zadaných geografických souřadnic.
+    \item Autocomplete (New) - API umožňuje získat návrhy míst na základě částečného textového dotazu a geografického rozsahu.
+\end{itemize} 
+S tímto API jsem se již setkala v několika aplikacích při zadávání lokace pro události (například v aplikaci OnlyDance).
+
+Toto API jsem nakonec nezvolila, kvůli tomu, že je placené a cena se odvíjí od počtu požadavků, které jsou na API posílány. Jelikož nechci aby projekt se stal finančně náročným, rozhodla jsem podívat se po nějaké levnější alternativě, která by mi poskytla podobné funkce.\cite{google_maps_places_pricing}
+
+\subsubsection{Photon (https://github.com/komoot/photon)}
+Toto API je open-source a je založeno na OpenStreetMap datech. API nabízí funkce jako například:
+\begin{itemize}
+    \item Geocoding
+    \item Reverse Geocoding
+    \item hledání míst - podporuje i v rámci několika jazyků
+\end{itemize}
+Tento projekt má i vystavené zdarma API, které je možné využívat bez nutnosti hostovat vlastní instanci. Avšak je třeba dbát na to nezahlcovat toto API přílišným množstvím požadavků, protože na to server není připraven a jedná se spíše o ukázku toho, jak API funguje. Pokud by bylo třeba posílat větší množství požadavků, tak je v projektu zdokumentováno jak hostovat vlastní instanci. \cite{komoot_photon}
+
+Nakonec jsem se rozhodla pro využití tohoto API, protože je zdarma a poskytuje všechny funkce, které potřebuji pro zadávání lokace pro události. Jelikož moje aplikace je ve fázi prototypu, nebude na API posíláno příliš mnoho požadavků, takže by neměl být problém s využíváním tohoto API. V budoucnu, pokud by se aplikace stala populární a bylo by potřeba posílat větší množství požadavků, bych zvážila hostování vlastní instance tohoto API nebo přechod na placené API, jako je Google Places API. Navíc při zadávání lokace bude nastavený přiměřený \textit{debounce}, aby se zabránilo posílání příliš mnoha požadavků na API.
+
+\subsection{Přihlášení uživatele}
+Přihlášení uživatele jak již bylo zmíněno v předchozí kapitole, bylo realizováno pomocí Google. Jelikož naše aplikace není jen klientská, ale i serverová, bylo potřeba implementovat přihlášení i na serveru.
+
+Prvním krokem bylo vytvoření projektu v Google Cloud Console, Poté bylo potřeba vytvořit OAuth 2.0 Client ID pro webovou aplikaci, což nám poskytlo Client ID a Client Secret, které jsou nezbytné pro implementaci přihlášení. Následně byly nastaveny redirect URI, které jsou adresy, na které bude Google přesměrovávat uživatele po úspěšném přihlášení a origins, které jsou adresy, ze kterých bude možné přihlášení provést.
+
+Poté byly přidány tzv. scopes, které určují, jaké informace o uživateli bude aplikace požadovat. V našem případě bude při prvotním přihlášení požadováno pouze základní informace o uživateli, jako je jeho jméno a emailová adresa. Tudíž se jedná o následující scopes \cite{google_oauth_scopes}:
+\begin{itemize}
+    \item \texttt{openid} - Tento scope propojuje uživatele s jeho osobními údaji na Google účtu.
+    \item \texttt{profile} - Tento scope umožňuje získat osobní údaje uživatele, i které zveřejnil
+    \item \texttt{email} - Tento scope umožňuje získat primární emailovou adresu uživatele.
+\end{itemize} 
+
+Tyto scope se řadí mezi nesenzitivní oprávnění, což jsou oprávnění, která slouží k autorizaci uživatele. 
+\cite{google_drive_auth_guide}
+
+Při nasazení aplikace do produkce a využívání api google, google nevyžaduje u těchto oprávnění ověření. Tudíž je jednodušší aplikaci uvést do produkce. 
+\cite{google_app_verification}
+
+\subsubsection{Inkrementální autorizace}
+Aplikace bude kromě zmíněných oprávněních z předešlé sekce také vyžadovat oprávnění pro přístup k Google Forms API, aby uživatelé mohli propojit formulář a odpovědi z formuláře s aplikací. Oprávnění jsou následující \cite{google_oauth_scopes}:
+\begin{itemize}
+    \item \texttt{https://www.googleapis.com/auth/forms.body} - Tento scope umožňuje aplikaci číst a upravovat obsah formulářů, jako jsou otázky,
+    \item \texttt{https://www.googleapis.com/auth/forms.responses.readonly} - Tento scope umožňuje aplikaci číst odpovědi z formulářů, ale neumožňuje je upravovat.
+\end{itemize}
+
+Jelikož se může stát že uživatel nebude nikdy potřebovat propojit formulář s aplikací, bylo by zbytečné požadovat tato oprávnění již při prvotním přihlášení. Proto je implementována tzv. inkrementální autorizace, která umožňuje požádat o další oprávnění až v momentě, kdy jsou potřeba. V našem případě se tedy o tato oprávnění požádá až v momentě, kdy se uživatel bude snažit propojit formulář s aplikací. Pokud uživatel tato oprávnění již udělil, nebude o ně požádán znovu. \cite{google_oauth_incremental_auth}
+
+Obecně inkrementální autorizace funguje tak, že uživatel požádá o oprávnění, která potřebuje a endpoint Google vrátí kód, který dále může být vyměněn za access token obsahující všechny oprávnění, která uživatel udělil. Tento způsob je od Google považován jako doporučený, oproti například požádání všech oprávnění najednou. \cite{google_oauth_incremental_auth} 
+
+\subsubsection{Proces přihlášení}
+Proces přihlášení začína na straně klienta. Uživatel klikne na tlačítko Sign in a klient provolá api Google pro přihlášení.
+
+Url, které klient volá pro přihlášení, je následující \cite{google_oauth_scopes}:
+
+\begin{lstlisting}[language=TypeScript]
+export const buildGoogleOAuthUrl = (params: {
+  scope: string;
+  state?: string;
+}) => {
+  const baseUrl = GOOGLE_OAUTH_URL;
+  const urlParams = new URLSearchParams({
+    client_id: GOOGLE_CLIENT_ID,
+    redirect_uri: GOOGLE_REDIRECT_URI,
+    response_type: 'code',
+    scope: params.scope,
+    access_type: 'offline',
+    include_granted_scopes: true.toString()
+  });
+
+  if (params.state) {
+    urlParams.append('state', params.state);
+  }
+
+  return `${baseUrl}?${urlParams.toString()}`;
+};
+\end{lstlisting}
+
+Funkci jsem si naprogramovala sama i přes to, že existuje například knihovna \texttt{@react-oauth/google}, která zjednodušuje proces přihlášení. Avšak při implementaci jsem narazila na problém, že tato knihovna v případě že využíváme flow autorization code, automaticky posílá parameter prompt=consent, což způsobuje, že uživatel musí při každém přihlášení proklikat souhlas s oprávněními, i když je již udělil. Tudíž jsem se rozhodla implementovat přihlášení sama, abych měla plnou kontrolu nad tím, jaké parametry jsou posílány a mohla tak využít inkrementální autorizaci.
+
+Parametry, které jsou posílány v url pro přihlášení, jsou následující \cite{google_oauth_creating_client}:
+\begin{itemize}
+    \item \texttt{client\_id} - Toto je Client ID, které jsme získali při vytvoření OAuth 2.0 Client ID v Google Cloud Console.
+    \item \texttt{redirect\_uri} - Toto je URI, na které bude Google přesměrovávat uživatele po úspěšném přihlášení. Toto URI musí být stejné jako jedno z redirect URI, které jsme nastavili v Google Cloud Console.
+    \item \texttt{response\_type} - Tento parameter určuje, jaký typ odpovědi očekáváme od Google. V našem případě je to \texttt{code}, což znamená, že očekáváme autorizační kód, který následně vyměníme za access token. Druhým typem odpovědi je \texttt{token}, což znamená, že očekáváme přímo access token. Tento typ odpovědi se používá v tzv. implicitním flow, které se však nedoporučuje pro webové aplikace, protože není tak bezpečné jako authorization code flow.
+    \item \texttt{scope} - Tento parameter obsahuje seznam oprávnění, o která žádáme. Oprávnění jsou oddělena mezery.
+    \item \texttt{access\_type} - Tento parameter určuje, zda chceme získat refresh token. Pokud je tento parameter nastaven na \texttt{offline}, Google nám pošle refresh token, který můžeme použít k získání nového access tokenu, když ten původní vyprší. Parametr jsem takto zvolila kvůli tomu, že bude vyžadováno abychom v budoucnu volali API i bez přítomnosti uživatele, například pro synchronizaci odpovědí z formuláře, a v takovém případě je potřeba mít možnost získat nový access token bez toho, aby se uživatel musel znovu přihlásit.
+    \item \texttt{include\_granted\_scopes} - Tento parameter určuje, zda chceme, aby Google zahrnul již udělená oprávnění do access tokenu. Pokud je tento parameter nastaven na \texttt{true}, Google nám pošle access token, který obsahuje všechna oprávnění, která uživatel udělil, nejen ta, o která právě žádáme. Při implementaci se mi stalo, že jsem na tento parametr opomněla a v důsledku při každém přihlášení uživatel resetoval všechna oprávnění, která udělil, a musel je znovu udělovat, což samozřejmě nebylo ideální.
+    \item \texttt{state} - Tento parameter je volitelnný a slouží k ochraně proti CSRF útokům. Můžeme do něj vložit náhodný řetězec, který nám Google vrátí zpět po úspěšném přihlášení. Tím můžeme ověřit, že odpověď pochází od Google a ne od útočníka.
+\end{itemize}
+
+Potom co uživatel zvolí účet, kterým se chce přihlásit, a udělí požadovaná oprávnění (pokud je ještě neudělil), Google přesměruje uživatele na redirect URI, které jsme nastavili, a v URL bude obsažen autorizační kód. Klient tento kód zachytí a pošle ho na náš server, kde ho vyměníme za access token. Pokud se jedná o prvotní přihlášení, Google nám pošle i refresh token, který uložíme do databáze pro pozdější použití. Poté obratem klientovi vrátíme serverem vygenerovaný JWT token, který klient bude používat pro autentizaci a autorizaci při dalších požadavcích na server.
+
+
+\subsection{Integrace s Google Forms}
+\section{Frontend}
+\section{Databáze}

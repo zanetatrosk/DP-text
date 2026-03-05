@@ -106,7 +106,37 @@
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{text/bib-database.bib}
 \usepackage{xurl}
+\usepackage{xcolor}
 \usepackage{listings} % typesetting of sources
+
+% Define TypeScript language for listings
+\lstdefinelanguage{TypeScript}{
+  keywords={const, let, var, function, return, if, else, for, while, break, continue, switch, case, default, export, import, from, class, interface, type, extends, implements, public, private, protected, static, async, await, new, this, super, typeof, instanceof, void, null, undefined, true, false},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={boolean, number, string, any, never, unknown},
+  ndkeywordstyle=\color{purple}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`
+}
+
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  tabsize=2,
+  captionpos=b
+}
+
 %\usepackage{minted}
 \usepackage{csquotes}
 \usepackage{pdfx}
