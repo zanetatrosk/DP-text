@@ -51,7 +51,7 @@ Aplikace musí umožnit uživatelům odhlásit se z aplikace, aby měli napřík
 \subsubsection{Detail události}
 Přihlášený uživatel by měl mít možnost zobrazit detailní informace o události. Tyto informace by měly zahrnovat:
 \begin{itemize}
-    \item základní informace o akci (název, datum a čas, místo konání, cena)
+    \item základní informace o akci (název, datum a čas, místo konání, cena, odkaz na facebookovou událost)
     \item popisek akce
     \item informace o organizátorovi (jméno, odkaz na profil)
     \item informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni (leader, follower))
@@ -72,6 +72,7 @@ Mezi tyto informace patří:
     \item Popisek akce
     \item Informace o akci (typ tance, úroveň obtížnosti, druh události)
     \item kapacita akce 
+    \item odkaz na facebookovou událost (pokud existuje) - to umožní uživatelům zkontrolovat další informace o akci, které nejsou uvedeny v aplikaci, a zároveň umožní organizátorům snadno propojit svou akci s již existující facebookovou událostí.
 \end{itemize}
 Uvedené informace o akci byli sestaveny po diskuzích s různými organizátory (ať už se jedná o lektory anebo lidi kteří organizují taneční večírky). Zároveň jsem se inspirovala informacemi, které jsou běžně uváděny v popiscích akcí na facebooku nebo na webových stránkách organizátorů.
 
@@ -189,8 +190,7 @@ Tato skupina požadavků nebývá implementována v následující verzi aplikac
 Tato funkce by umožnila uživatelům synchronizovat své registrace na akce s jejich osobním kalendářem, což by usnadnilo plánování a připomínání nadcházejících událostí.
 
 \subsubsection{Scraping událostí z webu}
-//TODO
-
+Tento požadavek jsem zamýšlela implementovat za cílem naplnit aplikaci obsahem obvzlášť zpočátku, kdy ještě nebude mít mnoho uživatelů, kteří by přidávali akce. Scraping událostí z webu by umožnil automatické získávání informací o nadcházejících akcích z různých webových stránek a jejich přidávání do aplikace. Nicméně, vzhledem k tomu, že scraping může být právně problematický a může porušovat podmínky používání některých webových stránek, jsem se rozhodla tento požadavek zatím nezahrnovat do vývoje aplikace. Také je problém ten, že tím že se snažíme získat informace z různých webových stránek, můžeme narazit na různé formáty a struktury dat, což by mohlo zkomplikovat implementaci této funkce a způsobit problémy s kvalitou dat v aplikaci.
 
 \subsubsection{Internalizace}
 Tato funkce by umožnila uživatelům přepínat jazyk aplikace, což by zlepšilo přístupnost pro uživatele z různých zemí. Jelikož se v této doméně používá hlavně angličtina, tak tento požadavek není zas tak důležitý a tudíž se nebude zatím implementovat.
@@ -199,18 +199,67 @@ Tato funkce by umožnila uživatelům přepínat jazyk aplikace, což by zlepši
 Uživatelé by měli mít možnost hodnotit a psát recenze na akce,
 což pomůže ostatním uživatelům při rozhodování, zda se akce zúčastnit.
 
-\subsubsection{Sdílení akcí na sociálních sítích}
-Tento požadavek umožní uživatelům snadno sdílet informace o
-akcích na svých sociálních sítích, čímž se zvýší dosah aplikace a přiláká více uživatelů.
-
 \subsubsection{Offline režim}
 Tento požadavek by umožnil uživatelům přístup k informacím
 o akcích i bez připojení k internetu, což by bylo užitečné při cestování nebo v oblastech s omezeným přístupem k síti.
 
 \section{Návrh systému}
-V této sekci se zaměřím na návrh systému, který bude implementovat požadavky definované v předchozí části. Návrh systému bude zahrnovat výběr architektury a technologií pro frontend, backend a databázi. Cílem je vytvořit škálovatelnou aplikaci, která bude dostatečně efektivní a snadno udržovatelná.
+V této sekci se zaměřím na návrh systému, který bude implementovat požadavky definované v předchozí části. 
+Jelikož se jedná o rozsáhlou webovou aplikaci, rozhodla jsem se mít odděleného klienta a server, což nám umožní větší flexibilitu při vývoji a nasazení aplikace. Tento přístup nám také umožní snadněji škálovat jednotlivé části systému podle potřeby. 
+
+Konkrétně jsem zvolila architekturu MVC (Model-View-Controller), která nám umožní oddělit logiku aplikace od její prezentace a usnadní nám tak vývoj a údržbu systému. Model bude zodpovědný za správu dat a obchodní logiku, View bude zodpovědný za prezentaci dat uživatelům, a Controller bude zprostředkovávat komunikaci mezi Modelem a View. TODO
 
 \subsection{Databáze}
-\subsection{Frontend}
-\subsection{Backend}
+Při výběru databáze jsem uvažovala zda použít relační anebo nosql databázi. Jelikož se jedná o systém, který bude mít poměrně složitou strukturu dat s mnoha vztahy mezi různými entitami (například uživatelé, akce, registrace, atd.), rozhodla jsem se pro relační databázi. Relační databáze nám umožní snadno modelovat tyto vztahy a poskytne nám robustní nástroje pro správu dat a zajištění jejich integrity.
+Konkrétně jsem se rozhodla použít PostgreSQL, což je open-source relační databáze, se kterou jsem již měla zkušenosti jak v praxi tak při studiu, takže se mi s ní bude dobře pracovat a zároveň nám poskytne všechny potřebné funkce pro správu dat v naší aplikaci.
+\subsection{server - návrh backendu}
+Backend bude zodpovědný za zpracování požadavků od klienta, komunikaci s databází a implementaci obchodní logiky. V následujících podsekcích se zaměřím na výběr frameworku pro backend podporující architekturu MVC.
 
+\subsubsection{NestJS}
+Pro vývoj backendu jsem zvažovala NestJS. Jedná se o framework umožňující vývoj efektivních, škálovatelných server-side aplikací postavených na Node.js. NestJS využívá moderní JavaScript ale plně podporuje TypeScript. Tento framework obsahuje aspekty jak z OOP tak i z funkcionálního a reaktivního programování. Jeho motivací bylo poskytnout vývojářům framework s architekturou inspirovanou framewrokem Angular, která usnadní vývoj a údržbu aplikací. 
+Z mé zkušenosti se backend aplikace psané v Node.js postrádají tuto abstrakci architektury a bývají psané za využití frameworku Express, který je dle mého názoru příliš jednoduchý a nenabízí tolik připravených funcionalit (např. ORM), což v praxi může vést k nepřehlednému a těžko udržovatelnému kódu, zejména v případě větších aplikací. Ono samotný Nest.js používá Express jako defaultní HTTP server, ale poskytuje nad ním vyšší úroveň abstrakce a struktury. 
+\cite{nestjs_docs}
+
+Při výběru jsem vzala v úvahu jeho výhody a nevýhody.
+Mezi výhody patří:
+\begin{itemize}
+    \item Mám zkušenosti s Node.js a TypeScriptem, takže jazyk frameworku pro mě nebude úplně nový
+    \item Obsahuje instalovatelné balíčky jako např. ORM pro namapování databáze na objekty, které nám umožní psát aplikace jako MVC
+\end{itemize}
+
+Mezi nevýhody patří:
+\begin{itemize}
+    \item Větší křivka učení z hlediska frameworku (ne jazyku), zejména pro mě, protože jsem s tímto frameworkem ještě nepracovala, takže se budu muset nejdříve naučit jak s ním pracovat, což může zpomalit vývoj.
+    \item Architektura inspirovaná Angular mi v minulosti nevyhovovala, protože mi přišla příliš robustní a složitá.
+    \item Přijde mi, že má menší komunitu než jiné frameworky, což může znamenat méně dostupných zdrojů a podpory při vývoji.
+\end{itemize}
+
+\subsubsection{Spring Boot}
+Spring Boot je framework pro vývoj webových aplikací v JVM jazycích. Je postaven na vrcholu Spring Frameworku a poskytuje řadu funkcí, které usnadňují vývoj a nasazení aplikací. Spring Boot nabízí rychlý start a jednoduchou konfiguraci, což umožňuje vývojářům rychle vytvořit funkční aplikaci bez nutnosti řešit složité nastavení. 
+
+Mezi výhody Spring Bootu patří:
+\begin{itemize}
+    \item Mám zkušenosti s Java (trochu i Kotlinem) a Spring Frameworkem, takže jazyk a některé koncepty frameworku pro mě nebudou úplně nové, což usnadní vývoj
+    \item Velká a aktivní komunita, což znamená, že je k dispozici mnoho zdrojů a podpory pro vývoj.
+    \item Osvědčený framework, který se používá na vývoj mnoha enterprise aplikací
+    \item Je postaven na MVC architektuře
+    \item Velké množství funkcí a nástrojů, které usnadňují vývoj a správu aplikací, jako je například integrovaná podpora pro databáze, bezpečnost, testování a další.
+\end{itemize}
+
+Mezi nevýhody patří:
+\begin{itemize}
+    \item Jedná se o opinionated framework, což znamená, že do jisté míry diktuje v mnoha spektech od konfigurace k vybrání knihoven jak má být psána
+    \item Pro aplikace, které vyžadují nízkou latenci, může být Spring Boot příliš robustní a nesplňovat požadavky na výkon a dobu odezvy.
+\end{itemize}
+
+Vzhledem k tomu, že Spring Boot převážil výhodami, zejména díky mým zkušenostem s Java a Spring Frameworkem, jsem se rozhodla pro tento framework pro vývoj backendu.
+
+Dále jsem se rozhodovala zda použít Kotlin nebo Javu. Sice jsem s Kotlinem měla méně zkušeností než s Javou, ale vzhledem k tomu, že Kotlin je moderní jazyk, který nabízí mnoho funkcí a zlepšení oproti Javě, jako je například lepší podpora pro funkcionální programování, méně boilerplate kódu a lepší interoperabilita s Java kódem, jsem se rozhodla použít Kotlin pro vývoj backendu.
+
+\subsection{Klient - návrh frontendu}
+Jako architekturu pro frontend jsem zvolila Single Page Application (SPA), což znamená, že aplikace bude načítat všechny potřebné zdroje (HTML, CSS, JavaScript) při prvním načtení a následně bude dynamicky aktualizovat obsah bez nutnosti načítat nové stránky z serveru. Tento přístup umožní rychlejší a plynulejší uživatelský zážitek, protože nebude docházet k přerušení způsobenému načítáním nových stránek. Tento přístup je i dále vhodný aplikace, které mají být používány na mobilních zařízeních, protože je přechod mezi stránkami plynulejší. TODO cite some site about SPA
+
+Jako framework pro vývoj SPA jsem se rozhodla použít React. S tímto frameworkem mám již zkušenosti jak z profesního života, tak i z projektů během mého studia. To usnadní čas strávený na vývoji. Nehledě na fakt, že v porovnání s ostatními frameworky jakými jsou například Angular nebo Vue, je pro mě API Reactu přehlednější a jednodušší na používání. 
+Tento framework je populární a široce používaný, což nahrává tomu, že existuje plno knihoven pro různé use cases, které nám mohou usnadnit vývoj a ušetřit čas. 
+
+Frontend bude zajišťovat komunikaci s backendem prostřednictvím REST API, které bude implementováno v backendu.
