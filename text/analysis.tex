@@ -4,7 +4,7 @@
 \end{chapterabstract}
 
 \section{Požadavky}
-Požadavky jsou důležitou částí vývoje softwaru, protože definují, co má systém dělat a jaké funkce by měl poskytovat uživatelům. Požadavky jsem definovala pomocí MOSCoW metody, která rozděluje požadavky do čtyř kategorií: Must have (musí mít), Should have (mělo by mít), Could have (mohlo by mít) a Won't have (nebude mít). Metodu vytvořil D. Richardson při práci v Oracle za účelem pomoci prioritizovat požadavky pro vývoj softwaru.\cite{moscow:definition}
+Požadavky jsou důležitou částí vývoje softwaru, protože definují, co má systém dělat a jaké funkce by měl poskytovat uživatelům. Požadavky jsem definovala pomocí MOSCoW metody, která rozděluje požadavky do čtyř kategorií: Must have, Should have, Could have a Won't have. Metodu vytvořil D. Richardson při práci v Oracle za účelem pomoci prioritizovat požadavky pro vývoj softwaru.\cite{moscow:definition}
 
 Tato metoda mi pomohla určit priority jednotlivých požadavků a zaměřit se na ty nejdůležitější funkce pro první verzi aplikace. V následujících podsekcích rozdělím požadavky podle této metodiky a ke každému požadavku přidám popis jeho významu a důležitosti pro budoucí aplikaci.
 
@@ -13,9 +13,9 @@ U každého požadavku jsem rozhodla, zda se jedná o funkční nebo nefunkční
 Veškeré požadavky byly tvořeny na základě konzultací s taneční komunitou, analýzy stávajících řešení a mých vlastních zkušeností, jakožto člověka, který se aktivně účastní tanečních akcí a setkává se s problémy, které způsobují frustraci u tanečníků a organizátorů. Tyto požadavky jsou navrženy tak, aby řešily konkrétní problémy a zlepšovaly celkovou zkušenost s hledáním a organizací tanečních akcí.
 
 \subsection{Must have (musí mít)}
-Tyto požadavky jsou nezbytné pro základní funkčnost aplikace. Bez nich nedává nasazení aplikace smysl. Tudíž se jedná o požadavky, na které budu klást větší důraz a dávat jim nejvyšší prioritu při vývoji.\cite{moscow:definition}
+Tyto požadavky jsou nezbytné pro základní funkčnost aplikace. Bez nich nedává nasazení aplikace smysl. Tudíž se jedná o požadavky, na které budu klást větší důraz a dávat jim nejvyšší prioritu při vývoji. \cite{moscow:definition}
 \subsubsection{Zobrazení nadcházejících akcí}
-Tento požadavek je klíčový pro hlavní účel aplikace, kterým je usnadnit uživatelům vyhledávání tanečních akcí. Aplikace musí být schopna zobrazit seznam nadcházejících akcí spolu s jejich základními informacemi jako:
+Aplikace musí být schopna zobrazit seznam nadcházejících akcí spolu s jejich základními informacemi jako:
 \begin{itemize}
     \item Název akce
     \item Jméno organizátora
@@ -23,27 +23,27 @@ Tento požadavek je klíčový pro hlavní účel aplikace, kterým je usnadnit 
     \item Místo konání
     \item Cena pokud je uvedena
     \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
-    \item počet přihlášených účastníků a počet uživatelů kteří mají o akci zájem
+    \item Počet přihlášených účastníků a počet uživatelů kteří mají o akci zájem
     \item Možnost zobrazit detailní informace o akci
 \end{itemize}
 Pokud uživatel není organizátor, má navíc možnost se na akci přihlásit anebo ji označit že ho zajímá. Události se navíc vrací po stránkách, aby nedocházelo k zbytečnému načítání velkého množství dat najednou, což by mohlo zpomalit aplikaci.
 
-Tento požadavek je nezbytný, umožní uživatelům snadno najít a prohlédnout si nadcházející taneční akce, aniž by museli jak je to například na facebooku, hledat akce pomocí klíčových slov anebo doufat že se jim akce zobrazí v jejich feedu na základě reakce jejich přátel.
+Seznam nadcházejících akcí umožní uživateli získat přehled o tom, jaké akce se budou konat v blízké době a zároveň každá z nich obsahuje stručně sepsané informace. Na základě těchto informací se uživatel může rozhodnout, že chce vědět více o konkrétní akci a zobrazit její detail.
 
 \subsubsection{Filtrování nadcházejících akcí}
 Aplikace umožní uživatelům filtrovat nadcházející akce podle různých kritérií, jako jsou:
 \begin{itemize}
     \item Název akce
     \item Typ tance (swing, salsa, tango, atd.)
-    \item Typ akce (kurz, workshop, party)
+    \item Typ akce (kurz, workshop, party, atd.)
     \item Lokalita -filtrování na úrovni města nebo státu
 \end{itemize}
-Tento požadavek je velmi důležitý, protože umožní uživatelům vyhledávat akce lépe než popsané aplikace popsané v předchozí kapitole. Vyfiltrované události se také budou vracet po stránkách jak je to popsáno v předchozím požadavku.
+Tento požadavek je nezbytný, protože umožní uživatelům snadno najít a prohlédnout si nadcházející taneční akce, aniž by museli, jak je to například na facebooku, hledat akce pomocí klíčových slov anebo doufat, že se jim akce zobrazí v jejich feedu na základě reakce jejich přátel. Vyfiltrované události se také budou vracet po stránkách jak je to popsáno v předchozím požadavku.
 
 Tohle mě jako potencionálnímu uživateli například umožní odfiltrovat akce, které se konají pro mě v nedostupné lokalitě anebo akce které jsou zaměřené na jiný taneční styl než ten který preferuji.
 
 \subsubsection{Přihlášení uživatele pomocí Google účtu}
-Aplikace musí umožnit uživatelům přihlásit se pomocí svého Google účtu, což zjednoduší proces registrace a přihlášení, a zároveň umožní využít funkce spojené s Google službami, jako je například integrace s Google Forms. Zároveň nám bude poskytnuto jméno a email uživatele, což pro uživatele bude přívětivější mít tyto informace předvyplněné na svém profilu.
+Aplikace musí umožnit uživatelům přihlásit se pomocí svého Google účtu, což zjednoduší proces registrace a přihlášení, a zároveň umožní využít funkce spojené s Google službami, jako je například integrace s Google Forms. Zároveň nám bude poskytnuto jméno a email uživatele, což usnadní uživateli vyplňování informací o sobě na profilu, protože tyto informace bude mít předvyplněné.
 
 \subsubsection{Odhlášení uživatele pomocí Google účtu}
 Aplikace musí umožnit uživatelům odhlásit se z aplikace, aby měli například možnost na stejném zařízení používat více účtů. 
@@ -51,17 +51,17 @@ Aplikace musí umožnit uživatelům odhlásit se z aplikace, aby měli napřík
 \subsubsection{Detail události}
 Přihlášený uživatel by měl mít možnost zobrazit detailní informace o události. Tyto informace by měly zahrnovat:
 \begin{itemize}
-    \item základní informace o akci (název, datum a čas, místo konání, cena, odkaz na facebookovou událost)
-    \item popisek akce
-    \item informace o organizátorovi (jméno, odkaz na profil)
-    \item informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni (leader, follower))
-    \item tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
+    \item Základní informace o akci (název, datum a čas, místo konání, cena, odkaz na facebookovou událost)
+    \item Popisek akce
+    \item Informace o organizátorovi (jméno, odkaz na profil)
+    \item Informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni (leader, follower))
+    \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
 \end{itemize}
 
-Požadavek byl sepsán na základě konzultací s tanečníky, kde jsme diskutovali, jaké informace bychom uvítali u detailu akce, abychom se mohli lépe rozhodnout, zda se na akci přihlásit nebo ne. Opakovaně se mi dostávalo odpovědi, že by bylo užitečné mít informace o tom, kolik lidí se již přihlásilo a kolik lidí má o akci zájem, protože to může být indikátor kvality akce (čím více lidí se přihlásí tím více mám možnost například v případě párového tance ozkoušet různé partnery a akci si tím více užít). 
+Požadavek byl sepsán na základě konzultací s tanečníky, kde jsme diskutovali, jaké informace bychom uvítali u detailu akce, abychom se mohli lépe rozhodnout, zda se na akci přihlásit nebo ne. Opakovaně se mi dostávalo odpovědi, že by bylo užitečné mít informace o tom, kolik lidí se již registrovalo a kolik lidí má o akci zájem, protože to může být indikátor kvality akce (čím více lidí se přihlásí, tím více mám možnost například v případě párového tance ozkoušet různé partnery a akci si tím pádem více užít). 
 
 \subsubsection{Přihlášený uživatel může přidávat vlastní akce}
-Přihlášený uživatel by měl mít možnost přidávat vlastní taneční akce do aplikace, což umožní komunitě sdílet informace o různých událostech. Přidání akce je proces, který si klade za cíl strukturovaně uživateli umožnit zadat v přehledném formuláři všechny potřebné informace o akci nezbytné pro její zveřejnění v aplikaci. Formulář organizátorovi poskytuje rozhraní jehož výsledkem bude událost s dostatečnou informační hodnotou pro potencionální účastníky. 
+Přihlášený uživatel by měl mít možnost přidávat vlastní taneční akce do aplikace. Tento požadavek umožní komunitě sdílet informace o různých akcích. Přidání akce je proces, který si klade za cíl strukturovaně uživateli umožnit zadat v přehledném formuláři všechny potřebné informace o akci nezbytné pro její zveřejnění v aplikaci. Formulář organizátorovi poskytuje rozhraní jehož výsledkem bude událost s dostatečnou informační hodnotou pro potencionální účastníky. 
 
 Mezi tyto informace patří:
 \begin{itemize}
@@ -71,29 +71,35 @@ Mezi tyto informace patří:
     \item Cena pokud je uvedena a měna ve které je cena uvedena
     \item Popisek akce
     \item Informace o akci (typ tance, úroveň obtížnosti, druh události)
-    \item kapacita akce 
-    \item odkaz na facebookovou událost (pokud existuje) - to umožní uživatelům zkontrolovat další informace o akci, které nejsou uvedeny v aplikaci, a zároveň umožní organizátorům snadno propojit svou akci s již existující facebookovou událostí.
+    \item Kapacita akce 
+    \item Odkaz na facebookovou událost (pokud existuje) - to umožní uživatelům zkontrolovat další informace o akci, které nejsou uvedeny v aplikaci, a zároveň umožní organizátorům snadno propojit svou akci s již existující facebookovou událostí.
 \end{itemize}
 Uvedené informace o akci byli sestaveny po diskuzích s různými organizátory (ať už se jedná o lektory anebo lidi kteří organizují taneční večírky). Zároveň jsem se inspirovala informacemi, které jsou běžně uváděny v popiscích akcí na facebooku nebo na webových stránkách organizátorů.
 
 Formulář s informacemi bude rozdělen do několika kroků, aby se uživatelé necítili zahlceni množstvím informací, které musí zadat.
-Vzhledem k tomu, že organizátor nemusí mít v okamžiku vytváření události k dispozici všechny potřebné informace, případně ji ještě nemusí chtít zveřejnit nebo si přeje nejprve zkontrolovat výslednou podobu detailu akce, tak odeslání formuláře nebude mít za následek okamžité zveřejnění akce v aplikaci. Místo toho se vytvoří koncept události, který bude organizátorovi přístupný pro další úpravy a doplnění informací.
+Vzhledem k tomu, že organizátor nemusí mít při vytváření události k dispozici všechny potřebné informace, případně je ještě nemusí chtít zveřejnit nebo si přeje nejprve zkontrolovat výslednou podobu detailu akce, nebude odeslání formuláře znamenat okamžité zveřejnění akce v aplikaci. Místo toho se vytvoří koncept události, který bude organizátorovi přístupný pro další úpravy a doplnění informací.
 Organizátor bude mít možnost kdykoliv se vrátit k úpravě konceptu a doplnění informací o akci, než ji zveřejní.
 
 \subsubsection{Registrace na událost}
 Tento požadavek umožní uživatelům přihlásit se na události přímo prostřednictvím aplikace, což usnadní organizátorům správu registrací a účastníkům jednoduchý způsob, jak se zúčastnit akcí. Tento požadavek je klíčový pro hlavní účel aplikace, kterým je správa registrací na taneční akce.
 
-Aplikace bude umožňovat 3 následné možnosti jak se uživatel bude přihlašovat na akci:
+
+
+\subsubsection{Organizátor může publikovat akci}
+Po vytvoření konceptu akce bude organizátor mít možnost ji publikovat, což znamená, že se akce stane viditelnou pro všechny uživatele aplikace.
+
+Aplikace bude umožňovat 3 následné možnosti při zveřejnění akce, jak se uživatelé mohou registrovat na akci:
 \begin{itemize}
     \item Otevřená registrace - každý se může přihlásit bez omezení do kapacity akce
     \item Párová registrace - každý se může přihlásit do kapacity akce, ale musí uvést zda je leader nebo follower
     \item Registrace pomocí Google formuláře - organizátor může propojit Google formulář pro registraci účastníků přímo s událostí v aplikaci, což by usnadnilo správu registrací.
 \end{itemize} 
-Tyto možnosti publikace jsou pro organizátory velmi vítané, protože umožní jak např. registraci pro ladies styling workshop, kde je obvykle omezená kapacita a není potřeba uvádět zda je účastník leader nebo follower, tak i pro párové akce, kde je důležité mít přehled o počtu leaderů a followerů. 
-A jelikož je google formulář jedním z častějších nástrojů pro registraci účastníků, tak možnost propojení s google formulářem je pro organizátory velmi vítaná.
 
-\subsubsection{Organizátor může publikovat akci}
-Po vytvoření konceptu akce bude organizátor mít možnost ji publikovat, což znamená, že se akce stane viditelnou pro všechny uživatele aplikace. Tento krok umožní organizátorovi nastavit jakým způsobem chce registrovat účastníky (vybrat jednu z možností popsaných v předchozím požadavku) a zároveň zvolit další nastavení přihlašování, jako je například možnost schvalovat registrace účastníků manuálně.
+Tyto možnosti zveřejnění jsou organizátory velmi vítané, protože umožňují například registraci na workshop ladies styling, kde bývá kapacita omezená a není nutné uvádět, zda je účastník leader nebo follower. Zároveň jsou vhodné i pro párové akce, u nichž je důležité mít přehled o počtu leaderů a followerů.
+
+Protože je Google Formulář jedním z nejčastěji používaných nástrojů pro registraci účastníků, je pro organizátory velmi přínosná také možnost propojení s Google formulářem.
+
+Organizátor bude mít možnost nastavit jakým způsobem chce registrovat účastníky a zároveň zvolit další nastavení přihlašování, jako je například možnost schvalovat registrace účastníků manuálně.
 
 \subsubsection{Organizátor může upravovat akci}
 Tento požadavek umožní organizátorům upravovat informace o své akci i po jejím zveřejnění, což je důležité pro případ, že se změní nějaké detaily akce nebo pokud organizátor zapomněl uvést nějakou důležitou informaci při vytváření akce.
@@ -101,9 +107,9 @@ Tento požadavek umožní organizátorům upravovat informace o své akci i po j
 Dle mých pozorování je běžné, že se mění čas anebo místo konání akce, případně se doplňují informace o programu, které předtím nebyly k dispozici.
 
 \subsubsection{Přihlášený uživatel může označit akce, které ho zajímají}
-Uživatelé mají rádi možnost označit akce, které je zajímají, já osobně jsem na tohle chování navyklá na facebooku, kde si označuji akce, které mě zajímají, abych je mohla snadno najít později a sledovat aktualizace týkající se těchto akcí. 
+Uživatelé mají rádi možnost označit si akce, které je zajímají. Já osobně jsem na toto chování zvyklá z Facebooku, kde si označuji události, které mě zajímají, abych je mohla později snadno najít a zároveň sledovat jejich aktualizace.
 
-Tento požadavek umožní uživatelům snadno si označit akce, o které mají zájem, což jim pomůže sledovat události, které by chtěli navštívit, a zároveň poskytne organizátorům cenné informace o tom, jaký zájem je o jejich akci.
+Tento požadavek umožní uživatelům snadno si označit akce, o které mají zájem, což jim pomůže sledovat události, které by chtěli navštívit, a zároveň poskytne organizátorům cenné informace o tom, jaký velký zájem je o jejich akci.
 
 \subsubsection{Zobrazení seznamu akcí, které uživatele zajímají}
 Tento požadavek umožní uživatelům zobrazit seznam akcí, které si označili jako zajímavé, což jim pomůže se k nim snadno vrátit a případně se na ně přihlásit.
@@ -120,7 +126,7 @@ Tento požadavek umožní uživatelům zobrazit seznam akcí, které organizují
 Jelikož chceme aby aplikace měla komunitní charakter, tak je důležité umožnit uživatelům vytvořit si svůj profil, kde budou mít možnost sdílet informace o sobě a svých tanečních preferencích. Uživatelé by měli mít možnost upravovat své osobní údaje, jako je jméno za kterým vystupují v aplikaci, dále další informace jako jsou taneční styly které preferují, popisek o sobě a informace o jejich taneční úrovni.
 
 \subsubsection{Zobrazení seznamu registrovaných účastníků}
-Tento požadavek umožní organizátorům akcí snadno zobrazit seznam registrovaných účastníků, což usnadní plánování a organizaci událostí. K registraci budou ještě přidány další informace o účastnících vycházející z informací které poskytli při registraci doplněné o informace z jejich profilu.
+Tento požadavek umožní organizátorům akcí snadno zobrazit seznam registrovaných účastníků, což usnadní plánování a organizaci událostí. K registraci budou ještě přidány další informace o účastnících vycházející z informací které poskytli při registraci doplněné o odkaz na jejich profil, pokud existuje.
 
 \subsubsection{Integrace s Google Forms}
 Google Forms jsou častým nástrojem pro registraci účastníků jak jsme se již zmínili v předchozí kapitole. Integrace aplikace s Google Forms by umožnila organizátorům akcí snadno spravovat registrace a získávat informace o účastnících přímo z aplikace. Organizátoři by mohli vytvořit Google formulář pro registraci účastníků a propojit ho s událostí v aplikaci, což by usnadnilo správu registrací a umožnilo organizátorům tak snadno sledovat počet přihlášených účastníků a další informace o nich.
@@ -137,9 +143,9 @@ Proces zrušení události se liší podle aktuálního stavu události. Pokud s
 V případě, že je událost již publikována, nedojde k jejímu fyzickému smazání, ale ke změně jejího stavu na „CANCELLED“. Taková akce zůstane nadále viditelná v aplikaci, bude však jednoznačně označena jako nekonající se. Zároveň se zruší všechny registrace účastníků na tuto událost.Tento přístup umožní transparetnost vůči uživatelům, kteří se již na akci přihlásili, a zároveň poskytne informaci o zrušení pro všechny ostatní uživatele, kteří například zvažovali účast na této akci. Pokud bychom publikovanou událost fyzicky smazali, mohlo by to vést k nejasnostem a zmatku mezi uživateli, kteří o té akci věděli a nechápali by, kam zmizela. 
 
 \subsubsection{Organizátor může zamítat registrace}
-Tento požadavek umožní organizátorům zamítat registrace účastníků, pokud se rozhodnou, že daná osoba není vhodná pro účast na akci.  
+Tento požadavek umožní organizátorům zamítat registrace účastníků, pokud se rozhodnou, že daná osoba není vhodná pro účast na akci.
 
-Tento požadavek jsem definovala, protože si obecně myslím, že je dobré nabídnout organizátorům možnost jak vyhodit zaregistrovaného uživatele. Například může nastat situace, že se registrovaný uživatel choval nevhodně na předchozí akci, ale má již zaregistrovanou další akci, na kterou se chystá zúčastnit. V takovém případě by bylo vhodné, aby organizátor měl možnost zrušit registraci tohoto uživatele, aby se předešlo opakování nevhodného chování a zároveň zajistil bezpečné prostředí pro ostatní účastníky. 
+Požadavek byl definován s ohledem na potřebu dát organizátorům možnost odebrat již zaregistrovaného uživatele. Může například nastat situace, kdy se účastník choval nevhodně na předchozí akci, ale je již přihlášen na další. V takovém případě by měl mít organizátor možnost jeho registraci zrušit, aby se předešlo opakování nevhodného chování a zároveň bylo zajištěno bezpečné prostředí pro ostatní účastníky.
 
 \subsubsection{Aplikace je responzivní pro mobilní zařízení}
 Jelikož se předpokládá, že aplikace bude používána i na mobilních zařízeních, je důležité, aby byla responzivní a přizpůsobovala se různým velikostem obrazovky telefonu. Tablety neuvádím, kvůli tomu, že z mých pozorování se zdá, že většina uživatelů používá k prohlížení informací o akcích a k registraci na akce spíše mobilní telefony než tablety. Nicméně, pokud by se ukázalo, že je potřeba optimalizovat aplikaci i pro tablety, tak by bylo možné tento požadavek rozšířit i na tablety. 
@@ -151,34 +157,38 @@ Tyto požadavky jsou důležité, ale nejsou nezbytné pro základní funkčnost
 Aplikace by měla mít úvodní stránku, která poskytne uživatelům přehled o tom, co aplikace nabízí, důvody pro její použití a jak začít. Tato stránka by měla být atraktivní a informativní, aby motivovala uživatele k registraci a používání aplikace.
 
 \subsubsection{Možnost potvrzování registrace organizátorem}
-Organizátor bude mít možnost při publikaci akce zvolit, zda chce mít možnost potvrzovat registrace účastníků. Pokud organizátor tuto možnost aktivuje, bude povinen každou registraci schvalovat manuálně. Tento mechanismus mu poskytuje větší kontrolu nad seznamem účastníků a umožňuje individuálně rozhodovat o přijetí či odmítnutí přihlášky.
+Organizátor bude mít možnost při zveřejnění akce zvolit, zda chce mít možnost potvrzovat registrace účastníků. Pokud organizátor tuto možnost aktivuje, bude povinen každou registraci schvalovat manuálně. Tento mechanismus mu poskytuje větší kontrolu nad seznamem účastníků a umožňuje individuálně rozhodovat o přijetí či odmítnutí přihlášky.
 
 Schválení může být podmíněno například přijetím registračního poplatku nebo úhradou plné ceny akce. Dalším důvodem může být charakter události, například pokud je určena pouze pro tanečníky určité úrovně. Organizátor tak může zajistit, že se akce zúčastní pouze osoby odpovídající požadované úrovni či dalším stanoveným podmínkám.
 
 Tento požadavek je v kategorii "Should have", protože i bez něj může aplikace fungovat, jelikož většina akcí umožňuje otevřenou registraci bez nutnosti schvalování. Nicméně, pro některé organizátory může být tato funkce velmi užitečná a zlepšit jejich zkušenost s aplikací, což je důvod, proč ji zahrnuji do této kategorie.
 
 \subsubsection{Uživatelé registrující nad kapacitní akci jsou umístěni na čekací listinu}
-Tento požadavek umožní uživatelům, kteří se pokusí zaregistrovat na akci, která již dosáhla své kapacity, být umístěni na čekací listinu. Pokud se někdo z přihlášených účastníků odhlásí, bude první osoba na čekací listině automaticky přesunuta do seznamu registrovaných účastníků a v systému se uživatelům zobrazí aktualizace stavu jejich registrace. Tato funkcionalita je velmi důležitá, protože umožňuje naplnit kapacitu akce a využít tím její potenciál. Občas se totiž stává, že zaregistrovaní účastníci se nakonec nezúčastní akce, ale neohlásí to organizátorovi například z důvodu toho, že psát zprávu organisátorovi se jim nechce. Tím pádem pokud je akce například párová tak dochází k nevybalancování počtu leaderů a followerů, což může být pro organizátora problém. Díky čekací listině umožníme organizátorům tento problém lépe vybalancovat a zároveň umožníme uživatelům, kteří se chtějí zúčastnit akce, ale kapacita již byla naplněna, mít stále šanci se zúčastnit. 
+Tento požadavek umožní uživatelům, kteří se pokusí zaregistrovat na akci, která již dosáhla své kapacity, být zařazeni na čekací listinu. Pokud se některý z přihlášených účastníků odhlásí, první osoba na čekací listině bude automaticky přesunuta do seznamu registrovaných účastníků a uživatelé zároveň uvidí v systému aktualizaci stavu své registrace.
+
+Tato funkcionalita je velmi důležitá, protože umožňuje lépe využít kapacitu akce a naplnit její potenciál. Často se totiž stává, že se někteří registrovaní účastníci nakonec akce nezúčastní, aniž by svou neúčast organizátorovi oznámili – například proto, že se jim nechce psát zprávu. U párových akcí pak může docházet k nevyváženému počtu leaderů a followerů, což může být pro organizátora problematické. Díky čekací listině je možné tyto situace lépe vyrovnávat a zároveň dát šanci účastnit se akce i uživatelům, kteří se chtěli přihlásit až poté, co byla kapacita naplněna.
 
 \subsubsection{Zobrazení seznamu účastníků pro přihlášené uživatele}
-Tento požadavek umožní přihlášeným uživatelům zobrazit seznam účastníků, kteří se zaregistrovali na akci, na kterou jsou sami přihlášeni. Tohle by mohlo zvýšit zájem o akci, například pokud uživatel uvidí, že se na akci přihlásili jeho přátelé nebo známí, může to být pro něj motivací k účasti. Avšak je třeba mít na paměti, že ne každý uživatel bude chtít, aby jeho jméno bylo veřejně zobrazeno v seznamu účastníků, proto by měla být tato funkce volitelná a uživatelé by měli mít možnost skrýt své jméno v seznamu účastníků, pokud si to přejí.
+Tento požadavek umožní přihlášeným uživatelům zobrazit seznam účastníků, kteří se zaregistrovali na akci, na kterou jsou sami přihlášeni. Tato funkce může zvýšit zájem o akci. Například v situaci, kdy uživatel uvidí, že se na akci přihlásili jeho přátelé nebo známí, což ho může motivovat k účasti.
+
+Je však potřeba počítat s tím, že ne každý uživatel bude chtít, aby jeho jméno bylo v seznamu účastníků veřejně zobrazeno. Proto by měla být tato funkce volitelná a uživatelé by měli mít možnost skrýt své jméno v seznamu účastníků, pokud si to přejí.
 
 \subsubsection{Přidávání médií k akci a profilu}
-Pro propagaci akcí a zlepšení uživatelského zážitku by bylo užitečné umožnit organizátorům přidávat média, jako jsou fotografie nebo videa, k detailu akce. To by mohlo pomoci potenciálním účastníkům lépe si představit, co mohou od akce očekávat, a zvýšit jejich zájem o účast. Stejně tak by bylo vhodné umožnit uživatelům přidávat média k jejich profilu, což by mohlo pomoci ostatním uživatelům lépe poznat jejich taneční styl a úroveň. Zejména v případě, že se uživatel přihlašuje na akci určenou vyžadující úroveň v daném stylu tance, je vhodné umožnit organizátorovi nahlédnout do médií přidaných k profilu daného uživatele.
+Pro propagaci akcí a zlepšení uživatelského zážitku by bylo užitečné umožnit organizátorům přidávat k detailu akce média, jako jsou fotografie nebo videa. Tato média mohou potenciálním účastníkům pomoci lépe si představit, co mohou od akce očekávat, a tím zvýšit jejich zájem o účast.
 
-Přístup k těmto materiálům (například videím či fotografiím) poskytuje organizátorovi lepší podklad pro posouzení, zda úroveň tanečních dovedností uchazeče odpovídá požadavkům dané události.
+Zároveň by bylo vhodné umožnit uživatelům přidávat média také do jejich profilu. Díky tomu by ostatní uživatelé mohli lépe poznat jejich taneční styl a úroveň. To může být obzvláště užitečné v případě akcí, které vyžadují určitou úroveň v daném tanečním stylu. Organizátor by tak mohl nahlédnout do médií přidaných k profilu uživatele a získat lepší podklad pro posouzení, zda jeho taneční dovednosti odpovídají požadavkům dané události.
 
 \subsubsection{Vytvoření opakované akce}
 Ve světě tanečních akcí se často vyskytují opakující se události, například pravidelné workshopy nebo taneční večírky. Tento požadavek by umožnil organizátorům snadno vytvářet opakované akce, což by ušetřilo čas a usnadnilo správu těchto událostí. Organizátor by mohl nastavit frekvenci opakování (denně, týdně, měsíčně) a další parametry, jako je počet opakování nebo datum ukončení opakování. 
 
 \subsubsection{Možnost spravovat opakované akce samostatně}
-Jelikož se opakující akce mohou lišit obsahem (například jeden týden může být zaměřen workshop na ladies styling a další týden na musicality), tak by bylo užitečné, aby organizátoři měli možnost spravovat jednotlivé opakované akce samostatně. To by jim umožnilo upravovat informace o konkrétní akci, například změnit popisek nebo přidat nové tagy, aniž by to ovlivnilo ostatní opakované akce. Také by bylo vhodné aby šli jednotlivé akce publikovat postupně či zrušit jednotlivé akce bez nutnosti zrušení celé série opakovaných akcí.
-
-\subsection{Could have (mohlo by mít)}
-Tento druh požadavků bývá označován jako "nice to have" a zahrnuje funkce, které by mohly být přidány v budoucnu, ale nejsou prioritou pro první verzi aplikace. Oproti požadavkům z kategorie "Should have" se liší tím, že jejich implementace nemá na aplikaci takový vliv. Těmto požadavkům bývá přiřazována menší priorita a prostor dostávají hlavně požadavky z předchozích kategorií, které dokážou narůst i přes očekávaný scope. \cite{moscow:definition}
+Jelikož se opakující akce mohou lišit obsahem (například jeden týden může být zaměřen workshop na ladies styling a další týden na musicality), tak by bylo užitečné, aby organizátoři měli možnost spravovat jednotlivé opakované akce samostatně. To by jim umožnilo upravovat informace o konkrétní akci, například změnit popisek nebo přidat nové tagy, aniž by to ovlivnilo ostatní opakované akce. Také by bylo vhodné, aby šly jednotlivé akce publikovat postupně či zrušit jednotlivé akce bez nutnosti zrušení celé série opakovaných akcí.
 
 \subsubsection{Stránka o projektu}
 Aplikace bude obsahovat stránku s informacemi o projektu, která bude obsahovat informace o tom, kdo stojí za projektem a za jakým účelem byl vytvořen. Tato stránka bude sloužit k budování důvěry mezi uživatelem a produktem.
+
+\subsection{Could have (mohlo by mít)}
+Tento druh požadavků bývá označován jako "nice to have" a zahrnuje funkce, které by mohly být přidány v budoucnu, ale nejsou prioritou pro první verzi aplikace. Oproti požadavkům z kategorie "Should have" se liší tím, že jejich implementace nemá na aplikaci takový vliv. Těmto požadavkům bývá přiřazována menší priorita a prostor dostávají hlavně požadavky z předchozích kategorií, které dokážou narůst i přes očekávaný scope. \cite{moscow:definition}
 
 \subsubsection{Notifikace}
 Aplikace by mohla posílat notifikace uživatelům, například o nadcházejících akcích, změnách v jejich registracích nebo změnách provedených v akci, na které jsou přihlášeni. Tato funkce by zlepšila uživatelskou zkušenost a pomohla uživatelům být informováni o důležitých událostech. 
@@ -201,52 +211,57 @@ což pomůže ostatním uživatelům při rozhodování, zda se akce zúčastnit
 
 \subsubsection{Offline režim}
 Tento požadavek by umožnil uživatelům přístup k informacím
-o akcích i bez připojení k internetu, což by bylo užitečné při cestování nebo v oblastech s omezeným přístupem k síti.
+o akcích i bez připojení k internetu, což by bylo užitečné při omezeném přístupu k síti.
 
 \section{Návrh systému}
 V této sekci se zaměřím na návrh systému, který bude implementovat požadavky definované v předchozí části. 
 Jelikož se jedná o rozsáhlou webovou aplikaci, rozhodla jsem se mít odděleného klienta a server, což nám umožní větší flexibilitu při vývoji a nasazení aplikace. Tento přístup nám také umožní snadněji škálovat jednotlivé části systému podle potřeby. 
 
-Konkrétně jsem zvolila architekturu MVC (Model-View-Controller), která nám umožní oddělit logiku aplikace od její prezentace a usnadní nám tak vývoj a údržbu systému. Model bude zodpovědný za správu dat a obchodní logiku, View bude zodpovědný za prezentaci dat uživatelům, a Controller bude zprostředkovávat komunikaci mezi Modelem a View. TODO
+Konkrétně jsem zvolila architekturu MVC (Model-View-Controller), která nám umožní oddělit logiku aplikace od její prezentace a usnadní nám tak vývoj a údržbu systému. Model bude zodpovědný za správu dat a obchodní logiku, View bude zodpovědný za prezentaci dat uživatelům, a Controller bude zprostředkovávat komunikaci mezi Modelem a View. \cite{mvc}
 
 \subsection{Databáze}
 Při výběru databáze jsem uvažovala zda použít relační anebo nosql databázi. Jelikož se jedná o systém, který bude mít poměrně složitou strukturu dat s mnoha vztahy mezi různými entitami (například uživatelé, akce, registrace, atd.), rozhodla jsem se pro relační databázi. Relační databáze nám umožní snadno modelovat tyto vztahy a poskytne nám robustní nástroje pro správu dat a zajištění jejich integrity.
-Konkrétně jsem se rozhodla použít PostgreSQL, což je open-source relační databáze, se kterou jsem již měla zkušenosti jak v praxi tak při studiu, takže se mi s ní bude dobře pracovat a zároveň nám poskytne všechny potřebné funkce pro správu dat v naší aplikaci.
-\subsection{server - návrh backendu}
+
+Konkrétně jsem se rozhodla použít  \cite{postgresql_website}, což je open-source relační databáze, se kterou jsem již měla zkušenosti jak v praxi tak při studiu, takže se mi s ní bude dobře pracovat a zároveň nám poskytne všechny potřebné funkce pro správu dat v naší aplikaci.
+
+\subsection{Server - návrh backendu}
 Backend bude zodpovědný za zpracování požadavků od klienta, komunikaci s databází a implementaci obchodní logiky. V následujících podsekcích se zaměřím na výběr frameworku pro backend podporující architekturu MVC.
 
 \subsubsection{NestJS}
-Pro vývoj backendu jsem zvažovala NestJS. Jedná se o framework umožňující vývoj efektivních, škálovatelných server-side aplikací postavených na Node.js. NestJS využívá moderní JavaScript ale plně podporuje TypeScript. Tento framework obsahuje aspekty jak z OOP tak i z funkcionálního a reaktivního programování. Jeho motivací bylo poskytnout vývojářům framework s architekturou inspirovanou framewrokem Angular, která usnadní vývoj a údržbu aplikací. 
-Z mé zkušenosti se backend aplikace psané v Node.js postrádají tuto abstrakci architektury a bývají psané za využití frameworku Express, který je dle mého názoru příliš jednoduchý a nenabízí tolik připravených funcionalit (např. ORM), což v praxi může vést k nepřehlednému a těžko udržovatelnému kódu, zejména v případě větších aplikací. Ono samotný Nest.js používá Express jako defaultní HTTP server, ale poskytuje nad ním vyšší úroveň abstrakce a struktury. 
-\cite{nestjs_docs}
+Pro vývoj backendu jsem zvažovala NestJS. Jedná se o framework umožňující vývoj efektivních, škálovatelných server-side aplikací postavených na Node.js. NestJS využívá moderní JavaScript ale plně podporuje TypeScript. Tento framework obsahuje aspekty jak z OOP tak i z funkcionálního a reaktivního programování. Jeho motivací bylo poskytnout vývojářům framework s architekturou inspirovanou framewrokem Angular, která usnadní vývoj a údržbu aplikací. samotný Nest.js používá Express jako defaultní HTTP server, ale poskytuje nad ním vyšší úroveň abstrakce a struktury.  \cite{nestjs_docs}
+
+Z mé zkušenosti se backend aplikace psané v Node.js postrádají tuto abstrakci architektury a bývají psané za využití frameworku Express, který je dle mého názoru příliš jednoduchý a nenabízí tolik připravených funcionalit (např. ORM \cite{nestjs_database_techniques}), což v praxi může vést k nepřehlednému a těžko udržovatelnému kódu, zejména v případě větších aplikací. 
+
 
 Při výběru jsem vzala v úvahu jeho výhody a nevýhody.
 Mezi výhody patří:
 \begin{itemize}
     \item Mám zkušenosti s Node.js a TypeScriptem, takže jazyk frameworku pro mě nebude úplně nový
-    \item Obsahuje instalovatelné balíčky jako např. ORM pro namapování databáze na objekty, které nám umožní psát aplikace jako MVC
+    \item Obsahuje instalovatelné balíčky jako např. ORM \cite{nestjs_database_techniques} pro namapování databáze na objekty, které nám umožní psát aplikace v architektuře MVC
 \end{itemize}
 
 Mezi nevýhody patří:
 \begin{itemize}
-    \item Větší křivka učení z hlediska frameworku (ne jazyku), zejména pro mě, protože jsem s tímto frameworkem ještě nepracovala, takže se budu muset nejdříve naučit jak s ním pracovat, což může zpomalit vývoj.
+    \item Větší křivka učení z hlediska frameworku (ne jazyku) pro mě, protože jsem s tímto frameworkem ještě nepracovala, takže se budu muset nejdříve naučit jak s ním pracovat, což může zpomalit vývoj.
     \item Architektura inspirovaná Angular mi v minulosti nevyhovovala, protože mi přišla příliš robustní a složitá.
     \item Přijde mi, že má menší komunitu než jiné frameworky, což může znamenat méně dostupných zdrojů a podpory při vývoji.
 \end{itemize}
 
 \subsubsection{Spring Boot}
-Spring Boot je framework pro vývoj webových aplikací v JVM jazycích. Je postaven na vrcholu Spring Frameworku a poskytuje řadu funkcí, které usnadňují vývoj a nasazení aplikací. Spring Boot nabízí rychlý start a jednoduchou konfiguraci, což umožňuje vývojářům rychle vytvořit funkční aplikaci bez nutnosti řešit složité nastavení. 
+Spring Boot je open source, microservice oriented framework pro vývoj Java webových aplikací.\cite{what_is_spring_boot}
+
+Je postaven na Spring Frameworku a zjednodušuje proces vývoje a nasazení aplikací tím, že poskytuje předkonfigurované nastavení. Spring Boot umožňuje vývojářům snadno vytvářet samostatné, produkčně připravené aplikace. Narozdíl od Spring Frameworku, kde konfigurace a nastavení nového projektu vyžadují nějaký čas a znalosti. \cite{ibm_what_is_spring_boot}
 
 Mezi výhody Spring Bootu patří:
 \begin{itemize}
     \item Mám zkušenosti s Java (trochu i Kotlinem) a Spring Frameworkem, takže jazyk a některé koncepty frameworku pro mě nebudou úplně nové, což usnadní vývoj
-    \item Velká a aktivní komunita, což znamená, že je k dispozici mnoho zdrojů a podpory pro vývoj.
-    \item Osvědčený framework, který se používá na vývoj mnoha enterprise aplikací
-    \item Je postaven na MVC architektuře
-    \item Velké množství funkcí a nástrojů, které usnadňují vývoj a správu aplikací, jako je například integrovaná podpora pro databáze, bezpečnost, testování a další.
+    \item Velká a aktivní komunita, což znamená, že je k dispozici mnoho zdrojů a podpory pro vývoj \cite{spring_why_spring}
+    \item Osvědčený framework, který se používá na vývoj mnoha enterprise aplikací \cite{spring_why_spring}
+    \item Je postaven na MVC architektuře \cite{mvc_spring_boot}
+    \item umožňuje snadnou integraci s různými databázemi (PostgreSQL, MySQL, Oracle, ElasticSearch atd.) \cite{spring_boot_pros_cons}
 \end{itemize}
 
-Mezi nevýhody patří:
+Mezi nevýhody \cite{spring_boot_pros_cons} patří:
 \begin{itemize}
     \item Jedná se o opinionated framework, což znamená, že do jisté míry diktuje v mnoha spektech od konfigurace k vybrání knihoven jak má být psána
     \item Pro aplikace, které vyžadují nízkou latenci, může být Spring Boot příliš robustní a nesplňovat požadavky na výkon a dobu odezvy.
@@ -254,10 +269,14 @@ Mezi nevýhody patří:
 
 Vzhledem k tomu, že Spring Boot převážil výhodami, zejména díky mým zkušenostem s Java a Spring Frameworkem, jsem se rozhodla pro tento framework pro vývoj backendu.
 
-Dále jsem se rozhodovala zda použít Kotlin nebo Javu. Sice jsem s Kotlinem měla méně zkušeností než s Javou, ale vzhledem k tomu, že Kotlin je moderní jazyk, který nabízí mnoho funkcí a zlepšení oproti Javě, jako je například lepší podpora pro funkcionální programování, méně boilerplate kódu a lepší interoperabilita s Java kódem, jsem se rozhodla použít Kotlin pro vývoj backendu.
+Při rozhodování o výběru programovacího jazyka pro projekt jsem zvažovala Kotlin i Javu. Ačkoliv jsem měla s Kotlinem méně zkušeností než s Javou, nakonec jsem se rozhodla pro Kotlin. Tento moderní jazyk totiž přináší několik výhod oproti Javě, například výrazné snížení množství opakujícího se kódu díky data classes nebo extension functions a bezpečnější práci s hodnotami null.
+\cite{java_vs_kotlin}
 
 \subsection{Klient - návrh frontendu}
-Jako architekturu pro frontend jsem zvolila Single Page Application (SPA), což znamená, že aplikace bude načítat všechny potřebné zdroje (HTML, CSS, JavaScript) při prvním načtení a následně bude dynamicky aktualizovat obsah bez nutnosti načítat nové stránky z serveru. Tento přístup umožní rychlejší a plynulejší uživatelský zážitek, protože nebude docházet k přerušení způsobenému načítáním nových stránek. Tento přístup je i dále vhodný aplikace, které mají být používány na mobilních zařízeních, protože je přechod mezi stránkami plynulejší. TODO cite some site about SPA
+Jako architekturu pro frontend jsem zvolila Single Page Application (SPA), což znamená, že aplikace bude načítat všechny potřebné zdroje (HTML, CSS, JavaScript) při prvním načtení a následně bude dynamicky aktualizovat obsah bez nutnosti načítat nové stránky z serveru. \cite{guptaa_single_page_application} 
+
+Tento přístup umožní rychlejší a plynulejší uživatelský zážitek, protože nebude docházet k přerušení způsobenému načítáním nových stránek. Navigace v rámci SPA má díky tomu spíše charakter plynulého přepínání obrazovek, podobně jako u desktopové anebo mobilní aplikace. Tím, že SPA načte jádro aplikace při prvotním načtení, tak může provést rychlejší přechody mezi jednotlivými obrazovkami, protože nebude muset znovu načítat a renderovat celý obsah stránky.
+\cite{guide_spa}
 
 Jako framework pro vývoj SPA jsem se rozhodla použít React. S tímto frameworkem mám již zkušenosti jak z profesního života, tak i z projektů během mého studia. To usnadní čas strávený na vývoji. Nehledě na fakt, že v porovnání s ostatními frameworky jakými jsou například Angular nebo Vue, je pro mě API Reactu přehlednější a jednodušší na používání. 
 Tento framework je populární a široce používaný, což nahrává tomu, že existuje plno knihoven pro různé use cases, které nám mohou usnadnit vývoj a ušetřit čas. 
