@@ -99,7 +99,7 @@ Stránka se skládá ze sekce pro vyhledávání akcí a výčtu nadcházející
 
 Pro filtrování jména akce jsem se rozhodla navrhnout dlouhý input, následně pro místo konání akce jsem navrhla combobox, který umožní uživatelům potom co začnou psát název místa, zobrazit možnosti, které odpovídají zadanému textu. 
 
-Pro typ akce a typ tance jsem navrhla také comboboxy avšak uživatel může vybrat více možností a pokud je tech možností více než tři tak se zobrazí pouze první tři a zbytek bude zobrazen jako "+X", kde X bude počet zbývajících možností. Po rozkliknutí komboboxu se uživateli zobrazí možnosti které zaškrtl. Tento výběr možností bude na mobilním zařízení implementován tak že vyjede nabídka (podobající se modalu) s možnostmi, které může uživatel zaškrtnout/odškrtnout.
+Pro typ akce a typ tance jsem navrhla také comboboxy avšak uživatel může vybrat více možností a pokud je tech možností více než tři tak se zobrazí pouze prvních pět a zbytek bude zobrazen jako "+X", kde X bude počet zbývajících možností. Po rozkliknutí komboboxu se uživateli zobrazí možnosti které zaškrtl. Tento výběr možností bude na mobilním zařízení implementován tak že vyjede nabídka (podobající se modalu) s možnostmi, které může uživatel zaškrtnout/odškrtnout.
 
 Co se týče zobrazení nadcházejících akcí, navrhla jsem zobrazení ve formě karet, které budou obsahovat informace, jak jsou definované v požadavku~\reqref{F1}. Kartu na desktopovém zařízení jsem pojala tak, že v levé části karty se bude nacházet obrázek akce anebo placeholder pokud obrázek není uvedený. Úplně nahoře v pravé části karty bude název akce, pod ním bude jméno organizátora a následně se budou nacházet zbylé informace o akci, obohacené o ikony. Úplně na spodu karty se budou nacházet akce, když je akce organizována uživatelem, bude se zde nacházet tlačítko přejít na detail akce, pokud uživatel organizátorem není, tak zde navíc budou akce jako přihlásit se na akci a označit že mám zájem o akci. Co mi chvíli dalo zabrat na návrhu bylo umístění tagů. Nakonec jsem se rozhodla je umístit pod organizátora, protože jsem iterovala několik variant a tato se uživatelům zdála nejpřehlednější. 
 
@@ -170,7 +170,7 @@ Design této komponenty jsem vytvářela přímo v kódu a jeho finální verze 
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{images/profile.png}
+    \includegraphics[width=\textwidth]{images/profile-light.png}
     \caption{Výsledný profil uživatele}
     \label{fig:userProfile}
 \end{figure}
