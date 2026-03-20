@@ -1,0 +1,23 @@
+stateDiagram-v2
+    [*] --> None
+
+    None --> Interested: user register (INTERESTED)
+    None --> Registered: user register (REGISTERED) [capacity ok && !requireApproval]
+    None --> Pending: user register (REGISTERED) [capacity ok && requireApproval]
+    None --> Waitlisted: user register (REGISTERED) [capacity full]
+
+    Interested --> Removed: user delete (only if INTERESTED)
+    Removed --> [*]
+
+    Pending --> Registered: organizer approve (from PENDING)
+    Pending --> Rejected: organizer reject (from PENDING)
+    Registered --> Rejected: organizer reject (from REGISTERED)
+
+    Pending --> Cancelled: user/organizer cancel (not allowed for INTERESTED)
+    Registered --> Cancelled: user/organizer cancel (not allowed for INTERESTED)
+
+    Waitlisted --> Registered: recalculate [spot opens && !requireApproval]
+    Waitlisted --> Pending: recalculate [spot opens && requireApproval]
+
+    Cancelled --> [*]
+    Rejected --> [*]

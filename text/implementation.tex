@@ -86,28 +86,48 @@ V případě že se jedná o registraci přes aplikaci, uživatel v případě o
 
 V případě, že organizátor chce vidět všechny registrace a s nimi pracovat, bylo třeba implementovat endpoint, který vrací všechny registrace pro danou akci. Jelikož chceme aby implementace byla do budoucna rozšiřitelná, bylo třeba navrhnout strukturu odpovědi obecně, bez ohledu na to, zda se jedná o registrace z google formuláře nebo z aplikace. Proto jsem navrhla, že se budou zasílat hlavičky tabulky, a dále samotné registrace, ve kterých bude uloženo mapování mezi hlavičkou a hodnotou odpovědi. V případě, že se jedná o registraci přes aplikaci, máme staticky definované hlavičky (např. jméno, email, role), a v případě google formuláře jsou hlavičky dynamické a závisí na struktuře formuláře. Příklad odpovědi pro endpoint, který vrací registrace, je zobrazen v ukázce kódu \ref{lst:registrations-response}.
 
-\begin{lstlisting}[language=TypeScript, caption={Příklad struktury odpovědi pro endpoint vracející registrace}, label={lst:registrations-response}]
+\begin{lstlisting}[language=TypeScript, caption={Příklad části struktury odpovědi pro endpoint vracející registrace}, label={lst:registrations-response}]
 {
   "headers": [
-    { "id": "questionId1", "title": "Jméno", "type": "text" },
-    { "id": "questionId2", "title": "Email", "type": "text" },
-    { "id": "questionId3", "title": "Role", "type": "choice" }
+    {
+        "type": "TEXT",
+        "id": "16893cb4",
+        "question": "Zadejte jmeno a prijmeni"
+      },
+      {
+        "type": "SET",
+        "id": "2f58f63f",
+        "question": "Ktery kurz chcete",
+        "answerSet": [
+          "Sensual",
+          "blabla",
+          "salsa"
+        ]
+      },
   ],
   "registrations": [
     {
-      "id": "...",
-      "status": "pending",
-      "answers": {
-        "questionId1": "...",
-        "questionId2": "...",
-        "questionId3": "Dancer"
-      }
-    }
+        "id": "62d8f653-cdd9-45de-9442-165d98102b0f",
+        "user": {
+          "email": "zanetatrosk@gmail.com",
+          "userId": "5e600195-ea89-4cdb-9011-c6235140675c"
+        },
+        "data": [
+          {
+            "id": "16893cb4",
+            "value": "Zaneta Troskova"
+          },
+          {
+            "id": "2f58f63f",
+            "value": "Sensual"
+          }
+        ],
+        "lastSubmittedTime": "2026-01-10T12:34:56Z",
+        "status": "REGISTERED"
+      },
   ]
 }
 \end{lstlisting}
-
-
 
 \subsection{Integrace s Google Forms}
 Jelikož jedna z hlavních funkcí naší aplikace je možnost propojit formulář z Google Forms (viz v požadavku TODO), bylo potřeba implementovat integraci s Google Forms API. Tato integrace nám umožní získávat strukturu formuláře a odpovědi, které uživatelé do formuláře zadali, a tyto informace následně zobrazovat v naší aplikaci.
@@ -126,16 +146,22 @@ V implementaci nejprve načítáme strukturu formuláře (\texttt{GET /v1/forms/
 \paragraph{1) Struktura odpovědi \texttt{GET /v1/forms/\{formId\}} (zjednodušeně)}
 \begin{verbatim}
 {
+  "formId": "1Qw8cABqYjtjOvValF28DpAEuZ2q4jwerABQ_v2jtYcc",
   "revisionId": "...",
+  "info": {
+    "documentTitle": "testik"
+  },
   "items": [
     {
-      "title": "Jméno",
+      "itemId": "0c9e2e5a",
       "questionItem": {
         "question": {
-          "questionId": "...",
+          "questionId": "id1",
+          "required": true,
           "textQuestion": {}
         }
-      }
+      },
+      "title": "Zadejte jmeno a prijmeni"
     }
   ]
 }
@@ -158,10 +184,19 @@ Z této odpovědi zpracováváme zejména:
       "responseId": "...",
       "respondentEmail": "user@example.com",
       "lastSubmittedTime": "2026-01-10T12:34:56Z",
+      "createTime": "2025-11-26T20:25:39.414Z",
       "answers": {
-        "questionId1": { "textAnswers": { "answers": [ { "value": "..." } ] } },
-        "questionId2": { "textAnswers": { "answers": [ { "value": "..." } ] } }
-      }
+        "id1": {
+          "questionId": "id1",
+          "textAnswers": {
+            "answers": [
+              {
+                "value": "..."
+              }
+            ]
+          }
+        }
+      },
     }
   ]
 }
@@ -183,11 +218,10 @@ Pokud zjistím, že je příliš požadavků na stanovenou kvótu, můžu dobu s
 
 Při synchronizaci formuláře kontroluji zda se změnila struktura formuláře, což zjišťuji porovnáním \texttt{revisionId} z Google API a \texttt{revisionId} uloženého v databázi. Pokud se \texttt{revisionId} liší, znamená to, že došlo ke změně formuláře a je potřeba aktualizovat strukturu formuláře v databázi. Pokud se \texttt{revisionId} neliší, nemusím aktualizovat strukturu formuláře, protože vím že se nezměnila. Podobným způsobem kontroluji i odpovědi, kde porovnávám čas posledního odeslání odpovědi z Google API a čas poslední synchronizace odpovědi v databázi. 
 
-\subsection{Validace}
-
 \section{Frontend}
-Jak už bylo řečeno v sekci Návrh, frontend část projektu bude napsána ve frameworku React. Pro založení projektu jsem se rozhodla použit Tanstack Start, což je React framework umožňující rychlé založení projektu s předpřipravenou strukturou a konfigurací například pro formátování kódu, lintování, routování v aplikaci a další. 
-Frontend vyvíjím v IDE VS code čistě ze zvyku.
+Jak už bylo řečeno v sekci Návrh, frontend část projektu bude napsána ve frameworku React. Pro založení projektu jsem se rozhodla použít Tanstack Start, což je full-stack React framework založený na dvou klíčových technologiích: Tanstack Router pro routování a Vite pro build projektu. \cite{tanstack_react_overview}
+
+Tanstack Start nabízí několik výhod, jako je například rychlý vývoj a flexibilní nasazení kombatibilní s Vite, jednoduché routování díky Tanstack Router, zabudované nástroje pro vývojáře a také integrace s knihovnami pro efektivní načítaní dat z API (Tanstack Query, Apollo). \cite{tanstack_react_comparison}
 
 \subsection{API na lokace}
 Při tvorbě taneční akce je potřeba zadat lokaci, kde se bude konat. Jelikož nechci aby uživatelé zadávali lokaci ručně (je to nepohodlné a může to vést k chybám), bylo potřeba najít správné API, které umožňuje získávat lokace zadané uživatelem. Zároveň ale pořád chci umožnit lokaci ručně upravit, protože je možné, že některé lokace budou v API chybět (například se bude v API nacházet ulice, ale ne s číslem popisným, na které se akce bude konat). V následujících odstavcích popíšu, mezi jakými API jsem vybírala a která byla nakonec zvolena.
@@ -216,13 +250,19 @@ Tento projekt má i vystavené zdarma API, které je možné využívat bez nutn
 Nakonec jsem se rozhodla pro využití tohoto API, protože je zdarma a poskytuje všechny funkce, které potřebuji pro zadávání lokace pro události. Jelikož moje aplikace je ve fázi prototypu, nebude na API posíláno příliš mnoho požadavků, takže by neměl být problém s využíváním tohoto API. V budoucnu, pokud by se aplikace stala populární a bylo by potřeba posílat větší množství požadavků, bych zvážila hostování vlastní instance tohoto API nebo přechod na placené API, jako je Google Places API. Navíc při zadávání lokace bude nastavený přiměřený \textit{debounce}, aby se zabránilo posílání příliš mnoha požadavků na API.
 
 \subsection{Formuláře}
-Aplikace obsahuje několik formulářů, ať už se jedná o formulář pro vytvoření akce, nastavení registrace, úprava profilu a další. U jednoduchých formulářů jako je úprava profilu, stačilo stav formuláře řešit pomocí useState, ale u složitějších formulářů jako je například formulář pro vytvoření akce, jsem chtěla použít knihovnu, která by mi usnadnila práci s formulářem a zároveň by mi poskytla funkce jako například validace. Po prozkoumání několika knihoven jsem se rozhodla pro Tanstack Form. 
+Aplikace obsahuje několik formulářů, ať už se jedná o formulář pro vytvoření akce, nastavení registrace, úprava profilu a další. U jednoduchých formulářů jako je úprava profilu, stačilo stav formuláře řešit pomocí useState, ale u složitějších formulářů jako je například formulář pro vytvoření akce, jsem chtěla použít knihovnu, která by mi usnadnila práci s formulářem a zároveň by mi poskytla funkce jako například validace. 
+
+Po prozkoumání několika knihoven jsem se rozhodla pro Tanstack Form, protože mám dobré zkušenosti s Tanstackem jako takovým a tato knihovna nabízí potřebné funkce pro práci s formuláři jako validace, error handling, správa stavu formuláře a další. Navíc je tato knihovna dobře zdokumentovaná, což usnadňuje její použití. \cite{tanstack_form}
 
 \subsection{Načítání dat z API}
-Pro načítaní dat z API jsem se rozhodla použít knihovnu Tanstack Query, která poskytuje funkce pro efektivní načítaní dat z API, jako je například cachování, refetching, synchronizace dat a další. Tato knihovna mi umožňuje jednoduše načítat data z API a zároveň se stará o další aspekty načítaní dat, jako je například zobrazení loading stavu, error stavu a další. V kódu \ref{lst:profile-route} je ukázka toho, jak načítám data z API pomocí Tanstack Query v routě pro profil uživatele.
+Pro načítaní dat z API jsem se rozhodla použít knihovnu Tanstack Query, která poskytuje funkce pro efektivní načítaní dat z API, jako je například cachování, synchronizace dat, stránkování a další. Tato knihovna mi umožňuje jednoduše načítat data z API a zároveň se stará o další aspekty načítaní dat, jako je například zobrazení loading stavu, error stavu a další. \cite{tanstack_query_react_overview}
+
+V kódu \ref{lst:profile-route} je ukázka toho, jak načítám data z API pomocí Tanstack Query v routě pro profil uživatele. 
 
 \subsection{Routování}
-Tím, že jsme vytvořili projekt pomocí TanstackStart, máme již předpřipravenou funckionalitu pro routování v aplikaci protože Tanstack Start zahrnuje Tanstack Router. Tato knihovna používá tzv. file-based routing, což znamená, že struktura souborů v adresáři \texttt{src/routes} určuje strukturu URL v aplikaci. Například soubor \texttt{src/routes/my-profile.tsx} bude odpovídat URL \texttt{/my-profile}. V ukázce kódu \ref{lst:profile-route} lze vidět definovanou routu, kde v případě že uživatel není přihlášen, bude přesměrován na přihlašovací stránku, a pokud je přihlášen, načtou se data z API a zobrazí se profilová stránka s těmito daty. 
+Tím, že jsme vytvořili projekt pomocí TanstackStart, máme již předpřipravenou funckionalitu pro routování v aplikaci, protože Tanstack Start zahrnuje Tanstack Router. Tato knihovna používá tzv. file-based routing, což znamená, že struktura souborů v adresáři \texttt{src/routes} určuje strukturu URL v aplikaci. \cite{tanstack_react_routing_guide} 
+
+Například soubor \texttt{src/routes/my-profile.tsx} bude odpovídat URL \texttt{/my-profile}. V ukázce kódu \ref{lst:profile-route} lze vidět definovanou routu, kde v případě že uživatel není přihlášen, bude přesměrován na přihlašovací stránku, a pokud je přihlášen, načtou se data z API a zobrazí se profilová stránka s těmito daty. 
 
 \begin{lstlisting}[language=TypeScript, caption={Příklad definice routy pro profil uživatele}, label={lst:profile-route}]
 export const Route = createFileRoute("/my-profile")({
@@ -246,3 +286,5 @@ function RouteComponent() {
 
 \section{Databáze}
 Jak již bylo zmíněno v sekci Návrh, pro databázi jsem zvolila relační databázi PostgreSQL. Při implementace databáze jsem vytvořila dva skripty pro vytvoření tabulek a vložení testovacích dat. První skript \texttt{create\_tables.sql} obsahuje SQL příkazy pro vytvoření všech tabulek podle schématu navrženého v sekci Návrh. Druhý skript \texttt{insert\_test\_data.sql} obsahuje SQL příkazy pro vložení testovacích dat do tabulek. 
+
+Pro média jsem se rozhodla využít objektové úložiště MinIO, jak jsem popsala v sekci Návrh. Při ukládání médií uložím do databáze pouze URL, které odkazuje na dané médium v objektové databázi. Samotné médium je však uloženo v objektové databázi.
