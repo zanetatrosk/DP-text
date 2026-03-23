@@ -39,7 +39,7 @@ Na unit testování backendu jsem vzhledem k tomu, že je backend psaný ve fram
 \section{Uživatelské testování}
 Uživatelské testování bylo prováděno s potencionálními uživateli aplikace, kteří byli vybráni na základě jejich zájmu o danou problematiku. Při výběru uživatelů jsem se zaměřila na různé věkové skupiny a taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatelské testování probíhalo formou individuálních sezení, během kterých uživatelé prováděli různé úkoly v aplikaci, zatímco já jsem sledovala jejich interakce a sbírala zpětnou vazbu. Na konci těchto sezení jsem kladla otázky týkající se jejich zkušeností s aplikací, co se jim líbilo a co by mohlo být zlepšeno.
 
-Před zahájením samotného testování byly navrženy scénáře úloh, které měli účastníci během testování plnit. Scénáře byly rozděleny do dvou skupin na scénáře pro běžného uživatele (tanečníka) a scénáře pro organizátora akcí. 
+Před zahájením samotného testování byly navrženy scénáře úloh, které měli účastníci během testování plnit. Scénáře byly rozděleny do dvou skupin na scénáře pro běžného uživatele (tanečníka) a scénáře pro organizátora akcí. Snažila jsem se scénáře navrhnout tak, aby otestovaly klíčové funkce aplikace z pohledu obou typů uživatelů, a zároveň aby byly dostatečně jednoduché na pochopení a nebyly příliš časově náročné.
 
 \subsection{Scénáře pro běžného uživatele}
 Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z pohledu běžného uživatele, který je tanečníkem, ale neorganizuje akce. 
@@ -47,20 +47,18 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
 \paragraph*{Přihlášení do aplikace a práce s profilem}
 \begin{enumerate}
     \item Klikněte v navigaci na tlačítko "Sign in" a přihlaste se pomocí Google účtu.
-    \item Klikněte na ikonu profilu v pravém horním rohu a zvolte "My profile".
+    \item Přejděte na stránku svého profilu.
     \item Prohlédněte si svůj profil a zkontrolujte, zda jsou zobrazeny správné informace.
-    \item Klikněte na tlačítko "Edit profile" a upravte své jméno, věk, taneční úroveň a přidejte avatar a jiné média na profil. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
-    \item Odhlašte se.
+    \item Klikněte na tlačítko "Edit profile" a upravte své informace dle gusta. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
 \end{enumerate}
 
 \paragraph*{Vyhledávání a operace s tanečními akcemi}
 \begin{enumerate}
     \item Přejděte na stránku přehledu tanečních akcí.
-    \item Vyfiltrujte akce, které se konají v Praze, obsahují tanec "salsa" a jsou určeny pro pokročilé tanečníky.
+    \item Vyfiltrujte akce, které se konají v Praze, obsahují tanec "salsa" a jsou to party.
     \item Vyberte akci, která vás zajímá a zaklikněte, že máte o ni zájem.
-    \item Resetujte filtry a nalezněte akci s názvem "Salsa Night" a přihlaste se na ni.
-    \item Přejděte na stránku s vašimi akcemi a zkontrolujte, zda je akce "Salsa Night" zobrazena mezi vašimi přihlášenými akcemi a zda akce, kterou jste zaklikli, že máte o ni zájem, je zobrazena mezi akcemi, které vás zajímají.
-    \item Přejděte z této stránky na detail akce "Salsa Night"
+    \item Přejděte na stránku s vašimi akcemi a zkontrolujte, zda akce, kterou jste zaklikli, že máte o ni zájem, je zobrazena mezi akcemi, které vás zajímají.
+    \item Přejděte z této stránky na detail této akce
 \end{enumerate}
 
 \paragraph*{Práce s detailem akce a přihlášení na akci}
@@ -71,6 +69,7 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
     \item Podívejte se na seznam přihlášených účastníků a zkontrolujte, zda je vaše jméno zobrazeno mezi přihlášenými.
     \item Rozklikněte místo konání akce.
     \item Rozklikněte facebook událost akce.
+    \item Zkontrolujte, že se akce zobrazuje v přehledu vašich akcí, na které jste přihlášeni.
     \item Zrušte přihlášení na akci.
 \end{enumerate}
 
@@ -108,3 +107,5 @@ Tyto scénáře byly navrženy tak, aby otestovaly funkce aplikace z pohledu org
     \item Potvrďte registraci tanečníka "Martin Novák" pro tento výskyt akce.
     \item Synchronizujte registrace.
 \end{enumerate}
+
+\subsection{Výsledky testování a závěry}
