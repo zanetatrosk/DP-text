@@ -55,10 +55,14 @@
 \ctufityear{2026} % replace with the year of your defence
 \ctufitdeclarationplace{Praze} % replace with the place where you sign the declaration
 \ctufitdeclarationdate{\today} % replace with the date of signature of the declaration
-\ctufitabstractCZE{Fill in the abstract of this thesis in Czech. Lorem ipsum dolor sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.}
-\ctufitabstractENG{Fill in the abstract of this thesis in English. Lorem ipsum dolor sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.}
-\ctufitkeywordsCZE{enter, comma, separated, list, of, keywords, in, CZECH}
-\ctufitkeywordsENG{enter, comma, separated, list, of, keywords, in, ENGLISH}
+\ctufitabstractCZE{Tato diplomová práce se věnuje návrhu a implementaci webové aplikace pro správu tanečních akcí a kurzů v oblasti společenských tanců. Vychází z analýzy současných způsobů vyhledávání a organizace akcí, které jsou často rozptýlené mezi více platformami a neposkytují dostatečný přehled o registracích ani účastnících. Na základě zjištěných nedostatků jsou formulovány požadavky a navržen systém a jeho uživatelské rozhraní podporující vyhledávání a filtrování akcí, správu událostí organizátory, registrace účastníků i práci s uživatelskými profily.
+
+Implementace je realizována jako klient-server aplikace s frontendem v Reactu, backendem ve Spring Bootu (Kotlin), relační databází PostgreSQL a objektovým úložištěm MinIO pro média. Řešení je ověřeno kombinací manuálních testů, automatizovaných unit testů na frontendu i backendu a uživatelského testování s cílovou skupinou tanečníků a organizátorů akcí. V závěru práce jsou shrnuty dosažené výsledky v podobě funkčního prototypu a diskutovány možnosti dalšího rozvoje systému.}
+\ctufitabstractENG{This master's thesis focuses on the design and implementation of a web application for managing social dance events and courses. It is based on an analysis of current approaches to event discovery and organization, which are often fragmented across multiple platforms and do not provide sufficient visibility into registrations and participants. Based on the identified limitations, requirements are formulated, and both the system and its user interface are designed to support event search and filtering, event management by organizers, participant registrations, and user profile management.
+
+The implementation follows a client-server architecture with a React frontend, a Spring Boot (Kotlin) backend, a PostgreSQL relational database, and MinIO object storage for media files. The solution is validated through a combination of manual testing, automated unit tests on both frontend and backend, and user testing with the target group of dancers and event organizers. The thesis concludes by summarizing the achieved results in the form of a functional prototype and discussing possible directions for further system development.}
+\ctufitkeywordsCZE{společenské tance, webová aplikace, PostgreSQL, React, Spring Boot, Kotlin, full-stack} % enter a comma-separated list of keywords in Czech
+\ctufitkeywordsENG{social dancing, web application, PostgreSQL, React, Spring Boot, Kotlin, full-stack}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END FILL IN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,15 +261,21 @@ neomezené.
 \chapter{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
-	DFA   & Deterministic Finite Automaton                 \\
-	FA    & Finite Automaton                               \\
-	LPS   & Labelled Prüfer Sequence                       \\
-	NFA   & Nondeterministic Finite Automaton              \\
-	NPS   & Numbered Prüfer Sequence                       \\
-	XML   & Extensible Markup Language                     \\
-	XPath & XML Path Language                              \\
-	XSLT  & eXtensible Stylesheet Language Transformations \\
-	W3C   & World Wide Web Consortium
+  API   & Application Programming Interface                 \\
+  CSRF  & Cross-Site Request Forgery                        \\
+  CSS   & Cascading Style Sheets                            \\
+  HTTP  & Hypertext Transfer Protocol                       \\
+  IDE   & Integrated Development Environment                \\
+  JSON  & JavaScript Object Notation                        \\
+  JWT   & JSON Web Token                                    \\
+  MVC   & Model--View--Controller                           \\
+  OAuth & Open Authorization                                \\
+  SQL   & Structured Query Language                         \\
+  UI    & User Interface                                    \\
+  URI   & Uniform Resource Identifier                       \\
+  URL   & Uniform Resource Locator                          \\
+  UUID  & Universally Unique Identifier                     \\
+  UX    & User Experience
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%
 % ABBREVIATIONS END

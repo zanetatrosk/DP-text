@@ -1,0 +1,11 @@
+\chapter{Závěr}
+
+Cílem této diplomové práce byl návrh a implementace webové aplikace pro správu tanečních akcí a kurzů v oblasti společenských tanců, především pro bachatu, salsu a zouk. Nejprve jsem analyzovala současné způsoby, jak tanečníci a organizátoři vyhledávají, propagují a spravují události, a na základě zjištěných problémů jsem společně s konzultacemi v taneční komunitě stanovila požadavky, na kterých bude systém stavět.
+
+Na tyto požadavky navázal návrh architektury, databázového modelu a uživatelského rozhraní. Následně jsem navržené řešení implementovala jako klient--server aplikaci s frontendem v Reactu a backendem ve Spring Bootu (Kotlin), s využitím PostgreSQL pro perzistenci dat a MinIO pro ukládání médií. Vznikl funkční prototyp, který umožňuje uživatelům přehledně vyhledávat a filtrovat nadcházející akce, pracovat s detailem události a spravovat registrace, zatímco organizátorům poskytuje nástroje pro tvorbu a správu akcí včetně různých režimů registrace a integrace s Google Forms.
+
+V průběhu vývoje jsem prováděla manuální ověřování funkcionalit a klíčové části logiky jsem pokryla automatizovanými unit testy na frontendu i backendu. Ke konci práce jsem realizovala uživatelské testování s pěti respondenty z cílové skupiny, které potvrdilo srozumitelnost rozhraní a zároveň přineslo konkrétní podněty pro vylepšení, jež byly následně implementovány.
+
+Práce mi přinesla také nové praktické zkušenosti. Na backendu jsem si osvojila vývoj v jazyce Kotlin ve Spring Boot a na frontendu jsem se naučila pracovat s ekosystémem TanStack. Pro tvorbu uživatelského rozhraní jsem získala zkušenosti s Tailwind CSS a komponentami \texttt{shadcn/ui}.
+
+Stanovené cíle práce jsem splnila a výsledkem je použitelný prototyp, který řeší roztříštěnost informací a zjednodušuje procesy jak pro účastníky, tak pro organizátory. Řešení je navrženo tak, aby bylo v budoucnu rozšiřitelné. Další vývoj může směřovat k doplnění méně prioritních funkcionalit a k produkčnímu nasazení včetně řešení provozních aspektů a dlouhodobého sběru zpětné vazby od uživatelů.

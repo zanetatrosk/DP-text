@@ -1,6 +1,6 @@
-\chapter{Testování}
+\chapter{Testování a budoucí směřování aplikace}
 \begin{chapterabstract}
-Tato kapitola popisuje testování aplikace. Nejprve jsou zadefinovány pojmy týkající se testování. Poté je uvedeno jakým způsobem bylo testování funkcionalit systému prováděno a proč bylo zvolen zrovna tento způsob testování. Závěrečná část kapitoli se věnuje uživatelskému testování, jenž bylo prováděno s potencionálními uživateli aplikace. Nakonec jsou uvedeny výsledky testování a závěry, které z nich byly vyvozeny.
+Tato kapitola popisuje testování aplikace. Nejprve jsou zadefinovány pojmy týkající se testování. Poté je uvedeno, jakým způsobem bylo testování funkcionalit systému prováděno a proč byl zvolen právě tento způsob testování. Závěrečná část kapitoly se věnuje uživatelskému testování, jež bylo prováděno s potenciálními uživateli aplikace. Na konci kapitoly jsou shrnuty výsledky testování, zhodnocena výsledná podoba prototypu a nastíněno jeho další směřování.
 \end{chapterabstract}
 
 \section{Testování}
@@ -37,7 +37,7 @@ Na unit testování backendu jsem vzhledem k tomu, že je backend psaný ve fram
 
 
 \section{Uživatelské testování}
-Uživatelské testování bylo prováděno s potencionálními uživateli aplikace, kteří byli vybráni na základě jejich zájmu o danou problematiku. Při výběru uživatelů jsem se zaměřila na různé věkové skupiny a taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatelské testování probíhalo formou individuálních sezení, během kterých uživatelé prováděli různé úkoly v aplikaci, zatímco já jsem sledovala jejich interakce a sbírala zpětnou vazbu. Na konci těchto sezení jsem kladla otázky týkající se jejich zkušeností s aplikací, co se jim líbilo a co by mohlo být zlepšeno.
+Uživatelské testování bylo prováděno s potencionálními uživateli aplikace, kteří byli vybráni na základě jejich zájmu o danou problematiku. Uživatelské testování probíhalo formou individuálních sezení, během kterých uživatelé prováděli různé úkoly v aplikaci, zatímco já jsem sledovala jejich interakce a sbírala zpětnou vazbu. Na konci těchto sezení jsem kladla otázky týkající se jejich zkušeností s aplikací, co se jim líbilo a co by mohlo být zlepšeno.
 
 Před zahájením samotného testování byly navrženy scénáře úloh, které měli účastníci během testování plnit. Scénáře byly rozděleny do dvou skupin na scénáře pro běžného uživatele (tanečníka) a scénáře pro organizátora akcí. Snažila jsem se scénáře navrhnout tak, aby otestovaly klíčové funkce aplikace z pohledu obou typů uživatelů, a zároveň aby byly dostatečně jednoduché na pochopení a nebyly příliš časově náročné.
 
@@ -107,5 +107,28 @@ Tyto scénáře byly navrženy tak, aby otestovaly funkce aplikace z pohledu org
     \item Potvrďte registraci tanečníka "Martin Novák" pro tento výskyt akce.
     \item Synchronizujte registrace.
 \end{enumerate}
+\subsection{Uživatelé účastnící se testování}
+Pro uživatelské testování jsem oslovila 5 potencionálních uživatelů aplikace. Při výběru uživatelů jsem se zaměřila na různé věkové skupiny a taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatele nejmenuji, protože chci zachovat jejich anonymitu. Persony uživatelů, které se zůčastnili testování byli následující:
+\begin{itemize}
+    \item \textbf{Person A} – 31 let, pokročilý tanečník, účastní se tanečních akcí, ale neorganizuje je.
+    \item \textbf{Person B} – 30 let, středně pokročilý tanečník, účastní se tanečních akcí, ale neorganizuje je.
+    \item \textbf{Person C} – 23 let, začínající tanečnice, hledá taneční akce pro začátečníky.
+    \item \textbf{Person D} – 24 let, středně pokročilá tanečnice, účastní se tanečních akcí, ale neorganizuje je.
+    \item \textbf{Person E} – 35 let, středně pokročilá tanečnice, hledá taneční akce v různých městech.
+\end{itemize}
 
-\subsection{Výsledky testování a závěry}
+\subsection{Výsledky testování}
+Během uživatelského testování byla získána cenná zpětná vazba od všech zúčastněných respondentů. Většina uživatelů pozitivně hodnotila jednoduchost a přehlednost uživatelského rozhraní a neměla potíže s orientací v aplikaci. V průběhu testování však byly identifikovány i dílčí nedostatky, které byly následně odstraněny.
+
+Jedním z problémů byla vizuální nejednoznačnost karet událostí – při najetí kurzoru se zobrazovala animace stínu, která evokovala interaktivitu, ačkoliv karta samotná nebyla klikací. Tento nedostatek byl vyřešen odstraněním dané animace. Další nejasnost se týkala tlačítka pro zobrazení detailu akce, které obsahovalo ikonu šipky naznačující otevření odkazu v nové záložce, přestože se detail zobrazoval ve stejném okně. Pro zvýšení konzistence uživatelského rozhraní byla tato ikona odstraněna.
+
+Uživatelé rovněž upozornili na nedostatek v implementaci filtrování událostí, které nebylo řešeno pomocí query parametrů. V důsledku toho docházelo při použití navigačního tlačítka „zpět“ v prohlížeči ke ztrátě nastavených filtrů. Tento problém byl odstraněn zavedením filtrování prostřednictvím query parametrů, čímž byla zajištěna perzistence uživatelského nastavení.
+
+V neposlední řadě byl upraven mechanismus vyhledávání lokací. Původní implementace zobrazovala informaci o nenalezení výsledků i v situaci, kdy samotné vyhledávání ještě neproběhlo. K tomu docházelo z důvodu, že frontend zobrazoval tuto zprávu již při změně hodnoty ve vstupním poli, pokud byl současně počet zobrazených lokací roven nule. Tato logika byla upravena tak, aby odpovídala očekávanému chování. Informace o nenalezení výsledků se nyní zobrazuje pouze v případě, kdy uživatel zadá vyhledávací dotaz a následně proběhne vyhledávání, které skutečně nevrátí žádné výsledky.
+
+\subsection{Výsledná aplikace a její budoucí směřování}
+Výsledný prototyp aplikace zahrnuje veškeré funkcionality vycházející z požadavků kategorií Must have a Should have. Uživatelům umožňuje efektivně vyhledávat taneční akce, filtrovat je podle zvolených kritérií, přihlašovat se na jednotlivé události a spravovat svůj uživatelský profil. Organizátorům pak poskytuje nástroje pro tvorbu a správu akcí, včetně možnosti jejich publikace různými způsoby, jako je registrace párů, otevřená registrace nebo prostřednictvím Google formuláře.
+
+Během uživatelského testování se potvrdilo, že aplikace má potenciál stát se užitečným nástrojem pro taneční komunitu. Současně byly zohledněny a implementovány všechny relevantní připomínky uživatelů.
+
+Do budoucna je plánováno pokračování ve vývoji aplikace, zejména rozšiřování funkcionalit na základě požadavků kategorií Could have a Won’t have. Dále je v plánu realizace dalšího kola uživatelského testování s širší skupinou respondentů za účelem získání podrobnější zpětné vazby. V neposlední řadě se počítá s nasazením aplikace do produkčního prostředí, následným monitorováním jejího výkonu a spokojenosti uživatelů, což umožní pružně reagovat na vzniklé problémy a dále rozvíjet systém podle aktuálních potřeb.
