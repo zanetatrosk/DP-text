@@ -1,6 +1,6 @@
-\chapter{Testování a budoucí směřování aplikace}
+\chapter{Testování}
 \begin{chapterabstract}
-Tato kapitola popisuje testování aplikace. Nejprve jsou zadefinovány pojmy týkající se testování. Poté je uvedeno, jakým způsobem bylo testování funkcionalit systému prováděno a proč byl zvolen právě tento způsob testování. Závěrečná část kapitoly se věnuje uživatelskému testování, jež bylo prováděno s potenciálními uživateli aplikace. Na konci kapitoly jsou shrnuty výsledky testování, zhodnocena výsledná podoba prototypu a nastíněno jeho další směřování.
+Tato kapitola popisuje testování aplikace. Nejprve jsou zadefinovány pojmy týkající se testování. Poté je uvedeno, jakým způsobem bylo testování funkcionalit systému prováděno a proč byl zvolen právě tento způsob testování. Závěrečná část kapitoly se věnuje uživatelskému testování, jež bylo prováděno s potenciálními uživateli aplikace. Na konci kapitoly jsou shrnuty výsledky testování.
 \end{chapterabstract}
 
 \section{Testování}
@@ -29,12 +29,36 @@ Pro testování funkcionalit systému jsem zvolila kombinaci manuálního a auto
 \section{Implementace testů pro jednotlivé části systému}
 V následujících podsekcích popíši implementaci automatizovaných unit testů pro frontend a backend. Vysvětlím, jaké nástroje jsem použila pro testování a jak jsem postupovala při psaní testů pro jednotlivé části systému.
 \subsection{Frontend}
-Pro frontend unit testing jsem použila nástroj Jest, protože s ním již mám zkušenosti a z mého pohledu nabízí všechno co pro unit testing potřebuji. Jest je javascript testovací framework, který je kompatibilní s Babel, Node, React, Vue a dalšími frameworky/bundlery. Nabízí jednoduchou konfiguraci (pro většinu projektů stačí ta připravená) a testy spouští paralelně, což zrychluje testování. Navíc pro efektivnější práci spouští sadu testů tak, že primárně spustí testy, které předtím selhaly. API jestu je velmi jednoduché na používání a dobře zdokumentované. \cite{jest_docs}
+Pro frontend unit testing jsem použila testovací framework Vitest \cite{vitest_docs}, který je součástí ekosystému TanStack. Psaní testů usnadňovalo fakt, že jsem měla zkušenosti s podobným testovacím frameworkem zvaným Jest. 
 
-Při psaní unit testů pro frontend jsem se zaměřila na testování především částí obsahující logiku, většinou jsou tyto funkce umístěné ve složkách utils. V kódu ... je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text "Free", pro akci s cenou 100 Kč se zobrazí text "100 Kč" a pro akci s cenou null se zobrazí text "Not specified".
+Při psaní unit testů pro frontend jsem se zaměřila na testování především částí obsahující logiku, většinou jsou tyto funkce umístěné ve složkách utils. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text "Free", pro akci s cenou 100 Kč se zobrazí text "100 Kč" a pro akci s cenou null se zobrazí text "Not specified".
+
+\begin{lstlisting}[language=TypeScript, caption={Příklad unit testu pro frontend}, label={lst:frontend-unit-test}]
+import { describe, expect, it } from 'vitest'
+import { getLabelFromPrice } from './getLabelFromPrice'
+
+describe('getLabelFromPrice', () => {
+  it('returns "Not specified" when price is undefined', () => {
+    expect(getLabelFromPrice(undefined, 'USD')).toBe('Not specified')
+  })
+
+  it('returns "Not specified" when currency is missing', () => {
+    expect(getLabelFromPrice(10, undefined)).toBe('Not specified')
+  })
+
+  it('returns "Free" when price is 0 and currency is present', () => {
+    expect(getLabelFromPrice(0, 'CZK')).toBe('Free')
+  })
+
+  it('formats a non-zero price with two decimals', () => {
+    expect(getLabelFromPrice(12.5, 'EUR')).toBe('12.50 EUR')
+    expect(getLabelFromPrice(12, 'EUR')).toBe('12.00 EUR')
+  })
+})
+
+\end{lstlisting}
 \subsection{Backend}
 Na unit testování backendu jsem vzhledem k tomu, že je backend psaný ve frameworku Spring boot zvolila testovací framework JUnit, se kterým jsem se setkala standartně v rámci backend vývoje v Spring boot. \cite{junit_docs}
-
 
 \section{Uživatelské testování}
 Uživatelské testování bylo prováděno s potencionálními uživateli aplikace, kteří byli vybráni na základě jejich zájmu o danou problematiku. Uživatelské testování probíhalo formou individuálních sezení, během kterých uživatelé prováděli různé úkoly v aplikaci, zatímco já jsem sledovala jejich interakce a sbírala zpětnou vazbu. Na konci těchto sezení jsem kladla otázky týkající se jejich zkušeností s aplikací, co se jim líbilo a co by mohlo být zlepšeno.
@@ -46,10 +70,9 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
 
 \paragraph*{Přihlášení do aplikace a práce s profilem}
 \begin{enumerate}
-    \item Klikněte v navigaci na tlačítko "Sign in" a přihlaste se pomocí Google účtu.
-    \item Přejděte na stránku svého profilu.
-    \item Prohlédněte si svůj profil a zkontrolujte, zda jsou zobrazeny správné informace.
-    \item Klikněte na tlačítko "Edit profile" a upravte své informace dle gusta. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
+    \item Klikněte v navigaci na tlačítko "Sign in" a přihlaste se pomocí Google účtu pod emailem zanetrosk@gmail.com.
+    \item Přejděte na stránku profilu.
+    \item Klikněte na tlačítko "Edit profile" a upravte informace dle gusta. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
 \end{enumerate}
 
 \paragraph*{Vyhledávání a operace s tanečními akcemi}
@@ -89,32 +112,30 @@ Tyto scénáře byly navrženy tak, aby otestovaly funkce aplikace z pohledu org
     \item Klikněte na tlačítko "Create event" v navigaci.
     \item Vyplňte formulář pro založení akce s názvem "Testovací akce", která se bude konat v Praze, bude určena pro pokročilé tanečníky a bude obsahovat tanec "salsa". Uložte akci.
     \item Zkontrolujte zda je akce "Testovací akce" zobrazena v přehledu vašich akcí a přejděte na její detail.
-    \item Publikujte akci jako partnerskou a zkontrolujte, že je akce zobrazena v přehledu všech akcí.
+    \item Publikujte akci jako párovou a zkontrolujte, že je akce zobrazena v přehledu všech akcí.
     \item Zrušte publikaci akce a zkontrolujte, že je akce označena jako zrušená v přehledu všech akcí.
-    \item Odhlašte se.
 \end{enumerate}
 
 \paragraph*{Založení opakované akce, publikace pomocí google formuláře a práce s registracemi}
 \begin{enumerate}
-    \item Přihlaste se pomocí Google účtu za profil "Anna Testová".
-    \item Vytvořte opakovanou akci s názvem "Testovací opakovaná akce", která se bude konat každé pondělí v Praze, bude určena pro pokročilé tanečníky a bude obsahovat tanec "salsa". Uložte akci.
-    \item Publikujte první výskyt akce pomocí google formuláře pomocí poskytnutého ID a zkontrolujte, že je akce zobrazena v přehledu všech akcí.
+    \item Přihlaste se pomocí Google účtu za profil "Anna Nová".
+    \item Vytvořte opakovanou akci s názvem "Testovací opakovaná akce", která se bude konat každé pondělí v Praze po 4 týdny
+    \item Publikujte první výskyt akce pomocí google formuláře pomocí poskytnutého ID a zkontrolujte, že je akce zobrazena v přehledu všech akcí. Při publikaci zaškrtněte, že chcete potvrzovat registrace ručně.
     \item Přejděte na detail akce "Testovací opakovaná akce" na jeho první výskyt. 
     \item Přejděte na seznam registrací pro tento výskyt.
     \item Zrušte registraci tanečnice "Justyna Kowalska" pro tento výskyt akce.
-    \item Přejděte na profil tanečníka "Martin Novák".
+    \item Přejděte na profil tanečníka pod jménem "Zanda 2".
     \item Vraťte se zpět na seznam registrací pro tento výskyt akce. 
-    \item Potvrďte registraci tanečníka "Martin Novák" pro tento výskyt akce.
+    \item Potvrďte registraci tanečníka "Zanda 2" pro tento výskyt akce.
     \item Synchronizujte registrace.
 \end{enumerate}
 \subsection{Uživatelé účastnící se testování}
-Pro uživatelské testování jsem oslovila 5 potencionálních uživatelů aplikace. Při výběru uživatelů jsem se zaměřila na různé věkové skupiny a taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatele nejmenuji, protože chci zachovat jejich anonymitu. Persony uživatelů, které se zůčastnili testování byli následující:
+Pro uživatelské testování jsem oslovila 4 potencionální uživatele aplikace. Při výběru uživatelů jsem se zaměřila na různé věkové skupiny a taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatele nejmenuji, protože chci zachovat jejich anonymitu. Persony uživatelů, které se zůčastnili testování byli následující:
 \begin{itemize}
     \item \textbf{Person A} – 31 let, pokročilý tanečník, účastní se tanečních akcí, ale neorganizuje je.
-    \item \textbf{Person B} – 30 let, středně pokročilý tanečník, účastní se tanečních akcí, ale neorganizuje je.
-    \item \textbf{Person C} – 23 let, začínající tanečnice, hledá taneční akce pro začátečníky.
-    \item \textbf{Person D} – 24 let, středně pokročilá tanečnice, účastní se tanečních akcí, ale neorganizuje je.
-    \item \textbf{Person E} – 35 let, středně pokročilá tanečnice, hledá taneční akce v různých městech.
+    \item \textbf{Person B} – 23 let, začínající tanečnice, hledá taneční akce pro začátečníky.
+    \item \textbf{Person C} – 30 let, středně pokročilý tanečník, plánuje organizovat taneční akce.
+    \item \textbf{Person D} – 30 let, středně pokročilý tanečník, organizuje čtvrteční taneční akce.
 \end{itemize}
 
 \subsection{Výsledky testování}
@@ -125,10 +146,3 @@ Jedním z problémů byla vizuální nejednoznačnost karet událostí – při 
 Uživatelé rovněž upozornili na nedostatek v implementaci filtrování událostí, které nebylo řešeno pomocí query parametrů. V důsledku toho docházelo při použití navigačního tlačítka „zpět“ v prohlížeči ke ztrátě nastavených filtrů. Tento problém byl odstraněn zavedením filtrování prostřednictvím query parametrů, čímž byla zajištěna perzistence uživatelského nastavení.
 
 V neposlední řadě byl upraven mechanismus vyhledávání lokací. Původní implementace zobrazovala informaci o nenalezení výsledků i v situaci, kdy samotné vyhledávání ještě neproběhlo. K tomu docházelo z důvodu, že frontend zobrazoval tuto zprávu již při změně hodnoty ve vstupním poli, pokud byl současně počet zobrazených lokací roven nule. Tato logika byla upravena tak, aby odpovídala očekávanému chování. Informace o nenalezení výsledků se nyní zobrazuje pouze v případě, kdy uživatel zadá vyhledávací dotaz a následně proběhne vyhledávání, které skutečně nevrátí žádné výsledky.
-
-\subsection{Výsledná aplikace a její budoucí směřování}
-Výsledný prototyp aplikace zahrnuje veškeré funkcionality vycházející z požadavků kategorií Must have a Should have. Uživatelům umožňuje efektivně vyhledávat taneční akce, filtrovat je podle zvolených kritérií, přihlašovat se na jednotlivé události a spravovat svůj uživatelský profil. Organizátorům pak poskytuje nástroje pro tvorbu a správu akcí, včetně možnosti jejich publikace různými způsoby, jako je registrace párů, otevřená registrace nebo prostřednictvím Google formuláře.
-
-Během uživatelského testování se potvrdilo, že aplikace má potenciál stát se užitečným nástrojem pro taneční komunitu. Současně byly zohledněny a implementovány všechny relevantní připomínky uživatelů.
-
-Do budoucna je plánováno pokračování ve vývoji aplikace, zejména rozšiřování funkcionalit na základě požadavků kategorií Could have a Won’t have. Dále je v plánu realizace dalšího kola uživatelského testování s širší skupinou respondentů za účelem získání podrobnější zpětné vazby. V neposlední řadě se počítá s nasazením aplikace do produkčního prostředí, následným monitorováním jejího výkonu a spokojenosti uživatelů, což umožní pružně reagovat na vzniklé problémy a dále rozvíjet systém podle aktuálních potřeb.

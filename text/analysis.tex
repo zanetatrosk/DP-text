@@ -220,7 +220,7 @@ Jelikož se jedná o rozsáhlou webovou aplikaci, rozhodla jsem se mít oddělen
 
 Konkrétně jsem zvolila architekturu MVC (Model-View-Controller), která nám umožní oddělit logiku aplikace od její prezentace a usnadní nám tak vývoj a údržbu systému. Model bude zodpovědný za správu dat a obchodní logiku, View bude zodpovědný za prezentaci dat uživatelům, a Controller bude zprostředkovávat komunikaci mezi Modelem a View. \cite{mvc}
 
-\subsection{Databáze}
+\subsection{Návrh databáze}
 Při výběru databáze jsem uvažovala zda použít relační anebo NoSQL databázi. Jelikož se jedná o systém, který bude mít poměrně složitou strukturu dat s mnoha vztahy mezi různými entitami (například uživatelé, akce, registrace, atd.), rozhodla jsem se pro relační databázi. Relační databáze nám umožní snadno modelovat tyto vztahy a poskytne nám robustní nástroje pro správu dat a zajištění jejich integrity.
 
 Konkrétně jsem se rozhodla použít PostgreSQL \cite{postgresql_website}, což je open-source relační databáze, se kterou jsem již měla zkušenosti jak v praxi tak při studiu, takže se mi s ní bude dobře pracovat a zároveň nám poskytne všechny potřebné funkce pro správu dat v naší aplikaci.
@@ -300,7 +300,7 @@ jejich typy.
 \begin{sidewaysfigure}[p]
     \centering
     \includegraphics[width=\textheight,height=0.95\textwidth,keepaspectratio]{images/db-diagram.png}
-    \caption{Návrh databázového modelu}
+    \caption{ER diagram navržené databáze.}
     \label{fig:db_model}
 \end{sidewaysfigure}
 
