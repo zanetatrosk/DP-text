@@ -28,7 +28,7 @@ Aplikace musí být schopna zobrazit seznam nadcházejících akcí spolu s jeji
 \end{itemize}
 Pokud uživatel není organizátor, má navíc možnost se na akci přihlásit anebo ji označit že ho zajímá. Události se navíc vrací po stránkách, aby nedocházelo k zbytečnému načítání velkého množství dat najednou, což by mohlo zpomalit aplikaci.
 
-Seznam nadcházejících akcí umožní uživateli získat přehled o tom, jaké akce se budou konat v blízké době a zároveň každá z nich obsahuje stručně sepsané informace. Na základě těchto informací se uživatel může rozhodnout, že chce vědět více o konkrétní akci a zobrazit její detail.
+Seznam nadcházejících akcí umožní uživateli získat přehled o tom, jaké akce se budou konat v blízké době a zároveň každá z nich obsahuje stručně sepsané informace. Na základě těchto informací se uživatel může rozhodnout, zda chce vědět více o konkrétní akci a zobrazit její detail.
 
 \paragraph{F2 - Filtrování nadcházejících akcí.}\phantomsection\label{req:F2}
 Aplikace umožní uživatelům filtrovat nadcházející akce podle různých kritérií, jako jsou:
@@ -36,11 +36,11 @@ Aplikace umožní uživatelům filtrovat nadcházející akce podle různých kr
     \item Název akce
     \item Typ tance (swing, salsa, tango, atd.)
     \item Typ akce (kurz, workshop, party, atd.)
-    \item Lokalita -filtrování na úrovni města nebo státu
+    \item Lokalita (filtrování na úrovni města nebo státu)
 \end{itemize}
-Tento požadavek je nezbytný, protože umožní uživatelům snadno najít a prohlédnout si nadcházející taneční akce, aniž by museli, jak je to například na facebooku, hledat akce pomocí klíčových slov anebo doufat, že se jim akce zobrazí v jejich feedu na základě reakce jejich přátel. Vyfiltrované události se také budou vracet po stránkách jak je to popsáno v předchozím požadavku.
+Tento požadavek je nezbytný, protože umožní uživatelům snadno najít a prohlédnout si nadcházející taneční akce, aniž by museli, jak je to například na Facebooku, hledat akce pomocí klíčových slov anebo doufat, že se jim akce zobrazí v jejich feedu na základě reakce jejich přátel. Vyfiltrované události se také budou vracet po stránkách, jak je to popsáno v předchozím požadavku.
 
-Tohle mě jako potencionálnímu uživateli například umožní odfiltrovat akce, které se konají pro mě v nedostupné lokalitě anebo akce které jsou zaměřené na jiný taneční styl než ten který preferuji.
+Tohle mně jako potencionálnímu uživateli například umožní odfiltrovat akce, které se konají pro mě v nedostupné lokalitě anebo akce, které jsou zaměřené na jiný taneční styl než ten, který preferuji.
 
 \paragraph{F3 - Přihlášení uživatele pomocí Google účtu.}\phantomsection\label{req:F3}
 Aplikace musí umožnit uživatelům přihlásit se pomocí svého Google účtu, což zjednoduší proces registrace a přihlášení, a zároveň umožní využít funkce spojené s Google službami, jako je například integrace s Google Forms. Zároveň nám bude poskytnuto jméno a email uživatele, což usnadní uživateli vyplňování informací o sobě na profilu, protože tyto informace bude mít předvyplněné.
@@ -54,27 +54,27 @@ Přihlášený uživatel by měl mít možnost zobrazit detailní informace o ud
     \item Základní informace o akci (název, datum a čas, místo konání, cena, odkaz na facebookovou událost)
     \item Popisek akce
     \item Informace o organizátorovi (jméno, odkaz na profil)
-    \item Informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni (leader, follower))
+    \item Informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni - leader, follower)
     \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
 \end{itemize}
 
-Požadavek byl sepsán na základě konzultací s tanečníky, kde jsme diskutovali, jaké informace bychom uvítali u detailu akce, abychom se mohli lépe rozhodnout, zda se na akci přihlásit nebo ne. Opakovaně se mi dostávalo odpovědi, že by bylo užitečné mít informace o tom, kolik lidí se již registrovalo a kolik lidí má o akci zájem, protože to může být indikátor kvality akce (čím více lidí se přihlásí, tím více mám možnost například v případě párového tance ozkoušet různé partnery a akci si tím pádem více užít). 
+Požadavek byl sepsán na základě konzultací s tanečníky, kde jsme diskutovali, jaké informace bychom uvítali u detailu akce, abychom se mohli lépe rozhodnout, zda se na akci přihlásit nebo ne. Opakovaně se mi dostávalo odpovědi, že by bylo užitečné mít informace o tom, kolik lidí se již registrovalo a kolik lidí má o akci zájem, protože to může být indikátor kvality akce (čím více lidí se přihlásí, tím více mám možnost například v případě párového tance vyzkoušet různé partnery a akci si tím pádem více užít). 
 
 \paragraph{F6 - Přihlášený uživatel může přidávat vlastní akce.}\phantomsection\label{req:F6}
-Přihlášený uživatel by měl mít možnost přidávat vlastní taneční akce do aplikace. Tento požadavek umožní komunitě sdílet informace o různých akcích. Přidání akce je proces, který si klade za cíl strukturovaně uživateli umožnit zadat v přehledném formuláři všechny potřebné informace o akci nezbytné pro její zveřejnění v aplikaci. Formulář organizátorovi poskytuje rozhraní jehož výsledkem bude událost s dostatečnou informační hodnotou pro potencionální účastníky. 
+Přihlášený uživatel by měl mít možnost přidávat vlastní taneční akce do aplikace. Tento požadavek umožní komunitě sdílet informace o různých akcích. Přidání akce je proces, který si klade za cíl strukturovaně uživateli umožnit zadat v přehledném formuláři všechny potřebné informace o akci nezbytné pro její zveřejnění v aplikaci. Formulář organizátorovi poskytuje rozhraní, jehož výsledkem bude událost s dostatečnou informační hodnotou pro potencionální účastníky. 
 
 Mezi tyto informace patří:
 \begin{itemize}
     \item Název akce
     \item Datum a čas
     \item Místo konání
-    \item Cena pokud je uvedena a měna ve které je cena uvedena
+    \item Cena pokud je uvedena a její měna
     \item Popisek akce
     \item Informace o akci (typ tance, úroveň obtížnosti, druh události)
     \item Kapacita akce 
     \item Odkaz na facebookovou událost (pokud existuje) - to umožní uživatelům zkontrolovat další informace o akci, které nejsou uvedeny v aplikaci, a zároveň umožní organizátorům snadno propojit svou akci s již existující facebookovou událostí.
 \end{itemize}
-Uvedené informace o akci byli sestaveny po diskuzích s různými organizátory (ať už se jedná o lektory anebo lidi kteří organizují taneční večírky). Zároveň jsem se inspirovala informacemi, které jsou běžně uváděny v popiscích akcí na facebooku nebo na webových stránkách organizátorů.
+Uvedené informace o akci byly sestaveny po diskuzích s různými organizátory (ať už se jedná o lektory anebo lidi kteří organizují taneční večírky). Zároveň jsem se inspirovala informacemi, které jsou běžně uváděny v popiscích akcí na facebooku nebo na webových stránkách organizátorů.
 
 Formulář s informacemi bude rozdělen do několika kroků, aby se uživatelé necítili zahlceni množstvím informací, které musí zadat.
 Vzhledem k tomu, že organizátor nemusí mít při vytváření události k dispozici všechny potřebné informace, případně je ještě nemusí chtít zveřejnit nebo si přeje nejprve zkontrolovat výslednou podobu detailu akce, nebude odeslání formuláře znamenat okamžité zveřejnění akce v aplikaci. Místo toho se vytvoří koncept události, který bude organizátorovi přístupný pro další úpravy a doplnění informací.
@@ -177,7 +177,7 @@ Pro propagaci akcí a zlepšení uživatelského zážitku by bylo užitečné u
 Zároveň by bylo vhodné umožnit uživatelům přidávat média také do jejich profilu. Díky tomu by ostatní uživatelé mohli lépe poznat jejich taneční styl a úroveň. To může být obzvláště užitečné v případě akcí, které vyžadují určitou úroveň v daném tanečním stylu. Organizátor by tak mohl nahlédnout do médií přidaných k profilu uživatele a získat lepší podklad pro posouzení, zda jeho taneční dovednosti odpovídají požadavkům dané události.
 
 \paragraph{F25 - Vytvoření opakované akce.}\phantomsection\label{req:F25}
-Ve světě tanečních akcí se často vyskytují opakující se události, například pravidelné workshopy nebo taneční večírky. Tento požadavek by umožnil organizátorům snadno vytvářet opakované akce, což by ušetřilo čas a usnadnilo správu těchto událostí. Organizátor by mohl nastavit frekvenci opakování (denně, týdně, měsíčně) a další parametry, jako je počet opakování nebo datum ukončení opakování. 
+Ve světě tanečních akcí se často vyskytují opakující se události, například pravidelné workshopy nebo taneční večírky. Tento požadavek by umožnil organizátorům snadno vytvářet opakované akce, což by ušetřilo čas a usnadnilo správu těchto událostí. Organizátor by mohl nastavit frekvenci opakování (denně, týdně) a datum ukončení opakování.
 
 \paragraph{F26 - Možnost spravovat opakované akce samostatně.}\phantomsection\label{req:F26}
 Jelikož se opakující akce mohou lišit obsahem (například jeden týden může být zaměřen workshop na ladies styling a další týden na musicality), tak by bylo užitečné, aby organizátoři měli možnost spravovat jednotlivé opakované akce samostatně. To by jim umožnilo upravovat informace o konkrétní akci, například změnit popisek nebo přidat nové tagy, aniž by to ovlivnilo ostatní opakované akce. Také by bylo vhodné, aby šly jednotlivé akce publikovat postupně či zrušit jednotlivé akce bez nutnosti zrušení celé série opakovaných akcí.
@@ -193,20 +193,23 @@ Tento druh požadavků bývá označován jako "nice to have" a zahrnuje funkce,
 
 \paragraph{F28 - Notifikace.}\phantomsection\label{req:F28}
 Aplikace by mohla posílat notifikace uživatelům, například o nadcházejících akcích, změnách v jejich registracích nebo změnách provedených v akci, na které jsou přihlášeni. Tato funkce by zlepšila uživatelskou zkušenost a pomohla uživatelům být informováni o důležitých událostech. 
-   
+
+\paragraph{F29 - Možnost přidávání akcí do existující série akcí.}\phantomsection\label{req:F29}
+Tento požadavek by umožnil organizátorům přidávat nové akce do již existující série opakovaných akcí, což by usnadnilo správu těchto událostí a umožnilo organizátorům flexibilně reagovat na potřeby své komunity. Například pokud organizátor pravidelně pořádá taneční večírky každý pátek, mohl by snadno přidat další páteční večírek do této série, aniž by musel vytvářet zcela novou sérii opakovaných akcí.
+
 \subsection{Won't have (nebude mít)}
 Tato skupina požadavků nebývá implementována v následující verzi aplikace, ale může být zvážena pro budoucí vývoj. Někteří mohou tyto požadavky za ty, které se nikdy nezrealizují. Proto jsou občas rozdělovány do dvou skupin, podle toho zda v budoucnu připadá v úvahu jejich implementace či nikoliv.\cite{moscow:definition}
 
-\paragraph{F29 - Integrace s kalendářem.}\phantomsection\label{req:F29}
+\paragraph{F30 - Integrace s kalendářem.}\phantomsection\label{req:F30}
 Tato funkce by umožnila uživatelům synchronizovat své registrace na akce s jejich osobním kalendářem, což by usnadnilo plánování a připomínání nadcházejících událostí.
 
-\paragraph{F30 - Scraping událostí z webu.}\phantomsection\label{req:F30}
+\paragraph{F31 - Scraping událostí z webu.}\phantomsection\label{req:F31}
 Tento požadavek jsem zamýšlela implementovat za cílem naplnit aplikaci obsahem obvzlášť zpočátku, kdy ještě nebude mít mnoho uživatelů, kteří by přidávali akce. Scraping událostí z webu by umožnil automatické získávání informací o nadcházejících akcích z různých webových stránek a jejich přidávání do aplikace. Nicméně, vzhledem k tomu, že scraping může být právně problematický a může porušovat podmínky používání některých webových stránek, jsem se rozhodla tento požadavek zatím nezahrnovat do vývoje aplikace. Také je problém ten, že tím že se snažíme získat informace z různých webových stránek, můžeme narazit na různé formáty a struktury dat, což by mohlo zkomplikovat implementaci této funkce a způsobit problémy s kvalitou dat v aplikaci.
 
-\paragraph{F31 - Internalizace.}\phantomsection\label{req:F31}
+\paragraph{F32 - Internalizace.}\phantomsection\label{req:F32}
 Tato funkce by umožnila uživatelům přepínat jazyk aplikace, což by zlepšilo přístupnost pro uživatele z různých zemí. Jelikož se v této doméně používá hlavně angličtina, tak tento požadavek není zas tak důležitý a tudíž se nebude zatím implementovat.
 
-\paragraph{F32 - Hodnocení a recenze akcí.}\phantomsection\label{req:F32}
+\paragraph{F33 - Hodnocení a recenze akcí.}\phantomsection\label{req:F33}
 Uživatelé by měli mít možnost hodnotit a psát recenze na akce,
 což pomůže ostatním uživatelům při rozhodování, zda se akce zúčastnit.
 
@@ -234,6 +237,13 @@ Opakující se události jsou řešeny prostřednictvím nadřazené tabulky \te
 která odděluje logickou sérii událostí od jednotlivých termínů, což umožňuje flexibilní správu 
 jednotlivých výskytů bez narušení celé série.
 Navrhnutý model obsahuje ve výsledku 19 tabulek, které reprezentují různé entity a jejich vztahy v systému. 
+
+\begin{sidewaysfigure}[p]
+    \centering
+    \includegraphics[width=\textheight,height=0.95\textwidth,keepaspectratio]{images/db-diagram.png}
+    \caption{ER diagram navržené databáze.}
+    \label{fig:db_model}
+\end{sidewaysfigure}
 
 \paragraph{users}- Tabulka obsahuje základní autentizační informace o uživatelích systému. 
 Ukládá e-mailovou adresu, identifikaci poskytovatele přihlášení (např. Google) 
@@ -268,8 +278,7 @@ fotografií nebo propagačních materiálů. Tabulka obsahuje také pořadí zob
 \paragraph{locations}- Tabulka uchovává informace o místech konání událostí, například název místa, 
 adresu, město a stát. Jedna lokace může být sdílena více událostmi.
 
-\paragraph{dancer\_roles}- Tabulka obsahuje seznam možných tanečních rolí, například leader, follower 
-nebo role\_rotation. Slouží jako referenční tabulka pro uživatelské profily i registrace na události.
+\paragraph{dancer\_roles}- Tabulka obsahuje seznam možných tanečních rolí, jedná se o role leader a follower. Slouží jako referenční tabulka pro uživatelské profily i registrace na události.
 
 \paragraph{dance\_styles}- Tabulka uchovává seznam tanečních stylů podporovaných systémem, například 
 salsa, bachata nebo kizomba. Tyto styly mohou být přiřazeny uživatelům i událostem.
@@ -297,14 +306,9 @@ pro které je daná událost určena.
 Tabulka reprezentuje vztah M:N mezi událostmi a 
 jejich typy.
 
-\begin{sidewaysfigure}[p]
-    \centering
-    \includegraphics[width=\textheight,height=0.95\textwidth,keepaspectratio]{images/db-diagram.png}
-    \caption{ER diagram navržené databáze.}
-    \label{fig:db_model}
-\end{sidewaysfigure}
 
-Dle požadavku .. bylo třeba ještě vymyslet jak ukládat obrázky a videa. Jelikož jsem je nechtěla ukládat přímo do databáze, ale využít nějaké úložiště, které je pro tento účel vhodnější. Jelikož videa můžou být v budoucnu většího rozsahu, rozhodla jsem se použít pro ukládání médií objektovou databázi \cite{objective_storage}, protože je pro tento účel vhodnější než tradiční relační databáze. Jelikož si chci databázi hostovat sama kvůli finančním prostředkům, rozhodla jsem se pro MinIO \cite{minio_github}, což je open-source objektové úložiště. MinIO nám umožní snadno ukládat a spravovat média, jako jsou fotografie a videa, a zároveň nám poskytne škálovatelné řešení pro růst našeho systému.
+
+Dle požadavku \ref{req:F24} bylo třeba ještě vymyslet jak ukládat obrázky a videa. Jelikož jsem je nechtěla ukládat přímo do databáze, ale využít nějaké úložiště, které je pro tento účel vhodnější. Jelikož videa můžou být v budoucnu většího rozsahu, rozhodla jsem se použít pro ukládání médií objektovou databázi \cite{objective_storage}, protože je pro tento účel vhodnější než tradiční relační databáze. Jelikož si chci databázi hostovat sama kvůli finančním prostředkům, rozhodla jsem se pro MinIO \cite{minio_github}, což je open-source objektové úložiště. MinIO nám umožní snadno ukládat a spravovat média, jako jsou fotografie a videa, a zároveň nám poskytne škálovatelné řešení pro růst našeho systému.
 \subsection{Server - návrh backendu}
 Backend bude zodpovědný za zpracování požadavků od klienta, komunikaci s databází a implementaci obchodní logiky. V následujících podsekcích se zaměřím na výběr frameworku pro backend podporující architekturu MVC.
 

@@ -146,3 +146,9 @@ Jedním z problémů byla vizuální nejednoznačnost karet událostí – při 
 Uživatelé rovněž upozornili na nedostatek v implementaci filtrování událostí, které nebylo řešeno pomocí query parametrů. V důsledku toho docházelo při použití navigačního tlačítka „zpět“ v prohlížeči ke ztrátě nastavených filtrů. Tento problém byl odstraněn zavedením filtrování prostřednictvím query parametrů, čímž byla zajištěna perzistence uživatelského nastavení.
 
 V neposlední řadě byl upraven mechanismus vyhledávání lokací. Původní implementace zobrazovala informaci o nenalezení výsledků i v situaci, kdy samotné vyhledávání ještě neproběhlo. K tomu docházelo z důvodu, že frontend zobrazoval tuto zprávu již při změně hodnoty ve vstupním poli, pokud byl současně počet zobrazených lokací roven nule. Tato logika byla upravena tak, aby odpovídala očekávanému chování. Informace o nenalezení výsledků se nyní zobrazuje pouze v případě, kdy uživatel zadá vyhledávací dotaz a následně proběhne vyhledávání, které skutečně nevrátí žádné výsledky.
+
+Při testování s organizátory se ukázalo, že proces publikace události pomocí Google formuláře není zcela intuitivní. Někteří uživatelé měli potíže s pochopením, jak získat ID formuláře. Proto jsem přidala do modálu pro publikaci události pomocí Google formuláře podrobnější popis, jak ID formuláře získat.
+
+Dále uživatelé vyjádřili výhrady k nedostatečnému zastoupení tanečních stylů. Konkrétně požadovali, aby seznam neobsahoval pouze obecné styly, jako je bachata, ale také jejich subžánry a fusion varianty (podrobněji popsáno v sekci \ref{sec:tanecni-styly}). Na základě této zpětné vazby byl seznam tanečních stylů rozšířen.
+
+Současně byla upravena i kategorizace úrovní pokročilosti, kde byla přidána možnost „Open level“. Tato volba umožňuje organizátorům označit akce určené pro účastníky všech úrovní, aniž by bylo nutné specifikovat konkrétní pokročilost.

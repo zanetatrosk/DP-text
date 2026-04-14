@@ -87,12 +87,12 @@ Při testování přihlášení jsem narazila na problém, že když se přihlá
 Registrace uživatele začíná ve chvíli, když uživatel zaklikne v aplikace, že se chce registrovat anebo vyplní google formulář. 
 V případě že se jedná o registraci přes aplikaci, uživatel v případě otevřené registrace jen potvrdí, že se chce registrovat, a v případě partnerské registrace vybere roli, kterou chce zastávat. Po odeslání formuláře se vytvoří záznam v databázi s informací o registraci a jejím stavu (např. čekající na schválení, schválená, zamítnutá). V případě že se jedná o google formulář, je proces vysvětlen blíže v následující sekci. Organizátor akce pak může tyto registrace spravovat a měnit jejich stav. Stavový diagram pro registrace je zobrazen na obrázku \ref{fig:registration-state-diagram} a popisuje jak se přiřazují stavy pro registraci a jaké akce jsou s těmito stavy spojeny.
 
-\begin{figure}[ht]
+\begin{sidewaysfigure}[p]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/state-diagram.png}
+    \includegraphics[width=\textheight,height=0.95\textwidth,keepaspectratio]{images/state-diagram.png}
     \caption{Stavový diagram pro registrace.}
     \label{fig:registration-state-diagram}
-\end{figure}
+\end{sidewaysfigure}
 
 V případě, že organizátor chce vidět všechny registrace a s nimi pracovat, bylo třeba implementovat endpoint, který vrací všechny registrace pro danou akci. Jelikož chceme aby implementace byla do budoucna rozšiřitelná, bylo třeba navrhnout strukturu odpovědi obecně, bez ohledu na to, zda se jedná o registrace z google formuláře nebo z aplikace. Proto jsem navrhla, že se budou zasílat hlavičky tabulky, a dále samotné registrace, ve kterých bude uloženo mapování mezi hlavičkou a hodnotou odpovědi. V případě, že se jedná o registraci přes aplikaci, máme staticky definované hlavičky (např. jméno, email, role), a v případě google formuláře jsou hlavičky dynamické a závisí na struktuře formuláře. Příklad odpovědi pro endpoint, který vrací registrace, je zobrazen v ukázce kódu \ref{lst:registrations-response}.
 
@@ -297,4 +297,9 @@ function RouteComponent() {
 \section{Databáze}
 Jak již bylo zmíněno v sekci Návrh, pro databázi jsem zvolila relační databázi PostgreSQL. Při implementace databáze jsem vytvořila dva skripty pro vytvoření tabulek a vložení testovacích dat. První skript \texttt{create\_tables.sql} obsahuje SQL příkazy pro vytvoření všech tabulek podle schématu navrženého v sekci Návrh. Druhý skript \texttt{insert\_test\_data.sql} obsahuje SQL příkazy pro vložení testovacích dat do tabulek. 
 
-Pro média jsem se rozhodla využít objektové úložiště MinIO, jak jsem popsala v sekci Návrh. Při ukládání médií uložím do databáze pouze URL, které odkazuje na dané médium v objektové databázi. Samotné médium je však uloženo v objektové databázi.
+Pro média jsem se rozhodla využít objektové úložiště MinIO, jak jsem popsala v sekci Návrh. Při ukládání médií uložím do databáze pouze URL, které odkazuje na dané médium v objektové databázi. Samotné médium je však uloženo v objektové databázi. Při implementaci formuláře pro událost jsem narazila na problém, že média ukládám rovnou na server, avšak se může stát, že uživatel nakonec událost nevytvoří. Pro tyto případy jsem se rozhodla implementovat job, který bude pravidelně kontrolovat média, která jsou uložena na serveru, a pokud zjistí, že nějaké médium není přiřazeno k žádné entitě v databázi (například události), tak toto médium smaže. Tento job se spuští jednou za den, aby se zabránilo zbytečnému zatěžování serveru. 
+
+\section{Spuštění projektu}
+Ačkoliv nasazení aplikace do produkčního prostředí není předmětem této práce, bylo třeba zajistit, aby aplikaci bylo možné snadno spustit. Pro tento účel byl zvolen Docker, který umožňuje spustit aplikaci v izolovaném kontejneru, čímž zjednodušuje proces nasazení a přispívá k zajištění konzistentního chování napříč různými prostředími \cite{docker_fast_consistent_delivery}.
+
+Pro obě části projektu (frontend i backend) byly vytvořeny Dockerfile soubory, které slouží k definici a sestavení image dané aplikace. Dále byly vytvořeny Docker Compose soubory, jež umožňují definovat a spravovat více vzájemně propojených kontejnerů tvořících aplikaci. \cite{theserverside_dockerfile_vs_compose}
