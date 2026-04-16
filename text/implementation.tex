@@ -7,7 +7,7 @@ V této kapitole je popsána implementace jednotlivých částí projektu (front
 Pro vytvoření backendové části projektu byl zvolen framework Spring Boot, přičemž samotný projekt byl založen v prostředí IntelliJ IDEA, které bylo určeno jako hlavní nástroj pro vývoj backendu. Toto vývojové prostředí automaticky vytvořilo základní strukturu projektu včetně konfigurace nástroje Gradle. IntelliJ IDEA zároveň poskytuje širokou škálu funkcionalit, které usnadňují vývoj, jako je přehledné ladění aplikace, integrace se systémem pro správu verzí Git či podpora práce s databázemi. \cite{jetbrains_idea_features}
 
 \subsection{Přihlášení uživatele}
-Přihlášení uživatele bylo realizováno pomocí Google na základě požadavku \ref{req:F3}. Jelikož naše aplikace není jen klientská, ale i serverová, bylo potřeba implementovat přihlášení i na serveru.
+Přihlášení uživatele bylo realizováno pomocí Google na základě požadavku \ref{req:F3}. Jelikož aplikace není jen klientská, ale i serverová, bylo potřeba implementovat přihlášení i na serveru.
 
 Prvním krokem bylo vytvoření projektu v Google Cloud Console. Poté bylo potřeba vytvořit OAuth 2.0 Client ID pro webovou aplikaci, což nám poskytlo Client ID a Client Secret, které jsou nezbytné pro implementaci přihlášení. Následně byly nastaveny redirect URI, tedy adresy, na které bude Google přesměrovávat uživatele po úspěšném přihlášení, a origins, tedy adresy, ze kterých bude možné přihlášení provést.
 
@@ -144,7 +144,7 @@ Jelikož jedna z hlavních funkcí aplikace je možnost propojit formulář z Go
 
 Provolání samotného Google API je obdobné jako u autentizace, jen je potřeba, aby uživatelova oprávnění obsahovala oprávnění pro přístup k Google Forms API, což jsem řešila pomocí inkrementální autorizace, jak jsem popsala v sekci \ref{auth_incremental}, a dále je nutné znát ID formuláře. \cite{google_forms_get_method}
 
-V rámci integrace provoláváme zejména dva endpointy Google Forms API \cite{google_forms_api}:
+V rámci integrace provoláváme zejména dva endpointy Google Forms API \cite{google_forms_api_rest}:
 \begin{itemize}
   \item \texttt{GET /v1/forms/\{formId\}} -- vrací formulář.
   \item \texttt{GET /v1/forms/\{formId\}/responses} -- vrací seznam odpovědí odeslaných z formuláře.

@@ -24,14 +24,14 @@ Mezi tyto typy testů \cite{perfecto_types_of_testing} patří:
 \end{itemize}
 
 \subsection{Způsob testování}
-Pro testování funkcionalit systému jsem zvolila kombinaci manuálního a automatizovaného testování. V případě unit testů bylo zvoleno automatizované testování, protože umožňuje rychlé a efektivní testování jednotlivých částí kódu. Pro integration testy a end-to-end testy jsem zvolila manuální testování, protože tyto testy často vyžadují komplexní scénáře a interakce mezi různými částmi systému, které mohou být obtížné automatizovat. Při přidání nové funkcionality provádím vždy manuální smoke testy, abych ověřila, že základní funkcionality systému fungují správně. Před vydáním prototypu aplikace jsem se rozhodla provést acceptance testy s potenciálními uživateli, abych získala zpětnou vazbu a ověřila, že systém splňuje požadavky a je připraven k budoucímu nasazení.
+Pro testování funkcionalit systému jsem zvolila kombinaci manuálního a automatizovaného testování. V případě unit testů bylo zvoleno automatizované testování, protože umožňuje rychlé a efektivní testování jednotlivých částí kódu. Pro integration testy a end-to-end testy jsem zvolila manuální testování, protože tyto testy často vyžadují komplexní scénáře a interakce mezi různými částmi systému, které mohou být obtížné automatizovat. Při přidání nové funkcionality provádím vždy manuální smoke testy, abych ověřila, že základní funkcionality systému fungují správně. Před vydáním prototypu aplikace jsem se rozhodla provést akceptační testy (v textu dále označované jako uživatelské) s potenciálními uživateli. Cílem bylo získat zpětnou vazbu a ověřit, že systém splňuje stanovené požadavky a bude v budoucnu připraven k nasazení do produkčního prostředí.
 
 \section{Implementace testů pro jednotlivé části systému}
 V následujících podsekcích popíši implementaci automatizovaných unit testů pro frontend a backend. Vysvětlím, jaké nástroje jsem použila pro testování a jak jsem postupovala při psaní testů pro jednotlivé části systému.
 \subsection{Frontend}
 Pro frontend unit testing jsem použila testovací framework Vitest \cite{vitest_docs}, který je součástí ekosystému TanStack. Psaní testů usnadňovalo fakt, že jsem měla zkušenosti s podobným testovacím frameworkem zvaným Jest. 
 
-Při psaní unit testů pro frontend jsem se zaměřila na testování především částí obsahující logiku, většinou jsou tyto funkce umístěné ve složkách utils. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text "Free", pro akci s cenou 100 Kč se zobrazí text "100 Kč" a pro akci s cenou null se zobrazí text "Not specified".
+Při psaní unit testů pro frontend jsem se zaměřila především na části obsahující logiku. Tyto funkce jsou většinou umístěny v adresářích \texttt{utils}. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text "Free", pro akci s cenou 100 Kč se zobrazí text "100 Kč" a pro akci s cenou null se zobrazí text "Not specified".
 
 \begin{lstlisting}[language=TypeScript, caption={Příklad unit testu pro frontend}, label={lst:frontend-unit-test}]
 import { describe, expect, it } from 'vitest'
@@ -59,6 +59,8 @@ describe('getLabelFromPrice', () => {
 \end{lstlisting}
 \subsection{Backend}
 Na unit testování backendu jsem vzhledem k tomu, že je backend psaný ve frameworku Spring Boot, zvolila testovací framework JUnit, se kterým jsem se setkala standardně v rámci backend vývoje ve Spring Bootu. \cite{junit_docs}
+
+Při psaní unit testů pro backend jsem se zaměřila na testování především služeb, které obsahují \textit{business} logiku. 
 
 \section{Uživatelské testování}
 Uživatelské testování bylo prováděno s potenciálními uživateli aplikace, kteří byli vybráni na základě jejich zájmu o danou problematiku. Uživatelské testování probíhalo formou individuálních sezení, během kterých uživatelé prováděli různé úkoly v aplikaci, zatímco já jsem sledovala jejich interakce a sbírala zpětnou vazbu. Na konci těchto sezení jsem kladla otázky týkající se jejich zkušeností s aplikací, co se jim líbilo a co by mohlo být zlepšeno.
@@ -130,13 +132,14 @@ Tyto scénáře byly navrženy tak, aby otestovaly funkce aplikace z pohledu org
     \item Synchronizujte registrace.
 \end{enumerate}
 \subsection{Uživatelé účastnící se testování}
-Pro uživatelské testování jsem oslovila 4 potenciální uživatele aplikace. Při výběru uživatelů jsem se zaměřila na různé taneční úrovně, abych získala co nejširší spektrum zpětné vazby. Uživatele nejmenuji, protože chci zachovat jejich anonymitu. Persony uživatelů, kteří se zúčastnili testování, byly následující:
+Pro uživatelské testování jsem oslovila 4 potenciální uživatele aplikace. Při výběru uživatelů jsem se zaměřila na různé taneční úrovně a styly, abych získala co nejširší spektrum zpětné vazby. Uživatele nejmenuji, protože chci zachovat jejich anonymitu. Persony uživatelů, kteří se zúčastnili testování, byly následující:
 \begin{itemize}
-    \item \textbf{Person A} – 31 let, pokročilý tanečník, účastní se tanečních akcí, ale neorganizuje je.
-    \item \textbf{Person B} – 23 let, začínající tanečnice, hledá taneční akce pro začátečníky.
-    \item \textbf{Person C} – 30 let, středně pokročilý tanečník, plánuje organizovat taneční akce.
-    \item \textbf{Person D} – 30 let, středně pokročilý tanečník, organizuje čtvrteční taneční akce.
+    \item \textbf{Person A} – 31 let, pokročilý tanečník, účastní se tanečních akcí, ale sám je neorganizuje. Tancuje bachatu a zouk.
+    \item \textbf{Person B} – 23 let, začínající tanečnice, vyhledává taneční akce vhodné pro začátečníky. Tancuje bachatu.
+    \item \textbf{Person C} – 30 let, středně pokročilý tanečník, plánuje organizovat taneční akce. Tancuje bachatu a salsu.
+    \item \textbf{Person D} – 30 let, středně pokročilý tanečník, pravidelně organizuje taneční akce. Tancuje bachatu a salsu.
 \end{itemize}
+
 
 \subsection{Výsledky testování}
 Během uživatelského testování byla získána cenná zpětná vazba od všech zúčastněných respondentů. Většina uživatelů pozitivně hodnotila jednoduchost a přehlednost uživatelského rozhraní a neměla potíže s orientací v aplikaci. V průběhu testování však byly identifikovány i dílčí nedostatky, které byly následně odstraněny.
