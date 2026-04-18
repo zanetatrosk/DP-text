@@ -154,7 +154,7 @@ Sekce galerie obsahuje náhledy obrázků a videí, které jsou zobrazeny ve for
 \end{figure}
 
 \subsection{Modal pro publikování akce}
-Na rozdíl od jednoduchých operací, jako je smazání události, vyžaduje publikace akce speciální modal. Tento modal obsahuje formulář, ve kterém uživatel vybírá způsob zveřejnění akce, jak je specifikováno v požadavku~\reqref{F8}. Modal zahrnuje název „Publish event“, krátký popis účinků zveřejnění a možnost výběru způsobu publikace. Pro všechny způsoby publikace lze nastavit, zda bude uživatel potvrzovat jednotlivé registrace účastníků, v souladu s požadavkem~\reqref{F21}.
+Na rozdíl od jednoduchých operací, jako je smazání události, vyžaduje publikace akce speciální modal. Tento modal obsahuje formulář, ve kterém uživatel vybírá způsob zveřejnění akce, jak je specifikováno v požadavku~\reqref{F8}. Modal zahrnuje název „Publish event“, krátký popis účinků zveřejnění a možnost výběru způsobu publikace. Pro všechny způsoby publikace lze nastavit, zda bude uživatel potvrzovat jednotlivé registrace účastníků, v souladu s požadavkem~\reqref{F21}. V případě, že uživatel zvolí publikaci pomocí google formuláře, se zobrazí uživateli navíc sekce pro povolení přístupu ke google formuláři (pokud nemá přístup již povolený) a pole pro zadání URL google formuláře.
 
 \subsection{Profil uživatele}
 Profil uživatele jsem se snažila navrhnout tak, aby byl přehledný a obsahoval důležité informace o uživateli. Zároveň jsem chtěla, aby designem evokoval profil na sociální síti, protože jsou uživatelé na takové rozhraní zvyklí a bude pro ně přirozené se v něm pohybovat. Profil uživatele se skládá z dvou částí:
@@ -171,7 +171,7 @@ Design této komponenty jsem vytvářela přímo v kódu a jeho finální verze 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/profile-light.png}
-    \caption{Výsledný profil uživatele}
+    \caption{Výsledný profil uživatele.}
     \label{fig:userProfile}
 \end{figure}
 
@@ -193,7 +193,7 @@ Na obrázku \ref{fig:myEvents} je znázorněna finální implementace stránky v
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/my-events.png}
-    \caption{Finální implementace stránky "Moje akce"}
+    \caption{Finální implementace stránky "Moje akce".}
     \label{fig:myEvents}
 \end{figure}
 
@@ -225,6 +225,13 @@ Dospěla jsem k následujícímu rozdělení:
     \end{itemize}
 \end{itemize}
 
+Finální design této stránky lze vidět na obrázku \ref{fig:createEvent}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/add-event.png}
+    \caption{Finální design stránky pro vytvoření akce.}
+    \label{fig:createEvent}
+\end{figure}
 \subsection{O aplikaci}
 Tato stránka nebyla potřeba nijak zvlášť navrhovat, protože bude obsahovat pouze textové informace o aplikaci, které budou rozděleny do několika odstavců.
 Stránka bude obsahovat informace z požadavku~\reqref{F27}.
@@ -235,7 +242,14 @@ Tato stránka bude přístupná pouze pro organizátory dané akce a bude obsaho
 Stránka bude tvořena názvem akce a pod ním bude datum akce. V případě, že je akce opakovaná, bude zde stejná komponenta jako u detailu akce, která dovolí přepínat mezi jednotlivými výskyty akce dle požadavku \reqref{F26}.
 
 Pod tím se bude nacházet tabulka, která bude obsahovat informace o registracích pro danou akci. Hlavička tabulky bude obsahovat zaškrtávací pole pro označení všech registrací, informace o uživateli, který se registroval, datum registrace a status registrace. 
-Při zaškrtnutí konkrétní registrace se zobrazí možnosti pro práci s touto registrací, například zrušení registrace, přijetí registrace, atd. Každá hlavička tabulky obsahuje vhodný filtr pro každý sloupec, což může umožnit například filtrovat registrace podle statusu registrace, který organizátor chce vidět.
+Jak lze vidět na obrázku \ref{fig:registeredUsers}, při zaškrtnutí konkrétní registrace se zobrazí možnosti pro práci s touto registrací, například zrušení registrace, přijetí registrace, atd. Každá hlavička tabulky obsahuje vhodný filtr pro každý sloupec, což může umožnit například filtrovat registrace podle statusu registrace, který organizátor chce vidět.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/registrations.png}
+    \caption{Návrh stránky s registrovanými uživateli pro danou akci.}
+    \label{fig:registeredUsers}
+\end{figure}
 
 \subsection{Přihlašování a odhlašování z aplikace}
 Pro přihlašování do aplikace jsem navrhla samostatnou stránku, která obsahuje kartu s tlačítkem umožňujícím přihlášení pomocí účtu Google dle požadavku~\reqref{F3}. V případě potřeby rozšíření o další způsoby přihlašování, například pomocí e-mailu a hesla, by bylo možné tyto možnosti do stejné karty snadno doplnit.
