@@ -40,7 +40,7 @@ Proces přihlášení začíná na straně klienta. Uživatel klikne na tlačít
 
 Url, které klient volá pro přihlášení, vygeneruje funkce na základě parametrů, jejíž implementaci lze nahlédnout v kódu \ref{lst:google_oauth_url}.
 
-\begin{lstlisting}[language=TypeScript, label={lst:google_oauth_url}, caption={Funkce pro generování url pro přihlášení přes Google OAuth}]
+\begin{lstlisting}[language=TypeScript, label={lst:google_oauth_url}, caption={Funkce pro generování url pro přihlášení přes Google OAuth.}]
 export const buildGoogleOAuthUrl = (params: {
   scope: string;
   state?: string;
@@ -262,7 +262,7 @@ Tím, že jsme vytvořili projekt pomocí TanstackStart, máme již předpřipra
 
 Například soubor \texttt{src/routes/my-profile.tsx} bude odpovídat URL \texttt{/my-profile}. V ukázce kódu \ref{lst:profile-route} lze vidět definovanou routu, kde v případě že uživatel není přihlášen, bude přesměrován na přihlašovací stránku, a pokud je přihlášen, načtou se data z API a zobrazí se profilová stránka s těmito daty. 
 
-\begin{lstlisting}[language=TypeScript, caption={Příklad definice routy pro profil uživatele}, label={lst:profile-route}]
+\begin{lstlisting}[language=TypeScript, caption={Příklad definice routy pro profil uživatele.}, label={lst:profile-route}]
 export const Route = createFileRoute("/my-profile")({
   beforeLoad: requireAuth,
   component: RouteComponent,

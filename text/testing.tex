@@ -33,7 +33,7 @@ Pro frontend unit testing jsem použila testovací framework Vitest \cite{vitest
 
 Při psaní unit testů pro frontend jsem se zaměřila především na části obsahující logiku. Tyto funkce jsou většinou umístěny v adresářích \texttt{utils}. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text \textquote{Free}, pro akci s cenou 100 Kč se zobrazí text \textquote{100 Kč} a pro akci s nedefinovanou cenou se zobrazí text \textquote{Not specified}.
 
-\begin{lstlisting}[language=TypeScript, caption={Příklad unit testu pro frontend}, label={lst:frontend-unit-test}]
+\begin{lstlisting}[language=TypeScript, caption={Příklad unit testu pro frontend.}, label={lst:frontend-unit-test}]
 import { describe, expect, it } from 'vitest'
 import { getLabelFromPrice } from './getLabelFromPrice'
 
