@@ -99,7 +99,7 @@ Stránka se skládá ze sekce pro vyhledávání akcí a výčtu nadcházející
 
 Pro filtrování jména akce jsem se rozhodla navrhnout dlouhý input, následně pro místo konání akce jsem navrhla combobox, který umožní uživatelům potom co začnou psát název místa, zobrazit možnosti, které odpovídají zadanému textu. 
 
-Pro typ akce a typ tance jsem navrhla také comboboxy avšak uživatel může vybrat více možností a pokud je možností více než tři tak se zobrazí pouze prvních pět a zbytek bude zobrazen jako "+X", kde X bude počet zbývajících možností. Po rozkliknutí comboboxu se uživateli zobrazí možnosti které zaškrtl. Tento výběr možností bude na mobilním zařízení implementován tak že vyjede nabídka (podobající se modalu) s možnostmi, které může uživatel zaškrtnout/odškrtnout.
+Pro typ akce a typ tance jsem navrhla také comboboxy avšak uživatel může vybrat více možností a pokud je možností více než tři tak se zobrazí pouze prvních pět a zbytek bude zobrazen jako \textquote{+X}, kde X bude počet zbývajících možností. Po rozkliknutí comboboxu se uživateli zobrazí možnosti které zaškrtl. Tento výběr možností bude na mobilním zařízení implementován tak že vyjede nabídka (podobající se modalu) s možnostmi, které může uživatel zaškrtnout/odškrtnout.
 
 Co se týče zobrazení nadcházejících akcí, navrhla jsem zobrazení ve formě karet, které budou obsahovat informace, jak jsou definované v požadavku~\reqref{F1}. Kartu na desktopovém zařízení jsem pojala tak, že v levé části karty se bude nacházet obrázek akce anebo placeholder, pokud obrázek není uvedený. Úplně nahoře v pravé části karty bude název akce, pod ním bude jméno organizátora a následně se budou nacházet zbylé informace o akci, obohacené o ikony. Úplně na spodu karty se budou nacházet akce, když je akce organizována uživatelem, bude se zde nacházet tlačítko přejít na detail akce, pokud uživatel organizátorem není, tak zde navíc budou akce jako přihlásit se na akci a označit, že mám zájem o akci. Co mi chvíli dalo zabrat na návrhu bylo umístění tagů. Nakonec~jsem se rozhodla je umístit pod organizátora, protože jsem iterovala několik variant umístění a tato varianta se uživatelům zdála nejpřehlednější. 
 
@@ -159,7 +159,7 @@ Na rozdíl od jednoduchých operací, jako je smazání události, vyžaduje pub
 \subsection{Profil uživatele}
 Profil uživatele jsem se snažila navrhnout tak, aby byl přehledný a obsahoval důležité informace o uživateli. Zároveň jsem chtěla, aby designem evokoval profil na sociální síti, protože jsou uživatelé na takové rozhraní zvyklí a bude pro ně přirozené se v něm pohybovat. Profil uživatele se skládá z dvou částí:
 \begin{itemize}
-    \item Karta s informacemi o uživateli, která obsahuje informace jako jméno a příjmení uživatele, hlavní role v tanci(leader, follower, role rotation), avatar uživatele, obecná úroveň v tanci, popis o sobě a taneční styly, které uživatel tancuje. Pokud je profil přihlášeného uživatele, tak se zde navíc nachází tlačítko pro úpravu profilu.
+    \item Karta s informacemi o uživateli, která obsahuje informace jako jméno a příjmení uživatele, hlavní role v tanci(leader, follower), avatar uživatele, obecná úroveň v tanci, popis o sobě a taneční styly, které uživatel tancuje. Pokud je profil přihlášeného uživatele, tak se zde navíc nachází tlačítko pro úpravu profilu.
     \item Galerie s obrázky a videi, které uživatel přidal do svého profilu. Galerie je řešena stejným designem jako u detailu akce.
 \end{itemize}
 Informace obsažené v profilu uživatele byly navrženy v souladu s požadavkem~\reqref{F14}. Podobně i návrh galerie reflektuje specifikaci v požadavku~\reqref{F24}.
@@ -176,7 +176,7 @@ Design této komponenty jsem vytvářela přímo v kódu a jeho finální verze 
 \end{figure}
 
 \subsection{Moje akce}
-Tato stránka bude obsahovat seznamy akcí, které uživatel organizuje, na které se přihlásil a které označil že ho zajímají na základě požadavků~\reqref{F11}, \reqref{F12} a~\reqref{F13}. Jelikož se jedná o seznamy, které jsou vzájemně disjunktní, navrhla jsem zobrazení pomocí komponenty Tabs, která umožní uživateli přepínat mezi jednotlivými seznamy. Zároveň se bude nahoře objevovat tlačítko pro vytvoření nové akce a nadpis "My events". Během návrhu jsem však narazila na otázku, jak pracovat s akcemi, které již proběhly. Tento problém jsem vyřešila zavedením možnosti filtrovat akce podle jejich stavu (nadcházející, proběhlé). Při aktivním filtru nadcházejících akcí jsou události řazeny chronologicky vzestupně (od nejbližšího data konání). V případě proběhlých akcí je pořadí opačné, tedy sestupné, od nejnověji uskutečněných po nejstarší. Výchozí filter je nastaven na nadcházející akce, protože se domnívám, že uživatelé budou častěji chtít vidět své nadcházející akce než ty proběhlé.
+Tato stránka bude obsahovat seznamy akcí, které uživatel organizuje, na které se přihlásil a které označil že ho zajímají na základě požadavků~\reqref{F11}, \reqref{F12} a~\reqref{F13}. Jelikož se jedná o seznamy, které jsou vzájemně disjunktní, navrhla jsem zobrazení pomocí komponenty Tabs, která umožní uživateli přepínat mezi jednotlivými seznamy. Zároveň se bude nahoře objevovat tlačítko pro vytvoření nové akce a nadpis \textquote{My events}. Během návrhu jsem však narazila na otázku, jak pracovat s akcemi, které již proběhly. Tento problém jsem vyřešila zavedením možnosti filtrovat akce podle jejich stavu (nadcházející, proběhlé). Při aktivním filtru nadcházejících akcí jsou události řazeny chronologicky vzestupně (od nejbližšího data konání). V případě proběhlých akcí je pořadí opačné, tedy sestupné, od nejnověji uskutečněných po nejstarší. Výchozí filter je nastaven na nadcházející akce, protože se domnívám, že uživatelé budou častěji chtít vidět své nadcházející akce než ty proběhlé.
 
 Pokud se jedná o akci, která je opakovaná, tak se zobrazí název celé této série s rozsahem datumů od první do poslední akce, a pod tím se zobrazí pomocí tabulky jednotlivé výskyty této akce. Tabulka obsahuje datum a čas konání výskytu, místo konání, počet přihlášených uživatelů a status akce, popřípadě status uživatele a jeho roli, pokud jsme v sekci přihlášených akcí. Také se pro každý výskyt nachází tlačítko pro zobrazení detailu výskytu, které přesměruje uživatele na detail výskytu akce. 
 
@@ -193,7 +193,7 @@ Na obrázku \ref{fig:myEvents} je znázorněna finální implementace stránky v
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/my-events.png}
-    \caption{Finální implementace stránky "Moje akce".}
+    \caption{Finální implementace stránky \textquote{Moje akce}.}
     \label{fig:myEvents}
 \end{figure}
 

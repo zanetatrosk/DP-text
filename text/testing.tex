@@ -31,7 +31,7 @@ V následujících podsekcích popíši implementaci automatizovaných unit test
 \subsection{Frontend}
 Pro frontend unit testing jsem použila testovací framework Vitest \cite{vitest_docs}, který je součástí ekosystému TanStack. Psaní testů usnadňovalo fakt, že jsem měla zkušenosti s podobným testovacím frameworkem zvaným Jest. 
 
-Při psaní unit testů pro frontend jsem se zaměřila především na části obsahující logiku. Tyto funkce jsou většinou umístěny v adresářích \texttt{utils}. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text "Free", pro akci s cenou 100 Kč se zobrazí text "100 Kč" a pro akci s cenou null se zobrazí text "Not specified".
+Při psaní unit testů pro frontend jsem se zaměřila především na části obsahující logiku. Tyto funkce jsou většinou umístěny v adresářích \texttt{utils}. V kódu \ref{lst:frontend-unit-test} je možné vidět příklad unit testu pro funkci, která zobrazuje správný text na základě ceny akce z backendu. Test kontroluje, že pro akci s cenou 0 Kč se zobrazí text \textquote{Free}, pro akci s cenou 100 Kč se zobrazí text \textquote{100 Kč} a pro akci s nedefinovanou cenou se zobrazí text \textquote{Not specified}.
 
 \begin{lstlisting}[language=TypeScript, caption={Příklad unit testu pro frontend}, label={lst:frontend-unit-test}]
 import { describe, expect, it } from 'vitest'
@@ -72,15 +72,15 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
 
 \paragraph*{Přihlášení do aplikace a práce s profilem}
 \begin{enumerate}
-    \item Klikněte v navigaci na tlačítko "Sign in" a přihlaste se pomocí Google účtu pod emailem zanetrosk@gmail.com.
+    \item Klikněte v navigaci na tlačítko \textquote{Sign in} a přihlaste se pomocí Google účtu pod emailem zanetrosk@gmail.com.
     \item Přejděte na stránku profilu.
-    \item Klikněte na tlačítko "Edit profile" a upravte informace dle gusta. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
+    \item Klikněte na tlačítko \textquote{Edit profile} a upravte informace dle gusta. Uložte změny a zkontrolujte, zda se změny projevily v profilu.
 \end{enumerate}
 
 \paragraph*{Vyhledávání a operace s tanečními akcemi}
 \begin{enumerate}
     \item Přejděte na stránku přehledu tanečních akcí.
-    \item Vyfiltrujte akce, které se konají v Praze, obsahují tanec "salsa" a jsou to party.
+    \item Vyfiltrujte akce, které se konají v Praze, obsahují tanec \textquote{salsa} a jsou to party.
     \item Vyberte akci, která vás zajímá a zaklikněte, že máte o ni zájem.
     \item Přejděte na stránku s vašimi akcemi a zkontrolujte, zda akce, kterou jste zaklikli, že máte o ni zájem, je zobrazena mezi akcemi, které vás zajímají.
     \item Přejděte z této stránky na detail této akce
@@ -88,7 +88,7 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
 
 \paragraph*{Práce s detailem akce a přihlášení na akci}
 \begin{enumerate}
-    \item Přejděte na detail akce "Bachata hit night".
+    \item Přejděte na detail akce \textquote{Bachata hit night}.
     \item Rozklikněte profil pořadatele akce.
     \item Vraťte se zpět na detail akce a přihlaste se na akci neanonymizovaně.
     \item Podívejte se na seznam přihlášených účastníků a zkontrolujte, zda je vaše jméno zobrazeno mezi přihlášenými.
@@ -100,7 +100,7 @@ Tyto scénáře byly navrženy tak, aby otestovaly různé funkce aplikace z poh
 
 \paragraph*{Přihlášení na akci prostřednictvím Google formuláře}
 \begin{enumerate}
-    \item Přejděte na detail akce "Zouk practice".
+    \item Přejděte na detail akce \textquote{Zouk practice}.
     \item Přihlaste se na akci prostřednictvím Google formuláře.
     \item Po čase zkontrolujte, že jste přihlášeni na akci.
 \end{enumerate}
@@ -110,25 +110,25 @@ Tyto scénáře byly navrženy tak, aby otestovaly funkce aplikace z pohledu org
 
 \paragraph*{Přihlášení do aplikace, operace s akcí z pohledu organizátora}
 \begin{enumerate}
-    \item Klikněte v navigaci na tlačítko "Sign in" a přihlaste se pomocí Google účtu.
-    \item Klikněte na tlačítko "Create event" v navigaci.
-    \item Vyplňte formulář pro založení akce s názvem "Testovací akce", která se bude konat v Praze, bude určena pro pokročilé tanečníky a bude obsahovat tanec "salsa". Uložte akci.
-    \item Zkontrolujte zda je akce "Testovací akce" zobrazena v přehledu vašich akcí a přejděte na její detail.
+    \item Klikněte v navigaci na tlačítko \textquote{Sign in} a přihlaste se pomocí Google účtu.
+    \item Klikněte na tlačítko \textquote{Create event} v navigaci.
+    \item Vyplňte formulář pro založení akce s názvem \textquote{Testovací akce}, která se bude konat v Praze, bude určena pro pokročilé tanečníky a bude obsahovat tanec \textquote{salsa}. Uložte akci.
+    \item Zkontrolujte zda je akce \textquote{Testovací akce} zobrazena v přehledu vašich akcí a přejděte na její detail.
     \item Publikujte akci jako párovou a zkontrolujte, že je akce zobrazena v přehledu všech akcí.
     \item Zrušte publikaci akce a zkontrolujte, že je akce označena jako zrušená v přehledu všech akcí.
 \end{enumerate}
 
 \paragraph*{Založení opakované akce, publikace pomocí Google formuláře a práce s registracemi}
 \begin{enumerate}
-    \item Přihlaste se pomocí Google účtu za profil "Anna Nová".
-    \item Vytvořte opakovanou akci s názvem "Testovací opakovaná akce", která se bude konat každé pondělí v Praze po 4 týdny
+    \item Přihlaste se pomocí Google účtu za profil \textquote{Anna Nová}.
+    \item Vytvořte opakovanou akci s názvem \textquote{Testovací opakovaná akce}, která se bude konat každé pondělí v Praze po 4 týdny
     \item Publikujte první výskyt akce pomocí Google formuláře s použitím poskytnutého ID a zkontrolujte, že je akce zobrazena v přehledu všech akcí. Při publikaci zaškrtněte, že chcete potvrzovat registrace ručně.
-    \item Přejděte na detail akce "Testovací opakovaná akce" na jeho první výskyt. 
+    \item Přejděte na detail akce \textquote{Testovací opakovaná akce} na jeho první výskyt. 
     \item Přejděte na seznam registrací pro tento výskyt.
-    \item Zrušte registraci tanečnice "Justyna Kowalska" pro tento výskyt akce.
-    \item Přejděte na profil tanečníka pod jménem "Zanda 2".
+    \item Zrušte registraci tanečnice \textquote{Justyna Kowalska} pro tento výskyt akce.
+    \item Přejděte na profil tanečníka pod jménem \textquote{Zanda 2}.
     \item Vraťte se zpět na seznam registrací pro tento výskyt akce. 
-    \item Potvrďte registraci tanečníka "Zanda 2" pro tento výskyt akce.
+    \item Potvrďte registraci tanečníka \textquote{Zanda 2} pro tento výskyt akce.
     \item Synchronizujte registrace.
 \end{enumerate}
 \subsection{Uživatelé účastnící se testování}

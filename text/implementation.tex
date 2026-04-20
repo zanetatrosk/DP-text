@@ -9,7 +9,7 @@ Pro vytvoření backendové části projektu byl zvolen framework Spring Boot, p
 \subsection{Přihlášení uživatele}
 Přihlášení uživatele bylo realizováno pomocí Google na základě požadavku \ref{req:F3}. Jelikož aplikace není jen klientská, ale i serverová, bylo potřeba implementovat přihlášení i na serveru.
 
-Prvním krokem bylo vytvoření projektu v Google Cloud Console. Poté bylo potřeba vytvořit OAuth 2.0 Client ID pro webovou aplikaci, což nám poskytlo Client ID a Client Secret, které jsou nezbytné pro implementaci přihlášení. Následně byly nastaveny redirect URI, tedy adresy, na které bude Google přesměrovávat uživatele po úspěšném přihlášení, a origins, tedy adresy, ze kterých bude možné přihlášení provést.
+Prvním krokem bylo vytvoření projektu v Google Cloud Console. Poté bylo potřeba vytvořit OAuth 2.0 Client ID pro webovou aplikaci, což nám poskytlo Client ID a Client Secret, které jsou nezbytné pro implementaci přihlášení. Následně byly nastaveny redirect URI, tedy adresy, na které bude Google přesměrovávat uživatele po úspěšném přihlášení, a origins, tedy adresy, ze kterých bude možné přihlášení provést. \cite{google_oauth_cred}
 
 Poté byly přidány tzv. scopes, které určují, jaké informace o uživateli bude aplikace požadovat. V našem případě budou při prvotním přihlášení požadovány pouze základní informace o uživateli, jako je jeho jméno a emailová adresa. Tudíž se jedná o následující scopes \cite{google_oauth_scopes}:
 \begin{itemize}
@@ -63,7 +63,7 @@ export const buildGoogleOAuthUrl = (params: {
 };
 \end{lstlisting}
 
-Funkci jsem si naprogramovala sama i přesto, že existuje například knihovna \texttt{@react-oauth/google}, která zjednodušuje proces přihlášení. Avšak při implementaci jsem narazila na problém, že tato knihovna v případě, že využíváme authorization code flow, automaticky posílá parametr prompt=consent, což způsobuje, že uživatel musí při každém přihlášení proklikat souhlas s oprávněními, i když je již udělil. Tudíž jsem se rozhodla implementovat přihlášení sama, abych měla plnou kontrolu nad tím, jaké parametry jsou posílány, a mohla tak využít inkrementální autorizaci.
+Funkci jsem si naprogramovala sama i přesto, že existuje například knihovna \texttt{@react-oauth/google}, která zjednodušuje proces přihlášení. Avšak při implementaci jsem narazila na problém, že tato knihovna v případě, že využíváme authorization code flow, automaticky posílá parametr prompt=consent \cite{google_openid_reconsent}, což způsobuje, že uživatel musí při každém přihlášení proklikat souhlas s oprávněními, i když je již udělil. Tudíž jsem se rozhodla implementovat přihlášení sama, abych měla plnou kontrolu nad tím, jaké parametry jsou posílány, a mohla tak využít inkrementální autorizaci.
 
 Parametry, které jsou posílány v url pro přihlášení, jsou následující \cite{google_oauth_creating_client}:
 \begin{itemize}
@@ -73,10 +73,6 @@ Parametry, které jsou posílány v url pro přihlášení, jsou následující 
     \item \texttt{scope} - Tento parametr obsahuje seznam oprávnění, o která žádáme. Oprávnění jsou oddělena mezerami.
     \item \texttt{access\_type} - Tento parametr určuje, zda chceme získat refresh token. Pokud je tento parametr nastaven na \texttt{offline}, Google nám pošle refresh token, který můžeme použít k získání nového access tokenu, když ten původní vyprší. Parametr jsem takto zvolila kvůli tomu, že bude vyžadováno, abychom v budoucnu volali API i bez přítomnosti uživatele, například pro synchronizaci odpovědí z formuláře, a v takovém případě je potřeba mít možnost získat nový access token bez toho, aby se uživatel musel znovu přihlásit.
     \item \texttt{include\_granted\_scopes} - Tento parametr určuje, zda chceme, aby Google zahrnul již udělená oprávnění do access tokenu. Pokud je tento parametr nastaven na \texttt{true}, Google nám pošle access token, který obsahuje všechna oprávnění, která uživatel udělil, nejen ta, o která právě žádáme. Při implementaci se mi stalo, že jsem na tento parametr zapomněla, a v důsledku toho uživatel při každém přihlášení resetoval všechna oprávnění, která udělil, a musel je znovu udělovat, což samozřejmě nebylo ideální.
-    \item \texttt{state} - Tento parametr je volitelný, ale doporučený, a slouží k ochraně proti CSRF útokům.
-Klient do něj vloží náhodný řetězec, který si uloží (např. do session).
-Po přesměrování zpět ho porovná s hodnotou v odpovědi.
-Tím ověří, že odpověď odpovídá požadavku iniciovanému stejným uživatelem, a ne cizímu požadavku.
 \end{itemize}
 
 Potom co uživatel zvolí účet, kterým se chce přihlásit, a udělí požadovaná oprávnění (pokud je ještě neudělil), Google přesměruje uživatele na redirect URI, které jsme nastavili, a v URL bude obsažen autorizační kód. Klient tento kód zachytí a pošle ho na náš server, kde ho vyměníme za access token. Pokud se jedná o prvotní přihlášení, Google nám pošle i refresh token, který uložíme do databáze pro pozdější použití. Poté obratem klientovi vrátíme serverem vygenerovaný vlastní JWT token, který klient bude používat pro autentizaci a autorizaci při dalších požadavcích na server. \cite{google_oauth_creating_client}
@@ -85,9 +81,9 @@ Při testování přihlášení jsem narazila na problém, že když se po něja
 
 \subsection{Registrace uživatele}
 Registrace uživatele začíná ve chvíli, kdy uživatel v aplikaci zaškrtne, že se chce registrovat, anebo vyplní Google formulář.
-V případě, že se jedná o registraci přes aplikaci, uživatel v případě otevřené registrace jen potvrdí, že se chce registrovat, a v případě partnerské registrace vybere roli, kterou chce zastávat. Po odeslání formuláře se vytvoří záznam v databázi s informací o registraci a jejím stavu (např. čekající na schválení, schválená, zamítnutá). V případě, že se jedná o Google formulář, je proces vysvětlen blíže v následující sekci. Organizátor akce pak může tyto registrace spravovat a měnit jejich stav. Stavový diagram pro registrace je zobrazen na obrázku \ref{fig:registration-state-diagram} a popisuje, jak se přiřazují stavy pro registraci a jaké akce jsou s těmito stavy spojeny.
+V případě, že se jedná o registraci přes aplikaci, uživatel v případě otevřené registrace jen potvrdí, že se chce registrovat, a v případě partnerské registrace vybere roli, kterou chce zastávat. Po odeslání formuláře se vytvoří záznam v databázi s informací o registraci a jejím stavu (např. čekající na schválení, schválená, v čekací frontě). V případě, že se jedná o Google formulář, je proces vysvětlen blíže v následující sekci. Organizátor akce pak může tyto registrace spravovat a měnit jejich stav. Stavový diagram pro registrace je zobrazen na obrázku \ref{fig:registration-state-diagram} a popisuje, jak se přiřazují stavy pro registraci a jaké akce jsou s těmito stavy spojeny.
 
-\begin{sidewaysfigure}[p]
+\begin{sidewaysfigure}[hp]
     \centering
     \includegraphics[width=\textheight,height=0.95\textwidth,keepaspectratio]{images/state-diagram.png}
     \caption{Stavový diagram pro registrace.}
@@ -98,8 +94,7 @@ V případě, že organizátor chce vidět všechny registrace a s nimi pracovat
 
 \begin{lstlisting}[language=TypeScript, caption={Příklad části struktury odpovědi pro endpoint vracející registrace}, label={lst:registrations-response}]
 {
-  "headers": [
-    {
+  "headers": [{
         "type": "TEXT",
         "id": "16893cb4",
         "question": "Zadejte jmeno a prijmeni"
@@ -110,13 +105,10 @@ V případě, že organizátor chce vidět všechny registrace a s nimi pracovat
         "question": "Ktery kurz chcete",
         "answerSet": [
           "Sensual",
-          "blabla",
           "salsa"
         ]
-      },
-  ],
-  "registrations": [
-    {
+      },],
+  "registrations": [{
         "id": "62d8f653-cdd9-45de-9442-165d98102b0f",
         "user": {
           "email": "zanetatrosk@gmail.com",
@@ -132,11 +124,7 @@ V případě, že organizátor chce vidět všechny registrace a s nimi pracovat
             "value": "Sensual"
           }
         ],
-        "lastSubmittedTime": "2026-01-10T12:34:56Z",
-        "status": "REGISTERED"
-      },
-  ]
-}
+        "status": "REGISTERED"},]}
 \end{lstlisting}
 
 \subsection{Integrace s Google Forms}
@@ -144,7 +132,7 @@ Jelikož jedna z hlavních funkcí aplikace je možnost propojit formulář z Go
 
 Provolání samotného Google API je obdobné jako u autentizace, jen je potřeba, aby uživatelova oprávnění obsahovala oprávnění pro přístup k Google Forms API, což jsem řešila pomocí inkrementální autorizace, jak jsem popsala v sekci \ref{auth_incremental}, a dále je nutné znát ID formuláře. \cite{google_forms_get_method}
 
-V rámci integrace provoláváme zejména dva endpointy Google Forms API \cite{google_forms_api_rest}:
+V rámci integrace provoláváme dva endpointy Google Forms API \cite{google_forms_api_rest}:
 \begin{itemize}
   \item \texttt{GET /v1/forms/\{formId\}} -- vrací formulář.
   \item \texttt{GET /v1/forms/\{formId\}/responses} -- vrací seznam odpovědí odeslaných z formuláře.
@@ -221,10 +209,10 @@ Z odpovědí zpracováváme zejména \cite{google_forms_formresponse}:
     \item \texttt{answers} \- mapování \texttt{questionId} $\rightarrow$ hodnota odpovědi.
 \end{itemize}
 
-Po úspěšném napojení na Google Forms API jsem nejprve naivně navrhla, že pokaždé, když organizátor navštíví stránku a zavolá GET Registrations, se zavolá Google API. Toto řešení sice zaručovalo, že má organizátor aktuální strukturu formuláře i odpovědi, avšak pokaždé bylo nutné provést HTTP požadavek a parsovat odpověď z Google API do struktury, kterou používá naše API. To způsobilo, že odpověď trvala déle (naměřila jsem 2 sekundy v prohlížeči). Dalším důvodem, proč jsem začala optimalizovat, je to, že Google má určité kvóty na volání API. Tudíž se vyplatí požadavky šetřit. Rozhodla jsem se tedy pro způsob, že strukturu formuláře i odpovědi cachuji. Vzhledem k tomu, že každá odpověď z formuláře Google odpovídá právě jednomu záznamu v databázi, budeme pro tyto účely ukládat \texttt{responseId} společně s celým obsahem dané odpovědi. Podobným způsobem si budu ukládat i strukturu formuláře v tabulce \texttt{registrations\_settings}.
-Oboje je uloženo v databázi ve formátu JSON pomocí datového typu JSONB pro efektivnější načítání a parsování \cite{dudycz_postgresql_jsonb}. Po této optimalizaci se doba požadavku změnila na 300 ms. Avšak stále zůstal problém, kdy formulář synchronizovat. Rozhodla jsem se, že implementuji job, který se bude spouštět ve stanoveném intervalu (já jsem zvolila jednou za hodinu) a na pozadí synchronizovat jak formulář, tak i odpovědi z něj. Synchronizovat mohu i přesto, že je uživatel neaktivní, protože mám uložený refresh token, který mi umožňuje získat nový access token a zavolat Google API.
+Po úspěšném napojení na Google Forms API jsem nejprve naivně navrhla, že pokaždé, když organizátor navštíví stránku a zavolá GET Registrations, se zavolá Google API. Toto řešení sice zaručovalo, že má organizátor aktuální strukturu formuláře i odpovědi, avšak pokaždé bylo nutné provést HTTP požadavek a parsovat odpověď z Google API do struktury, kterou používá naše API. To způsobilo, že odpověď trvala déle (naměřila jsem 2 sekundy v prohlížeči). Tudíž se vyplatí požadavky šetřit. Rozhodla jsem se tedy pro způsob, že strukturu formuláře i odpovědi cachuji. Vzhledem k tomu, že každá odpověď z formuláře Google odpovídá právě jednomu záznamu v databázi, budeme pro tyto účely ukládat \texttt{responseId} společně s celým obsahem dané odpovědi. Podobným způsobem si budu ukládat i strukturu formuláře v tabulce \texttt{registrations\_settings}.
+Oboje je uloženo v databázi ve formátu JSON pomocí datového typu JSONB pro efektivnější načítání a parsování \cite{dudycz_postgresql_jsonb}. Po této optimalizaci se doba požadavku změnila na 300 ms. Avšak stále zůstal problém, kdy formulář synchronizovat. Rozhodla jsem se, že implementuji job, který se bude spouštět ve stanoveném intervalu (já jsem zvolila jednou za hodinu) a na pozadí synchronizovat jak formulář, tak i odpovědi z něj. Synchronizovat mohu i přesto, že je uživatel neaktivní, protože mám uložený refresh token, který mi umožňuje získat nový access token a provolat Google API.
 
-Pokud zjistím, že je požadavků na stanovenou kvótu příliš mnoho, mohu dobu spouštění upravit. Problém však bude nastávat v situacích, kdy organizátor potřebuje synchronizovat registrace ihned (např. pokud akce začíná a je možné, že se někdo přihlásil v časovém okně, kde ještě nedošlo k synchronizaci). Pro takové případy jsem se rozhodla implementovat endpoint, který umožní synchronizaci spustit ihned. Tato změna se projeví i v uživatelském rozhraní, kde bude implementováno tlačítko, které endpoint zavolá.
+Pokud zjistím, že je požadavků na Google API příliš mnoho, mohu dobu spouštění upravit. Problém však bude nastávat v situacích, kdy organizátor potřebuje synchronizovat registrace ihned (např. pokud akce začíná a je možné, že se někdo přihlásil v časovém okně, kde ještě nedošlo k synchronizaci). Pro takové případy jsem se rozhodla implementovat endpoint, který umožní synchronizaci spustit ihned. Tato změna se projeví i v uživatelském rozhraní, kde bude implementováno tlačítko, které endpoint zavolá.
 
 Při synchronizaci formuláře kontroluji, zda se změnila struktura formuláře, což zjišťuji porovnáním \texttt{revisionId} z Google API a \texttt{revisionId} uloženého v databázi. Pokud se \texttt{revisionId} liší, znamená to, že došlo ke změně formuláře a je potřeba aktualizovat strukturu formuláře v databázi. Pokud se \texttt{revisionId} neliší, nemusím aktualizovat strukturu formuláře, protože vím, že se nezměnila. Podobným způsobem kontroluji i odpovědi, kde porovnávám čas posledního odeslání odpovědi z Google API a čas poslední synchronizace odpovědi v databázi.
 

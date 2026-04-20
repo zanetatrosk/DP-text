@@ -19,10 +19,10 @@ Aplikace musí být schopna zobrazit seznam nadcházejících akcí spolu s jeji
 \begin{itemize}
     \item Název akce
     \item Jméno organizátora
-    \item Datum a čas
+    \item Datum
     \item Místo konání
     \item Cena pokud je uvedena
-    \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
+    \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti a typ akce.
     \item Počet přihlášených účastníků a počet uživatelů kteří mají o akci zájem
     \item Možnost zobrazit detailní informace o akci
 \end{itemize}
@@ -35,7 +35,7 @@ Aplikace umožní uživatelům filtrovat nadcházející akce podle různých kr
 \begin{itemize}
     \item Název akce
     \item Typ tance (swing, salsa, tango, atd.)
-    \item Typ akce (kurz, workshop, party, atd.)
+    \item Typ akce (festival, workshop, party, atd.)
     \item Lokalita (filtrování na úrovni města nebo státu)
 \end{itemize}
 Tento požadavek je nezbytný, protože umožní uživatelům snadno najít a prohlédnout si nadcházející taneční akce, aniž by museli, jak je to například na Facebooku, hledat akce pomocí klíčových slov anebo doufat, že se jim akce zobrazí v jejich feedu na základě reakce jejich přátel. Vyfiltrované události se také budou vracet po stránkách, jak je to popsáno v předchozím požadavku.
@@ -51,11 +51,13 @@ Aplikace musí umožnit uživatelům odhlásit se z aplikace, aby měli napřík
 \paragraph{F5 - Detail události.}\phantomsection\label{req:F5}
 Přihlášený uživatel by měl mít možnost zobrazit detailní informace o události. Tyto informace by měly zahrnovat:
 \begin{itemize}
-    \item Základní informace o akci (název, datum a čas, místo konání, cena, odkaz na facebookovou událost)
+    \item Základní informace o akci (název, datum a čas, místo konání)
+    \item Cena pokud je uvedena a její měna
+    \item Odkaz na facebookovou událost (pokud existuje)
     \item Popisek akce
     \item Informace o organizátorovi (jméno, odkaz na profil)
     \item Informace o přihlášených účastnících (počet přihlášených, počet uživatelů kteří mají o akci zájem, popřípadě v jakých rolích jsou uživatelé zastoupeni - leader, follower)
-    \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti, zda se jedná o kurz, workshop nebo party a další relevantní informace.
+    \item Tagy přibližující informace o akci, jako je typ tance, úroveň obtížnosti a typ akce.
 \end{itemize}
 
 Požadavek byl sepsán na základě konzultací s tanečníky, kde jsme diskutovali, jaké informace bychom uvítali u detailu akce, abychom se mohli lépe rozhodnout, zda se na akci přihlásit nebo ne. Opakovaně se mi dostávalo odpovědi, že by bylo užitečné mít informace o tom, kolik lidí se již registrovalo a kolik lidí má o akci zájem, protože to může být indikátor kvality akce (čím více lidí se přihlásí, tím více mám možnost například v případě párového tance vyzkoušet různé partnery a akci si tím pádem více užít). 
@@ -67,16 +69,16 @@ Mezi tyto informace patří:
 \begin{itemize}
     \item Název akce
     \item Datum a čas
+    \item Datum konce akce - nepovinný údaj, vhodný pro akce trvající více dní, jako jsou například festivaly nebo kurzy
     \item Místo konání
-    \item Cena pokud je uvedena a její měna
-    \item Popisek akce
-    \item Informace o akci (typ tance, úroveň obtížnosti, druh události)
-    \item Kapacita akce 
+    \item Cena a její měna - nepovinný údaj
+    \item Popisek akce - nepovinný údaj
+    \item Informace o akci (typ tance, úroveň obtížnosti, druh události) - nepovinné údaje
+    \item Kapacita akce - nepovinný údaj
     \item Odkaz na facebookovou událost (pokud existuje) - to umožní uživatelům zkontrolovat další informace o akci, které nejsou uvedeny v aplikaci, a zároveň umožní organizátorům snadno propojit svou akci s již existující facebookovou událostí.
 \end{itemize}
 Uvedené informace o akci byly sestaveny po diskuzích s různými organizátory (ať už se jedná o lektory, anebo lidi, kteří organizují taneční večírky). Zároveň jsem se inspirovala informacemi, které jsou běžně uváděny v popiscích akcí na Facebooku nebo na webových stránkách organizátorů.
 
-Formulář s informacemi bude rozdělen do několika kroků, aby se uživatelé necítili zahlceni množstvím informací, které musí zadat.
 Vzhledem k tomu, že organizátor nemusí mít při vytváření události k dispozici všechny potřebné informace, případně je ještě nemusí chtít zveřejnit nebo si přeje nejprve zkontrolovat výslednou podobu detailu akce, nebude odeslání formuláře znamenat okamžité zveřejnění akce v aplikaci. Místo toho se vytvoří koncept události, který bude organizátorovi přístupný pro další úpravy a doplnění informací.
 Organizátor bude mít možnost kdykoliv se vrátit k úpravě konceptu a doplnění informací o akci, než ji zveřejní.
 
@@ -89,7 +91,7 @@ Po vytvoření konceptu akce bude organizátor mít možnost ji publikovat, což
 Aplikace bude umožňovat 3 následné možnosti při zveřejnění akce, jak se uživatelé mohou registrovat na akci:
 \begin{itemize}
     \item Otevřená registrace - každý se může přihlásit bez omezení do kapacity akce
-    \item Párová registrace - každý se může přihlásit do kapacity akce, ale musí uvést zda je leader nebo follower
+    \item Párová registrace - každý se může přihlásit do kapacity akce, ale musí uvést zda se přihlašuje jako leader nebo follower
     \item Registrace pomocí Google formuláře - organizátor může propojit Google formulář pro registraci účastníků přímo s událostí v aplikaci, což by usnadnilo správu registrací.
 \end{itemize} 
 
@@ -98,6 +100,8 @@ Tyto možnosti zveřejnění jsou organizátory velmi vítané, protože umožň
 Protože je Google Formulář jedním z nejčastěji používaných nástrojů pro registraci účastníků, je pro organizátory velmi přínosná také možnost propojení s Google formulářem.
 
 Organizátor bude mít možnost nastavit jakým způsobem chce registrovat účastníky a zároveň zvolit další nastavení přihlašování, jako je například možnost schvalovat registrace účastníků manuálně.
+
+Pokud organizátor nastavil u akce kapacitu, uživatelé se mohou hlásit na akci až do naplnění kapacity (u párových akcí do naplnění kapacity pro danou roli, což je polovina celkové kapacity). Po naplnění kapacity se uživatel stále může hlásit na akci, ale bude umístěn na čekací listinu. 
 
 \paragraph{F9 - Organizátor může upravovat akci.}\phantomsection\label{req:F9}
 Tento požadavek umožní organizátorům upravovat informace o své akci i po jejím zveřejnění, což je důležité pro případ, že se změní nějaké detaily akce nebo pokud organizátor zapomněl uvést nějakou důležitou informaci při vytváření akce.
@@ -149,7 +153,7 @@ Požadavek byl definován s ohledem na potřebu dát organizátorům možnost od
 Jelikož se předpokládá, že aplikace bude používána i na mobilních zařízeních, je důležité, aby byla responsivní a přizpůsobovala se různým velikostem obrazovky telefonu. Tablety neuvádím, protože se z mých pozorování zdá, že většina uživatelů používá k prohlížení informací o akcích a k registraci na akce spíše mobilní telefony než tablety. Nicméně, pokud by se ukázalo, že je potřeba optimalizovat aplikaci i pro tablety, bylo by možné tento požadavek rozšířit i na tablety.
 
 \subsection{Should have (mělo by mít)}
-Tyto požadavky jsou důležité, ale nejsou nezbytné pro základní funkčnost aplikace. Jejich implementace může výrazně zlepšit systém avšak bez této funkce lze aplikaci nasadit. Mezi příklady takových požadavků patří zrychlení aplikace, oprava menších chyb anebo nové featury vylepšující systém. Tyto požadavky se zpravidla implementují po dokončení požadavků z kategorie "Must have".\cite{moscow:definition}
+Tyto požadavky jsou důležité, ale nejsou nezbytné pro základní funkčnost aplikace. Jejich implementace může výrazně zlepšit systém avšak bez této funkce lze aplikaci nasadit. Mezi příklady takových požadavků patří zrychlení aplikace, oprava menších chyb anebo nové featury vylepšující systém. Tyto požadavky se zpravidla implementují po dokončení požadavků z kategorie \textquote{Must have}.\cite{moscow:definition}
 
 \paragraph{F20 - Úvodní stránka aplikace.}\phantomsection\label{req:F20}
 Aplikace by měla mít úvodní stránku, která poskytne uživatelům přehled o tom, co aplikace nabízí, důvody pro její použití a jak začít. Tato stránka by měla být atraktivní a informativní, aby motivovala uživatele k registraci a používání aplikace.
@@ -159,7 +163,7 @@ Organizátor bude mít možnost při zveřejnění akce zvolit, zda chce mít mo
 
 Schválení může být podmíněno například přijetím registračního poplatku nebo úhradou plné ceny akce. Dalším důvodem může být charakter události, například pokud je určena pouze pro tanečníky určité úrovně. Organizátor tak může zajistit, že se akce zúčastní pouze osoby odpovídající požadované úrovni či dalším stanoveným podmínkám.
 
-Tento požadavek je v kategorii "Should have", protože i bez něj může aplikace fungovat, jelikož většina akcí umožňuje otevřenou registraci bez nutnosti schvalování. Nicméně, pro některé organizátory může být tato funkce velmi užitečná a zlepšit jejich zkušenost s aplikací, což je důvod, proč ji zahrnuji do této kategorie.
+Tento požadavek je v kategorii \textquote{Should have}, protože i bez něj může aplikace fungovat, jelikož většina akcí umožňuje otevřenou registraci bez nutnosti schvalování. Nicméně, pro některé organizátory může být tato funkce velmi užitečná a zlepšit jejich zkušenost s aplikací, což je důvod, proč ji zahrnuji do této kategorie.
 
 \paragraph{F22 - Uživatelé registrující nad kapacitní akci jsou umístěni na čekací listinu.}\phantomsection\label{req:F22}
 Tento požadavek umožní uživatelům, kteří se pokusí zaregistrovat na akci, která již dosáhla své kapacity, být zařazeni na čekací listinu. Pokud se některý z přihlášených účastníků odhlásí, první osoba na čekací listině bude automaticky přesunuta do seznamu registrovaných účastníků a uživatelé zároveň uvidí v systému aktualizaci stavu své registrace.
@@ -189,7 +193,7 @@ Aplikace bude obsahovat stránku s informacemi o projektu, která bude obsahovat
 Aplikace bude navržena tak, aby byla uživatelsky přívětivá a intuitivní. Uživatel by měl být schopen rychle porozumět tomu, jak se v aplikaci pohybovat a jak provést základní akce bez nutnosti studovat návod.
 
 \subsection{Could have (mohlo by mít)}
-Tento druh požadavků bývá označován jako "nice to have" a zahrnuje funkce, které by mohly být přidány v budoucnu, ale nejsou prioritou pro první verzi aplikace. Oproti požadavkům z kategorie "Should have" se liší tím, že jejich implementace nemá na aplikaci takový vliv. Těmto požadavkům bývá přiřazována menší priorita a prostor dostávají hlavně požadavky z předchozích kategorií, které dokážou narůst i přes očekávaný scope. \cite{moscow:definition}
+Tento druh požadavků bývá označován jako \textquote{Nice to have} a zahrnuje funkce, které by mohly být přidány v budoucnu, ale nejsou prioritou pro první verzi aplikace. Oproti požadavkům z kategorie \textquote{Should have} se liší tím, že jejich implementace nemá na aplikaci takový vliv. Těmto požadavkům bývá přiřazována menší priorita a prostor dostávají hlavně požadavky z předchozích kategorií, které dokážou narůst i přes očekávaný scope. \cite{moscow:definition}
 
 \paragraph{F28 - Notifikace.}\phantomsection\label{req:F28}
 Aplikace by mohla posílat notifikace uživatelům, například o nadcházejících akcích, změnách v jejich registracích nebo změnách provedených v akci, na které jsou přihlášeni. Tato funkce by zlepšila uživatelskou zkušenost a pomohla uživatelům být informováni o důležitých událostech. 
@@ -233,7 +237,7 @@ Databázový návrh systému byl realizován podle principů třetí normální 
 aby se minimalizovala redundance dat a zajistila konzistence informací. 
 Pro jednoznačnou identifikaci entit jsou použity téměř ve všech případech UUID jako primární klíče, což usnadňuje 
 propojení dat napříč různými tabulkami a umožňuje bezpečné slučování nebo replikaci dat. 
-Opakující se události jsou řešeny prostřednictvím nadřazené tabulky \textbf{event\_parents}, 
+Opakující se události jsou řešeny prostřednictvím nadřazené tabulky event\_parents, 
 která odděluje logickou sérii událostí od jednotlivých termínů, což umožňuje flexibilní správu 
 jednotlivých výskytů bez narušení celé série.
 Navrhnutý model obsahuje ve výsledku 19 tabulek, které reprezentují různé entity a jejich vztahy v systému. 
@@ -305,8 +309,6 @@ pro které je daná událost určena.
 \paragraph{events\_event\_types}-
 Tabulka reprezentuje vztah M:N mezi událostmi a 
 jejich typy.
-
-
 
 V souladu s požadavkem \ref{req:F24} bylo nutné vyřešit způsob ukládání multimediálního obsahu. Abych předešla nevhodnému ukládání objemných dat přímo do relační databáze, zvolila jsem cestu specializovaného objektového úložiště \cite{objective_storage}. Toto řešení je pro práci s velkými soubory, jako jsou videa, výrazně efektivnější. Z důvodu úspory nákladů a preference vlastního hostingu jsem se rozhodla pro open-source technologii MinIO \cite{minio_github}. Ta zajistí snadnou správu médií a zároveň nabídne potřebnou škálovatelnost pro budoucí růst objemu dat.
 \subsection{Server - návrh backendu}
