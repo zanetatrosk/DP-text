@@ -319,12 +319,13 @@ Backend bude zodpovědný za zpracování požadavků od klienta, komunikaci s d
 \subsubsection{NestJS}
 Pro vývoj backendu jsem zvažovala NestJS. Jedná se o framework umožňující vývoj efektivních, škálovatelných server-side aplikací postavených na Node.js. NestJS využívá moderní JavaScript, ale plně podporuje TypeScript. Tento framework obsahuje aspekty jak OOP, tak i funkcionálního a reaktivního programování. Jeho motivací bylo poskytnout vývojářům framework s architekturou inspirovanou frameworkem Angular, která usnadní vývoj a údržbu aplikací. Samotný Nest.js používá Express jako defaultní HTTP server, ale poskytuje nad ním vyšší úroveň abstrakce a struktury. \cite{nestjs_docs}
 
-Z mé zkušenosti backendové aplikace psané v Node.js často postrádají tuto architektonickou abstrakci a bývají psané za využití frameworku Express, který je dle mého názoru příliš jednoduchý a nenabízí tolik připravených funkcionalit (např. ORM \cite{nestjs_database_techniques}), což v praxi může vést k nepřehlednému a těžko udržovatelnému kódu, zejména v případě větších aplikací.
+Z mé zkušenosti backendové aplikace psané v Node.js často postrádají tuto architektonickou abstrakci a bývají psané za využití frameworku Express, který je dle mého názoru příliš jednoduchý a nenabízí tolik připravených funkcionalit (např. ORM \cite{nestjs_database_techniques}), což v praxi může vést k nepřehlednému a těžko udržovatelnému kódu, zejména v případě větších aplikací. 
 
-Při výběru jsem vzala v úvahu jeho výhody a nevýhody.
+Vhodnost tohoto frameworku pro projekt byla posouzena na základě vyhodnocení jeho výhod a nevýhod v kontextu stanovených požadavků.
+
 Mezi výhody patří:
 \begin{itemize}
-    \item Mám zkušenosti s Node.js a TypeScriptem, takže jazyk frameworku pro mě nebude úplně nový
+    \item Mám zkušenosti s Node.js a TypeScriptem, takže jazyk frameworku pro mě nebude úplně nový.
     \item Obsahuje instalovatelné balíčky jako např. ORM \cite{nestjs_database_techniques} pro namapování databáze na objekty, které nám umožní psát aplikace v architektuře MVC
 \end{itemize}
 
@@ -342,16 +343,16 @@ Je postaven na Spring Frameworku a zjednodušuje proces vývoje a nasazení apli
 
 Mezi výhody Spring Bootu patří:
 \begin{itemize}
-    \item Mám zkušenosti s Java (trochu i Kotlinem) a Spring Frameworkem, takže jazyk a některé koncepty frameworku pro mě nebudou úplně nové, což usnadní vývoj
-    \item Velká a aktivní komunita, což znamená, že je k dispozici mnoho zdrojů a podpory pro vývoj \cite{spring_why_spring}
-    \item Osvědčený framework, který se používá na vývoj mnoha enterprise aplikací \cite{spring_why_spring}
-    \item Je postaven na MVC architektuře \cite{mvc_spring_boot}
-    \item umožňuje snadnou integraci s různými databázemi (PostgreSQL, MySQL, Oracle, ElasticSearch atd.) \cite{spring_boot_pros_cons}
+    \item Mám zkušenosti s Java (trochu i Kotlinem) a Spring Frameworkem, takže jazyk a některé koncepty frameworku pro mě nebudou úplně nové, což usnadní vývoj.
+    \item Velká a aktivní komunita, což znamená, že je k dispozici mnoho zdrojů a podpory pro vývoj. \cite{spring_why_spring}
+    \item Osvědčený framework, který se používá na vývoj mnoha enterprise aplikací. \cite{spring_why_spring}
+    \item Je postaven na MVC architektuře. \cite{mvc_spring_boot}
+    \item Umožňuje snadnou integraci s různými databázemi (PostgreSQL, MySQL, Oracle, ElasticSearch atd.). \cite{spring_boot_pros_cons}
 \end{itemize}
 
 Mezi nevýhody \cite{spring_boot_pros_cons} patří:
 \begin{itemize}
-    \item jedná se o tzv. \uv{opinionated} framework, který v mnoha ohledech (od konfigurace až po volbu knihoven) definuje konkrétní postupy a standardy toho, jak má být aplikace vyvíjena.
+    \item Jedná se o tzv. \uv{opinionated} framework, který v mnoha ohledech (od konfigurace až po volbu knihoven) definuje konkrétní postupy a standardy toho, jak má být aplikace vyvíjena.
     \item Pro aplikace, které vyžadují nízkou latenci, může být Spring Boot příliš robustní a nesplňovat požadavky na výkon a dobu odezvy.
 \end{itemize}
 

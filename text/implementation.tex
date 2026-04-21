@@ -25,7 +25,9 @@ Při nasazení aplikace do produkce a využívání Google API společnost Googl
 \cite{google_app_verification}
 
 \subsubsection{Inkrementální autorizace} \label{auth_incremental}
-Aplikace bude kromě zmíněných oprávněních z předešlé sekce také vyžadovat oprávnění pro přístup k Google Forms API, aby uživatelé mohli propojit formulář a odpovědi z formuláře s aplikací. Oprávnění jsou následující \cite{google_oauth_scopes}:
+Aplikace bude kromě zmíněných oprávněních z předešlé sekce také vyžadovat oprávnění pro přístup k Google Forms API, aby uživatelé mohli propojit formulář a odpovědi z formuláře s aplikací. 
+
+Oprávnění jsou následující \cite{google_oauth_scopes}:
 \begin{itemize}
     \item \texttt{https://www.googleapis.com/auth/forms.body} - Tento scope umožňuje aplikaci číst a upravovat obsah formulářů, jako jsou otázky,
     \item \texttt{https://www.googleapis.com/auth/forms.responses.readonly} - Tento scope umožňuje aplikaci číst odpovědi z formulářů, ale neumožňuje je upravovat.
@@ -139,7 +141,7 @@ V rámci integrace provoláváme dva endpointy Google Forms API \cite{google_for
 \end{itemize}
 
 \noindent
-V implementaci nejprve načítáme strukturu formuláře (\texttt{GET /v1/forms/\{formId\}}) a následně odpovědi (\texttt{GET /v1/forms/\{formId\}/responses}). Obě odpovědi jsou z Google API vráceny ve formátu JSON, který následně mapujeme do interní struktury, kterou v aplikaci používáme.
+V implementaci nejprve načítáme strukturu formuláře (\texttt{GET /v1/forms/\{formId\}}) a následně odpovědi (\texttt{GET /v1/forms/\{formId\}/responses}). Obě odpovědi Google API následně mapujeme do interních struktur, které v aplikaci používáme.
 
 \paragraph{1) Struktura odpovědi \texttt{GET /v1/forms/\{formId\}} (zjednodušeně)}
 \begin{verbatim}
@@ -237,12 +239,16 @@ S tímto API jsem se již setkala v několika aplikacích při zadávání lokac
 Toto API jsem nakonec nezvolila, kvůli tomu, že je placené a cena se odvíjí od počtu požadavků, které jsou na API posílány. Jelikož nechci aby projekt se stal finančně náročným, rozhodla jsem podívat se po nějaké levnější alternativě, která by mi poskytla podobné funkce.\cite{google_maps_places_pricing}
 
 \subsubsection{Photon}
-Toto API je open-source a je založeno na OpenStreetMap datech. API nabízí funkce jako například:
+Toto API je open-source a je založeno na OpenStreetMap datech. \cite{komoot_photon}
+
+API nabízí funkce jako například \cite{komoot_photon}:
 \begin{itemize}
     \item Geocoding
     \item Reverse Geocoding
     \item hledání míst - podporuje i v rámci několika jazyků
 \end{itemize}
+
+
 Tento projekt má i vystavené zdarma API, které je možné využívat bez nutnosti hostovat vlastní instanci. Avšak je třeba dbát na to nezahlcovat toto API přílišným množstvím požadavků, protože na to server není připraven a jedná se spíše o ukázku toho, jak API funguje. Pokud by bylo třeba posílat větší množství požadavků, tak je v projektu zdokumentováno jak hostovat vlastní instanci. \cite{komoot_photon}
 
 Nakonec jsem se rozhodla pro využití tohoto API, protože je zdarma a poskytuje všechny funkce, které potřebuji pro zadávání lokace pro události. Jelikož moje aplikace je ve fázi prototypu, nebude na API posíláno příliš mnoho požadavků, takže by neměl být problém s využíváním tohoto API. V budoucnu, pokud by se aplikace stala populární a bylo by potřeba posílat větší množství požadavků, bych zvážila hostování vlastní instance tohoto API nebo přechod na placené API, jako je Google Places API. Navíc při zadávání lokace bude nastavený přiměřený \textit{debounce}, aby se zabránilo posílání příliš mnoha požadavků na API.
